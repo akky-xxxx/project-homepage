@@ -8,6 +8,7 @@
   "scripts": {
     "commitlint": "commitlint --edit",
     "fix:pack": "fixpack",
+    "lint:pack": "fixpack --dryRun",
     "prepare": "husky"
   },
   "devDependencies": {
