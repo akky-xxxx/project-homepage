@@ -4,6 +4,7 @@
   "workspaces": ["packages/*"],
   "devDependencies": {
     "@types/bun": "latest",
+    "fixpack": "4.0.0",
     "typescript": "5.4.4"
   },
   "peerDependencies": {
