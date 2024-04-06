@@ -10,6 +10,7 @@
     "fix": "run-p fix:* -c",
     "fix:pack": "fixpack",
     "lint": "run-p lint:* -c",
+    "lint:editorconfigChecker": "ec",
     "lint:pack": "fixpack --dryRun",
     "prepare": "husky"
   },
