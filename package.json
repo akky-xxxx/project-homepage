@@ -8,8 +8,10 @@
   "scripts": {
     "commitlint": "commitlint --edit",
     "fix": "run-p fix:* -c",
+    "fix:config": "prettier \"./config/**/*\" \"./*.{js,ts,mjs}\" --write --log-level warn",
     "fix:pack": "fixpack",
     "lint": "run-p lint:* -c",
+    "lint:config": "prettier \"./config/**/*\" \"./*.{js,ts,mjs}\" --check --log-level warn",
     "lint:editorconfigChecker": "ec",
     "lint:pack": "fixpack --dryRun",
     "prepare": "husky"
