@@ -7,7 +7,9 @@
   },
   "scripts": {
     "commitlint": "commitlint --edit",
+    "fix": "run-p fix:* -c",
     "fix:pack": "fixpack",
+    "lint": "run-p lint:* -c",
     "lint:pack": "fixpack --dryRun",
     "prepare": "husky"
   },
