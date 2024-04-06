@@ -14,7 +14,8 @@
     "spell-check": "cspell \"./config/**\" --no-progress"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/uuid": "9.0.8"
   },
   "peerDependencies": {
     "typescript": "5.4.4"
