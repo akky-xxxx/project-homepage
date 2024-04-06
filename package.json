@@ -6,9 +6,9 @@
     "yarn": "⚠️️  【bun】 を使ってください"
   },
   "scripts": {
+    "commitlint": "commitlint --edit",
     "fix:pack": "fixpack",
-    "prepare": "husky",
-    "commitlint": "commitlint --edit"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "19.2.1",
