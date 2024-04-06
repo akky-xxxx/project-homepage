@@ -17,7 +17,7 @@
     "lint:editorconfigChecker": "ec",
     "lint:pack": "fixpack --dryRun",
     "lint:ts": "run-s lint-ts-by-eslint lint-ts-by-prettier",
-    "spell-check": "cspell \"./config/**\" --no-progress"
+    "spell-check": "cspell \"./{src,config}/**\" --no-progress"
   },
   "dependencies": {
     "@google-cloud/storage": "7.9.0",
