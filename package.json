@@ -21,6 +21,7 @@
   "devDependencies": {
     "@commitlint/cli": "19.2.1",
     "@commitlint/config-conventional": "19.1.0",
+    "@manypkg/cli": "0.21.3",
     "@stylistic/eslint-plugin": "1.7.0",
     "@tsconfig/bun": "1.0.5",
     "@types/bun": "latest",
