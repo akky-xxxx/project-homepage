@@ -1,5 +1,10 @@
 {
   "name": "project-homepage",
+  "engines": {
+    "npm": "⚠️️  【bun】 を使ってください",
+    "pnpm": "⚠️️  【bun】 を使ってください",
+    "yarn": "⚠️️  【bun】 を使ってください"
+  },
   "scripts": {
     "fix:pack": "fixpack"
   },
