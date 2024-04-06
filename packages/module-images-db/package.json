@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "module": "index.ts",
   "scripts": {
-    "check-code": "run-p -c lint spell-check",
+    "check-code": "run-p -c lint spell-check type-check",
     "fix": "run-p fix:* -c",
     "fix-ts-by-eslint": "eslint \"./src/**/*.ts\" --fix --max-warnings 0 --cache",
     "fix-ts-by-prettier": "prettier \"./src/**/*.ts\" --write --log-level warn",
@@ -17,7 +17,8 @@
     "lint:editorconfigChecker": "ec",
     "lint:pack": "fixpack --dryRun",
     "lint:ts": "run-s lint-ts-by-eslint lint-ts-by-prettier",
-    "spell-check": "cspell \"./{src,config}/**\" --no-progress"
+    "spell-check": "cspell \"./{src,config}/**\" --no-progress",
+    "type-check": "tsc"
   },
   "dependencies": {
     "@google-cloud/storage": "7.9.0",
