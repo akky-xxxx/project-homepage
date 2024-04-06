@@ -4,9 +4,21 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "@pandacss/dev": "0.37.2",
+    "@types/bun": "latest",
+    "@types/js-cookie": "3.0.6",
+    "@types/react": "18.2.74",
+    "@types/react-dom": "18.2.24"
   },
   "peerDependencies": {
     "typescript": "5.4.4"
+  },
+  "dependencies": {
+    "jotai": "2.7.2",
+    "js-cookie": "3.0.5",
+    "next": "14.1.4",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "zod": "3.22.4"
   }
 }
