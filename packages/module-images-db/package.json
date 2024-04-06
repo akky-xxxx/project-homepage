@@ -3,6 +3,17 @@
   "version": "0.0.0",
   "module": "index.ts",
   "type": "module",
+  "scripts": {
+    "check-code": "run-p -c lint spell-check",
+    "fix": "run-p fix:* -c",
+    "fix:config": "prettier \"./config/**/*\" \"./*.{js,ts,mjs,csj}\" --write --log-level warn",
+    "fix:pack": "fixpack",
+    "lint": "run-p lint:* -c",
+    "lint:config": "prettier \"./config/**/*\" \"./*.{js,ts,mjs,csj}\" --check --log-level warn",
+    "lint:editorconfigChecker": "ec",
+    "lint:pack": "fixpack --dryRun",
+    "spell-check": "cspell \"./config/**\" --no-progress"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
