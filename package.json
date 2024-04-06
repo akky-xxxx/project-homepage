@@ -1,0 +1,13 @@
+{
+  "name": "project-homepage",
+  "private": true,
+  "workspaces": ["packages/*"],
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "5.4.4"
+  },
+  "peerDependencies": {
+    "typescript": "5.4.4"
+  },
+  "type": "module"
+}
