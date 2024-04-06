@@ -1,6 +1,9 @@
 {
   "name": "project-homepage",
   "private": true,
+  "scripts": {
+    "fix:pack": "fixpack"
+  },
   "workspaces": ["packages/*"],
   "devDependencies": {
     "@types/bun": "latest",
