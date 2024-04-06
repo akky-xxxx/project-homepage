@@ -4,3 +4,8 @@ frozenLockfile = false
 
 [install.lockfile]
 print = "yarn"
+
+[test]
+
+# always enable coverage
+coverage = true
