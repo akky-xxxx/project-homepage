@@ -114,6 +114,7 @@ web_modules/
 
 .next
 out
+styled-system
 
 # Nuxt.js build / generate output
 
