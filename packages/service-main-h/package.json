@@ -18,7 +18,7 @@
     "lint-ts-by-prettier": "prettier \"./app/**/*.{ts,tsx}\" --check --log-level warn",
     "lint:config": "prettier \"./config/**/*.{js,ts,mjs,csj}\" \"./.storybook/**/*\" \"./*.{js,mjs,cjs}\" --check --log-level warn",
     "lint:editorconfig": "editorconfig-checker",
-    "lint:markup": "markuplint \"./app/**/*.{ts,tsx}\" -p",
+    "lint:markup": "markuplint \"./app/**/*.{ts,tsx}\" -p -config ./markuplint.config.ts",
     "lint:pack": "fixpack --dryRun",
     "lint:ts": "run-s lint-ts-by-prettier lint-ts-by-eslint",
     "preview": "wrangler pages dev ./dist",
