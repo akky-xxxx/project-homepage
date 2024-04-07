@@ -6,6 +6,7 @@
     "yarn": "⚠️️  【bun】 を使ってください"
   },
   "scripts": {
+    "all-check": "run-s check-code ws:spell-check test",
     "check-code": "run-p -c lint spell-check",
     "commitlint": "commitlint --edit",
     "fix": "run-p fix:* -c",
@@ -17,6 +18,7 @@
     "lint:pack": "fixpack --dryRun",
     "prepare": "husky",
     "spell-check": "cspell \"./config/**\" --no-progress",
+    "test": "bun test",
     "ws:check-code": "manypkg exec bun check-code",
     "ws:fix": "manypkg exec bun fix",
     "ws:lint": "manypkg exec bun lint",
