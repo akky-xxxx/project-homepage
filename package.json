@@ -73,6 +73,7 @@
     "msw-storybook-addon": "1.10.0",
     "npm-run-all2": "6.1.2",
     "prettier": "3.2.5",
+    "storybook": "8.0.6",
     "storybook-dark-mode": "4.0.1",
     "typescript": "5.4.4"
   },

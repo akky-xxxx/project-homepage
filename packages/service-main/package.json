@@ -41,8 +41,7 @@
     "@types/bun": "latest",
     "@types/js-cookie": "3.0.6",
     "@types/react": "18.2.74",
-    "@types/react-dom": "18.2.24",
-    "storybook": "8.0.6"
+    "@types/react-dom": "18.2.24"
   },
   "peerDependencies": {
     "typescript": "5.4.4"
