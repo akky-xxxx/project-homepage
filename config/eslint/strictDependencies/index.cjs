@@ -13,10 +13,7 @@ module.exports = {
         },
         {
           module: "jotai",
-          allowReferenceFrom: [
-            "src/**/components/{organisms,templates}/**",
-            "src/globalStates",
-          ],
+          allowReferenceFrom: ["src/**/components/{organisms,templates}/**", "src/globalStates"],
           allowSameModule: false,
         },
         {
