@@ -1,14 +1,12 @@
 {
   "name": "service-main-h",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
-    "dev": "vite",
     "build": "vite build --mode client && vite build",
-    "preview": "wrangler pages dev ./dist",
-    "deploy": "$npm_execpath run build && wrangler pages deploy ./dist",
     "build-storybook": "storybook build",
     "check-code": "npm-run-all -p lint spell-check type-check -c",
+    "deploy": "$npm_execpath run build && wrangler pages deploy ./dist",
+    "dev": "vite",
     "fix": "run-p \"fix:*\" -c",
     "fix-ts-by-eslint": "eslint \"./{src,mock}/**/*.{ts,tsx}\" --fix --max-warnings 0 --cache",
     "fix-ts-by-prettier": "prettier \"./{src,mock}/**/*.{ts,tsx}\" --write --log-level warn",
@@ -23,11 +21,11 @@
     "lint:markup": "markuplint \"./src/**/*.{ts,tsx}\" -p",
     "lint:pack": "fixpack --dryRun",
     "lint:ts": "run-s lint-ts-by-prettier lint-ts-by-eslint",
+    "preview": "wrangler pages dev ./dist",
     "spell-check": "cspell \"./{.storybook,config,src}/**\" --no-progress",
     "storybook": "storybook dev -p 3010",
     "type-check": "tsc"
   },
-  "private": true,
   "dependencies": {
     "hono": "^4.2.2",
     "honox": "^0.1.9"
@@ -37,5 +35,7 @@
     "@hono/vite-cloudflare-pages": "^0.2.4",
     "vite": "^5.0.12",
     "wrangler": "^3.47.0"
-  }
+  },
+  "private": true,
+  "type": "module"
 }
