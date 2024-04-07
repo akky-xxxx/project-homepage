@@ -5,9 +5,6 @@
   "scripts": {
     "build": "next build",
     "build-storybook": "storybook build",
-    "capture": "run-s capture:run-storybook capture:run-capture",
-    "capture:run-capture": "storycap http://localhost:3015 -C \"puppeteer\" --disableCssAnimation --serverTimeout 120000 --captureTimeout 30000",
-    "capture:run-storybook": "storybook dev --no-open -p 3015 -s ../public --quiet --no-version-updates",
     "check-code": "npm-run-all -p lint spell-check type-check -c",
     "dev": "next dev -p 3000",
     "fix": "run-p \"fix:*\" -c",
