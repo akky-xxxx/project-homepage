@@ -7,5 +7,7 @@ print = "yarn"
 
 [test]
 
-# always enable coverage
 coverage = true
+preload = "./config/test/happyDom/index.ts"
+coverageIgnoreSourcemaps = true
+coverageThreshold = 0

@@ -1,4 +1,5 @@
 [test]
 
-# always enable coverage
 coverage = true
+coverageIgnoreSourcemaps = true
+coverageThreshold = 0

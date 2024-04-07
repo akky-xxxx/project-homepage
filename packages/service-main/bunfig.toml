@@ -1,6 +1,6 @@
 [test]
 
 coverage = true
-preload = "./config/test/happyDom/index.ts"
+preload = "../../config/test/happyDom/index.ts"
 coverageIgnoreSourcemaps = true
 coverageThreshold = 0
