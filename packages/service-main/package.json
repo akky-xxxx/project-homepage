@@ -2,17 +2,6 @@
   "name": "service-main",
   "version": "0.0.0",
   "module": "index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@pandacss/dev": "0.37.2",
-    "@storybook/react": "8.0.6",
-    "@testing-library/react": "14.2.2",
-    "@types/bun": "latest",
-    "@types/js-cookie": "3.0.6",
-    "@types/react": "18.2.74",
-    "@types/react-dom": "18.2.24",
-    "storybook": "8.0.6"
-  },
   "scripts": {
     "build": "next build",
     "build-storybook": "storybook build",
@@ -40,9 +29,6 @@
     "storybook": "storybook dev -p 3010",
     "type-check": "tsc"
   },
-  "peerDependencies": {
-    "typescript": "5.4.4"
-  },
   "dependencies": {
     "jotai": "2.7.2",
     "js-cookie": "3.0.5",
@@ -50,5 +36,19 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "zod": "3.22.4"
-  }
+  },
+  "devDependencies": {
+    "@pandacss/dev": "0.37.2",
+    "@storybook/react": "8.0.6",
+    "@testing-library/react": "14.2.2",
+    "@types/bun": "latest",
+    "@types/js-cookie": "3.0.6",
+    "@types/react": "18.2.74",
+    "@types/react-dom": "18.2.24",
+    "storybook": "8.0.6"
+  },
+  "peerDependencies": {
+    "typescript": "5.4.4"
+  },
+  "type": "module"
 }

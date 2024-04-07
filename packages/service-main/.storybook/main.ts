@@ -31,11 +31,10 @@ const config: StorybookConfig = {
     if (config.resolve) {
       config.resolve.alias = {
         ...config.resolve.alias,
-        '@panda': resolve(__dirname, '../styled-system'),
-      };
+        "@panda": resolve(__dirname, "../styled-system"),
+      }
     }
-    return config;
+    return config
   },
-
 }
 export default config
