@@ -43,6 +43,7 @@
     "@stylistic/eslint-plugin": "1.7.0",
     "@tsconfig/bun": "1.0.5",
     "@tsconfig/next": "2.0.3",
+    "@tsconfig/vite-react": "3.0.2",
     "@types/bun": "latest",
     "@types/jest": "29.5.12",
     "@typescript-eslint/eslint-plugin": "7.5.0",
