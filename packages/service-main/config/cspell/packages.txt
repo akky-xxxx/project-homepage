@@ -1,2 +1,3 @@
 autodocs
 pandacss
+registrator
