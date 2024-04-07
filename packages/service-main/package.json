@@ -5,10 +5,13 @@
   "type": "module",
   "devDependencies": {
     "@pandacss/dev": "0.37.2",
+    "@storybook/react": "8.0.6",
+    "@testing-library/react": "14.2.2",
     "@types/bun": "latest",
     "@types/js-cookie": "3.0.6",
     "@types/react": "18.2.74",
-    "@types/react-dom": "18.2.24"
+    "@types/react-dom": "18.2.24",
+    "storybook": "8.0.6"
   },
   "scripts": {
     "build": "next build",
@@ -32,11 +35,9 @@
     "lint:markup": "markuplint \"./src/**/*.{ts,tsx}\" -p",
     "lint:pack": "fixpack --dryRun",
     "lint:ts": "run-s lint-ts-by-prettier lint-ts-by-eslint",
-    "prepare": "panda codegen",
     "spell-check": "cspell \"./{.storybook,config,src}/**\" --no-progress",
     "start": "next start -p 3000",
-    "storybook": "storybook dev -p 3010 -s ../public",
-    "test": "jest --coverage",
+    "storybook": "storybook dev -p 3010",
     "type-check": "tsc"
   },
   "peerDependencies": {
