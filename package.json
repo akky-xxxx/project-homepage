@@ -21,7 +21,6 @@
     "ws:fix": "manypkg run packages fix",
     "ws:lint": "manypkg run packages lint",
     "ws:spell-check": "manypkg run packages spell-check",
-    "ws:test": "manypkg exec bun test",
     "ws:type-check": "manypkg run packages type-check"
   },
   "devDependencies": {
