@@ -3,7 +3,8 @@ module.exports = {
     "strict-check/react-max",
     "plugin:sonarjs/recommended",
     "../../config/eslint/import/index.cjs",
-    "../../config/eslint/strictCheck/index.cjs",
+    "./config/eslint/import/index.cjs",
+    "./config/eslint/strictCheck/index.cjs",
   ],
 
   ignorePatterns: ["**/dist/**"],
