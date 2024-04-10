@@ -1,4 +1,7 @@
 module.exports = {
+  globals: {
+    "bun:test": false,
+  },
   extends: [
     "strict-check/react-max",
     "plugin:sonarjs/recommended",
@@ -34,4 +37,13 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      files: "**/*.test.ts*",
+      rules: {
+        // FIXME: "bun:test" に対しての import/no-unresolved が解決できない
+        "import/no-unresolved": 0,
+      },
+    },
+  ],
 }
