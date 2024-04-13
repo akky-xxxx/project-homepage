@@ -12,7 +12,7 @@ import type { FC } from "hono/jsx"
 const IconSize = 20
 const { ICONS, ICON_DAY, ICON_NIGHT } = ClassNames
 
-export const ExteriorSwitch: FC = () => (
+export const View: FC = () => (
   // TODO: jsx-a11y/label-has-associated-control の上書きがうまくいってない？
   //  https://zenn.dev/krntmm/articles/756fdf2f8fcdff
   // eslint-disable-next-line jsx-a11y/label-has-associated-control
