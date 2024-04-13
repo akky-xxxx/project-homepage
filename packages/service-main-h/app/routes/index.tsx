@@ -2,9 +2,10 @@ import { getCookie } from "hono/cookie"
 import { css } from "hono/css"
 import { createRoute } from "honox/factory"
 
+import { CookieKeys } from "@shared/const/CookieKeys"
+import { getExteriorMode } from "@shared/utils/getExteriorMode"
+
 import Counter from "../islands/Counter"
-import { CookieKeys } from "../shared/const/CookieKeys"
-import { getExteriorMode } from "../shared/utils/getExteriorMode"
 
 const className = css`
   font-family: sans-serif;
