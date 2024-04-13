@@ -1,6 +1,10 @@
-import { Style } from "hono/css"
+import { cx, Style } from "hono/css"
 import { jsxRenderer } from "hono/jsx-renderer"
 import { Script } from "honox/server"
+
+import { Layout } from "../components/Layout"
+import { exteriorStyle } from "../styles/exteriorStyle"
+import { globalStyle } from "../styles/globalStyle"
 
 export default jsxRenderer(({ children, title }) => (
   <html lang="en">
@@ -13,8 +17,10 @@ export default jsxRenderer(({ children, title }) => (
         rel="stylesheet"
       />
       <Script async src="/app/client.ts" />
-      <Style />
+      <Style>{cx(exteriorStyle, globalStyle)}</Style>
     </head>
-    <body>{children}</body>
+    <body>
+      <Layout>{children}</Layout>
+    </body>
   </html>
 ))
