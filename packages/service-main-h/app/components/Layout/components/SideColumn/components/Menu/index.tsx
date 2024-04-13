@@ -8,6 +8,7 @@ import { LocationIcon } from "@icons/LocationIcon"
 import { PhotoIcon } from "@icons/PhotoIcon"
 import { ProfileIcon } from "@icons/ProfileIcon"
 import { TagIcon } from "@icons/TagIcon"
+import { getHref } from "@shared/utils/getHref"
 
 import { Accordion } from "./components/Accordion"
 import { Items } from "./components/Items"
@@ -28,7 +29,7 @@ export const Menu: FC = () => (
       <Accordion isOpen icon={<PhotoIcon {...IconProps} />} title="Photo Gallery">
         <ul>
           <li>
-            <a className={cx(itemStyle, anchorStyle)} href="/">
+            <a className={cx(itemStyle, anchorStyle)} href={getHref("PhotoGallery")}>
               <TextWithIcon icon={<AllIcon {...IconProps} />}>All</TextWithIcon>
             </a>
           </li>
