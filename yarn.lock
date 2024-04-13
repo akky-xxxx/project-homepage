@@ -12985,6 +12985,7 @@ serve-static@1.15.0:
   dependencies:
     hono "^4.2.2"
     honox "^0.1.9"
+    module-images-db "packages/module-images-db"
 
 set-cookie-parser@^2.4.6:
   version "2.6.0"

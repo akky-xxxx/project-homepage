@@ -26,7 +26,8 @@
   },
   "dependencies": {
     "hono": "^4.2.2",
-    "honox": "^0.1.9"
+    "honox": "^0.1.9",
+    "module-images-db": "workspace:*"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240403.0",
