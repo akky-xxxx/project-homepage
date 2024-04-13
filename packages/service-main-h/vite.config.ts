@@ -1,16 +1,23 @@
 import pages from '@hono/vite-cloudflare-pages'
 import honox from 'honox/vite'
 import client from 'honox/vite/client'
-import { defineConfig } from 'vite'
+import { defineConfig, type UserConfig } from 'vite'
+import tsconfigPaths from "vite-tsconfig-paths"
+
+const userConfig: UserConfig = {
+  optimizeDeps: {
+    entries: [
+      "./app/routes/index.tsx",
+    ],
+  },
+}
 
 export default defineConfig(({ mode }) => {
-  if (mode === 'client') {
-    return {
-      plugins: [client()]
-    }
-  } else {
-    return {
-      plugins: [honox(), pages()]
-    }
+  const pluginsBase = mode === 'client' ? [client()] : [honox(), pages()]
+  const plugins = [...pluginsBase, tsconfigPaths()]
+
+  return {
+    ...userConfig,
+    plugins,
   }
 })

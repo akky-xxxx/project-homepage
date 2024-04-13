@@ -1,9 +1,16 @@
 {
   "extends": ["@tsconfig/bun", "@tsconfig/vite-react"],
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@atoms/*": ["./app/components/atoms/*"],
+      "@icons/*": ["./app/components/icons/*"],
+      "@islands/*": ["./app/islands/*"],
+      "@shared/*": ["./app/shared/*"],
+    },
     "types": [
       "@cloudflare/workers-types",
-      "bun-types",
+      "bun-types"
     ],
     "jsxImportSource": "hono/jsx"
   }
