@@ -3,7 +3,7 @@ import { cx } from "hono/css"
 import { HiddenStyles } from "@shared/styles/HiddenStyles"
 
 import { Menu } from "./components/Menu"
-import { ExteriorSwitch } from "./components/ExteriorSwitch"
+import { ExteriorSwitch } from "../../../../islands/ExteriorSwitch"
 import { headerStyle } from "./styles/headerStyle"
 import { heading1Style } from "./styles/heading1Style"
 import { navigationStyle } from "./styles/navigationStyle"
