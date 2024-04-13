@@ -3,7 +3,7 @@ import { cx } from "hono/css"
 import { HiddenStyles } from "@shared/styles/HiddenStyles"
 
 import { Menu } from "./components/Menu"
-import { Toggle } from "./components/Toggle"
+import { ExteriorSwitch } from "./components/ExteriorSwitch"
 import { headerStyle } from "./styles/headerStyle"
 import { heading1Style } from "./styles/heading1Style"
 import { navigationStyle } from "./styles/navigationStyle"
@@ -19,7 +19,7 @@ export const SideColumn: FC = () => (
     <header className={headerStyle}>
       <h1 className={heading1Style}>akky-xxxx</h1>
       <div className={toggleWrapperStyle}>
-        <Toggle />
+        <ExteriorSwitch />
       </div>
     </header>
     <nav className={cx(navigationStyle, HIDDEN_SP)}>
