@@ -3,7 +3,7 @@
 /* eslint-disable */
 import {} from 'hono'
 
-import type { ExteriorMode } from "./shared/types/ExteriorMode"
+import type { ExteriorMode } from "@shared/types/ExteriorMode"
 
 type Head = {
   title?: string
