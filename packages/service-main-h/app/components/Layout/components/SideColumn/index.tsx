@@ -1,9 +1,9 @@
 import { cx } from "hono/css"
 
+import { ExteriorSwitch } from "@islands/ExteriorSwitch"
 import { HiddenStyles } from "@shared/styles/HiddenStyles"
 
 import { Menu } from "./components/Menu"
-import { ExteriorSwitch } from "../../../../islands/ExteriorSwitch"
 import { headerStyle } from "./styles/headerStyle"
 import { heading1Style } from "./styles/heading1Style"
 import { navigationStyle } from "./styles/navigationStyle"
