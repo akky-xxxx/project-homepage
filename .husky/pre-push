@@ -1,4 +1,4 @@
-bun install
+bun install --frozen-lockfile
 bun check-code
 bun ws:check-code
 bun test
