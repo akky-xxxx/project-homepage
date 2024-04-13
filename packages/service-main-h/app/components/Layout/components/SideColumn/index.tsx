@@ -10,20 +10,28 @@ import { navigationStyle } from "./styles/navigationStyle"
 import { rootStyle } from "./styles/rootStyle"
 import { toggleWrapperStyle } from "./styles/toggleWrapperStyle"
 
+import type { ExteriorMode } from "@shared/types/ExteriorMode"
 import type { FC } from "hono/jsx"
 
 const { HIDDEN_SP } = HiddenStyles
 
-export const SideColumn: FC = () => (
-  <div className={rootStyle}>
-    <header className={headerStyle}>
-      <h1 className={heading1Style}>akky-xxxx</h1>
-      <div className={toggleWrapperStyle}>
-        <ExteriorSwitch />
-      </div>
-    </header>
-    <nav className={cx(navigationStyle, HIDDEN_SP)}>
-      <Menu />
-    </nav>
-  </div>
-)
+type Props = {
+  exteriorMode: ExteriorMode
+}
+
+export const SideColumn: FC<Props> = (props) => {
+  const { exteriorMode } = props
+  return (
+    <div className={rootStyle}>
+      <header className={headerStyle}>
+        <h1 className={heading1Style}>akky-xxxx</h1>
+        <div className={toggleWrapperStyle}>
+          <ExteriorSwitch exteriorMode={exteriorMode} />
+        </div>
+      </header>
+      <nav className={cx(navigationStyle, HIDDEN_SP)}>
+        <Menu />
+      </nav>
+    </div>
+  )
+}
