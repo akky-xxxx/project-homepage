@@ -1,6 +1,6 @@
 import { cx } from "hono/css"
 
-import { ExteriorSwitch } from "@islands/ExteriorSwitch"
+import ExteriorSwitch from "@islands/ExteriorSwitch"
 import { HiddenStyles } from "@shared/styles/HiddenStyles"
 
 import { Menu } from "./components/Menu"
