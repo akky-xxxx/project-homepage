@@ -1,3 +1,5 @@
+import { getHref } from "@shared/utils/getHref"
+
 import { Thumbnail } from "./components/Thumbnail"
 import { ulStyle } from "./styles/ulStyle"
 
@@ -18,7 +20,9 @@ export const Images: FC<Props> = (props) => {
 
         return (
           <li key={imageId}>
-            <Thumbnail imageId={imageId} />
+            <a href={getHref({ id: "PhotoDetail", imageId })}>
+              <Thumbnail imageId={imageId} />
+            </a>
           </li>
         )
       })}
