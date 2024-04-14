@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/consistent-type-assertions, sonarjs/no-duplicate-string */
-// import { describe, it, expect } from "bun:test"
+import { describe, it, expect } from "bun:test"
 
 import { isSameLocation } from "."
 
