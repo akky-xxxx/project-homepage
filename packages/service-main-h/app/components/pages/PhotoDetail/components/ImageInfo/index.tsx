@@ -4,6 +4,7 @@ import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
 import { Spaces } from "@shared/styles/Spaces"
+import { getHref } from "@shared/utils/getHref"
 
 import type { FC } from "hono/jsx"
 import type { ImagesDataBase } from "module-images-db/src"
@@ -14,6 +15,8 @@ type Props = Omit<(typeof ImagesDataBase)[number], "imageId">
 
 export const ImageInfo: FC<Props> = (props) => {
   const { area, date, tags } = props
+  const locationHref = getHref({ id: "PhotoLocationDetail", location: area })
+  const dateHref = getHref({ id: "PhotoDateDetail", date })
 
   return (
     <table>
@@ -23,14 +26,18 @@ export const ImageInfo: FC<Props> = (props) => {
             <LocationIcon />
             Location
           </th>
-          <td>{area}</td>
+          <td>
+            <a href={locationHref}>{area}</a>
+          </td>
         </tr>
         <tr>
           <th className={thStyle}>
             <DateIcon />
             Date
           </th>
-          <td>{date}</td>
+          <td>
+            <a href={dateHref}>{date}</a>
+          </td>
         </tr>
         <tr>
           <th className={thStyle}>
@@ -39,9 +46,14 @@ export const ImageInfo: FC<Props> = (props) => {
           </th>
           <td>
             <ul className={tagsStyle}>
-              {tags.map((tag) => (
-                <li>{tag}</li>
-              ))}
+              {tags.map((tag) => {
+                const tagHref = getHref({ id: "PhotoTagDetail", tag })
+                return (
+                  <li>
+                    <a href={tagHref}>{tag}</a>
+                  </li>
+                )
+              })}
             </ul>
           </td>
         </tr>
