@@ -13,15 +13,15 @@ export const getHref: GetHref = (props) => {
     }
     case "PhotoLocationDetail": {
       const { location } = props
-      return `/photo-gallery/location/${location}`
+      return `/photo-gallery?location=${encodeURIComponent(location)}`
     }
     case "PhotoDateDetail": {
       const { date } = props
-      return `/photo-gallery/date/${date}`
+      return `/photo-gallery?date=${encodeURIComponent(date)}`
     }
     case "PhotoTagDetail": {
       const { tag } = props
-      return `/photo-gallery/tag/${tag}`
+      return `/photo-gallery?tag=${encodeURIComponent(tag)}`
     }
     case "PhotoGallery": {
       return "/photo-gallery"
