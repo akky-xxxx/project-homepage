@@ -7,4 +7,5 @@ export const Spaces = {
   SPACE12: Base * 3,
   SPACE16: Base * 4,
   SPACE20: Base * 5,
+  SPACE32: Base * 8,
 } as const
