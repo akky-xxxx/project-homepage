@@ -14,7 +14,7 @@ type Props = Omit<(typeof ImagesDataBase)[number], "imageId">
 export const ImageInfo: FC<Props> = (props) => {
   const { area, date, tags } = props
   const locationHref = getHref({ id: "PhotoLocationDetail", location: area })
-  const dateHref = getHref({ id: "PhotoDateDetail", date })
+  const dateHref = getHref({ date, id: "PhotoDateDetail" })
 
   return (
     <table>
