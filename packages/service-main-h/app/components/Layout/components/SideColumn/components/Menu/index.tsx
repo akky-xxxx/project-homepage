@@ -29,7 +29,7 @@ export const Menu: FC = () => (
       <Accordion isOpen icon={<PhotoIcon {...IconProps} />} title="Photo Gallery">
         <ul>
           <li>
-            <a className={cx(itemStyle, anchorStyle)} href={getHref("PhotoGallery")}>
+            <a className={cx(itemStyle, anchorStyle)} href={getHref({ id: "PhotoGallery" })}>
               <TextWithIcon icon={<AllIcon {...IconProps} />}>All</TextWithIcon>
             </a>
           </li>
