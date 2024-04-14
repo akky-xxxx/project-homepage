@@ -6,7 +6,7 @@ import { itemStyle } from "../styles/itemStyle"
 import type { FC } from "hono/jsx"
 
 type Props = {
-  items: string[]
+  items: Record<"href" | "item", string>[]
 }
 
 export const Items: FC<Props> = (props) => {
@@ -14,13 +14,16 @@ export const Items: FC<Props> = (props) => {
 
   return (
     <ul>
-      {items.map((item) => (
-        <li key={item}>
-          <a className={cx(itemStyle, anchorStyle)} href="/">
-            {item}
-          </a>
-        </li>
-      ))}
+      {items.map((record) => {
+        const { item, href } = record
+        return (
+          <li key={item}>
+            <a className={cx(itemStyle, anchorStyle)} href={href}>
+              {item}
+            </a>
+          </li>
+        )
+      })}
     </ul>
   )
 }
