@@ -4,10 +4,10 @@ import { Thumbnail } from "./components/Thumbnail"
 import { ulStyle } from "./styles/ulStyle"
 
 import type { FC } from "hono/jsx"
-import type { ImagesDataBase } from "module-images-db/src"
+import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 type Props = {
-  images: typeof ImagesDataBase
+  images: ImagesDataBaseRecord[]
 }
 
 export const Images: FC<Props> = (props) => {
