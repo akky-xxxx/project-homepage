@@ -3,9 +3,12 @@ import { css } from "hono/css"
 import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
+import { Spaces } from "@shared/styles/Spaces"
 
 import type { FC } from "hono/jsx"
 import type { ImagesDataBase } from "module-images-db/src"
+
+const { SPACE08 } = Spaces
 
 type Props = Omit<(typeof ImagesDataBase)[number], "imageId">
 
@@ -34,7 +37,13 @@ export const ImageInfo: FC<Props> = (props) => {
             <TagIcon />
             Tags
           </th>
-          <td className={tagsStyle}>{tags.join(", ")}</td>
+          <td>
+            <ul className={tagsStyle}>
+              {tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -54,5 +63,8 @@ const thStyle = css`
 `
 
 const tagsStyle = css`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${SPACE08}rem;
   line-height: 2;
 `
