@@ -20,6 +20,7 @@ export const Images: FC<Props> = (props) => {
 
         return (
           <li key={imageId}>
+            {/* jsx-a11y/control-has-associated-label */}
             <a href={getHref({ id: "PhotoDetail", imageId })}>
               <Thumbnail imageId={imageId} />
             </a>
