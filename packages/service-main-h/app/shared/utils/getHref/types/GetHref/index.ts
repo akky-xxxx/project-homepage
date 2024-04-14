@@ -1,22 +1,17 @@
+import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
+
 type Props =
-  | {
-      id: "PhotoDateDetail"
-      date: string
-    }
-  | {
+  {
       id: "PhotoDetail"
       imageId: string
-    }
-  | {
+    } | {
       id: "PhotoGallery"
-    }
-  | {
+    } | Record<Extract<PhotoGalleryFilterKey, "date">, string> & {
+      id: "PhotoDateDetail"
+    } | Record<Extract<PhotoGalleryFilterKey, "location">, string> & {
       id: "PhotoLocationDetail"
-      location: string
-    }
-  | {
+    } | Record<Extract<PhotoGalleryFilterKey, "tag">, string> & {
       id: "PhotoTagDetail"
-      tag: string
     }
 
 export type GetHref = (props: Props) => string
