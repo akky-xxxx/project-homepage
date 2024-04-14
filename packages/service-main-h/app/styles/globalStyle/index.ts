@@ -1,5 +1,9 @@
 import { css } from "hono/css"
 
+import { MediaQueries } from "@shared/styles/MediaQueries"
+
+const { MEDIA_ONLY_HOVER } = MediaQueries
+
 export const globalStyle = css`
   :-hono-global {
     html {
@@ -27,6 +31,22 @@ export const globalStyle = css`
     menu {
       margin-block: 0;
       padding-left: 0;
+    }
+
+    a {
+      color: var(--primary-color);
+      text-decoration: underline;
+      transition: opacity 0.2s ease;
+
+      &:visited {
+        color: -webkit-link;
+      }
+
+      ${MEDIA_ONLY_HOVER} {
+        &:hover {
+          opacity: 0.5;
+        }
+      }
     }
   }
 `
