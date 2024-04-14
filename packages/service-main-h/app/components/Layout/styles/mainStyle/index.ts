@@ -6,6 +6,8 @@ import { Spaces } from "@shared/styles/Spaces"
 const { MEDIA_PC, MEDIA_SP } = MediaQueries
 
 export const mainStyle = css`
+  overflow-y: scroll;
+
   ${MEDIA_PC} {
     padding: ${Spaces.SPACE20}rem;
   }

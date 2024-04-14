@@ -14,6 +14,7 @@ export const globalStyle = css`
       background-color: var(--primary-background);
       color: var(--primary-color);
       font-size: 1.6rem;
+      overflow-y: hidden;
       transition-duration: 0.2s;
       transition-property: background-color, color;
       transition-timing-function: ease;
