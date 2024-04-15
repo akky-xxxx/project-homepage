@@ -18,6 +18,11 @@ const PRIMARY_BACKGROUND = {
   LIGHT: COLOR_FAFAFA,
 } as const satisfies ByExterior
 
+const SECONDARY_BACKGROUND = {
+  DARK: COLOR_3C3C3C,
+  LIGHT: COLOR_E0E0E0,
+} as const satisfies ByExterior
+
 const PRIMARY_COLOR = {
   DARK: COLOR_FAFAFA,
   LIGHT: COLOR_303030,
@@ -41,4 +46,6 @@ export const Colors = {
   PRIMARY_BACKGROUND,
   PRIMARY_COLOR,
   PRIMARY_RED,
+
+  SECONDARY_BACKGROUND,
 } as const satisfies ColorsType
