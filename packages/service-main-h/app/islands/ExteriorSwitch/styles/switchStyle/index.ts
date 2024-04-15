@@ -1,10 +1,10 @@
 import { css } from "hono/css"
 
+import { Double } from "@shared/const/Double"
 import { MediaQueries } from "@shared/styles/MediaQueries"
 
 import { ClassNames } from "../../const/ClassNames"
 
-const Double = 2
 const ContentHeight = 3.5
 const ContentWidth = 6
 const BorderWidth = 0.2

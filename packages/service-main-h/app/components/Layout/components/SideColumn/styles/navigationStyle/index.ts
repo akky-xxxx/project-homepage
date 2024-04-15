@@ -1,5 +1,6 @@
 import { css } from "hono/css"
 
+import { Double } from "@shared/const/Double"
 import { MediaQueries } from "@shared/styles/MediaQueries"
 import { Spaces } from "@shared/styles/Spaces"
 
@@ -16,7 +17,7 @@ export const navigationStyle = css`
 
   ${MEDIA_SP} {
     background-color: var(--primary-background);
-    bottom: calc(${SPACE12 * 2}rem + ${MenuIconSize}px);
+    bottom: calc(${SPACE12 * Double}rem + ${MenuIconSize}px);
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2); /* TODO: 定数定義して置き換える */
     left: 0;
     overflow-y: auto;
