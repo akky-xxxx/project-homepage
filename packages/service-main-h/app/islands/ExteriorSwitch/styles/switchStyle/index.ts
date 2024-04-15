@@ -42,7 +42,6 @@ export const switchStyle = css`
       transform 0.3s ease,
       background-color 0.2s ease;
     width: ${Diameter}rem;
-    z-index: 20;
 
     & > span {
       display: inline-grid;
