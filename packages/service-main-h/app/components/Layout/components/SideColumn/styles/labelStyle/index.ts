@@ -15,7 +15,7 @@ export const labelStyle = css`
   }
 
   ${MEDIA_SP} {
-    background-color: pink; /* TODO: --secondary-background を定義して置き換える */
+    background-color: var(--secondary-background);
     border-radius: 4px;
     bottom: ${SPACE12}rem;
     display: grid;
