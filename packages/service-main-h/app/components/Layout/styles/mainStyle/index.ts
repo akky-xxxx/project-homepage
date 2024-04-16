@@ -15,7 +15,7 @@ export const mainStyle = css`
   }
 
   ${MEDIA_SP} {
-    height: calc(100vh - ${HeaderSize}px - ${Spaces.SPACE20}rem);
+    height: calc(100vh - ${HeaderSize}px);
     padding-block: ${Spaces.SPACE20}rem;
   }
 `
