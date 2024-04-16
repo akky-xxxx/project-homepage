@@ -14,5 +14,5 @@ export const Thumbnail: FC<Props> = (props) => {
     ? `${IMAGE_HOST}/${imageId}.thumb.avif`
     : "https://placehold.jp/1980x1320.png"
 
-  return <img alt="" className={imageStyle} src={source} />
+  return <img alt="" className={imageStyle} decoding="async" src={source} />
 }

@@ -11,7 +11,7 @@ export const Image: FC<Props> = (props) => {
   const { imageId } = props
   const source = IMAGE_HOST ? `${IMAGE_HOST}/${imageId}.avif` : "https://placehold.jp/1980x1320.png"
 
-  return <img alt="" className={imageStyle} src={source} />
+  return <img alt="" className={imageStyle} decoding="async" src={source} />
 }
 
 const imageStyle = css`
