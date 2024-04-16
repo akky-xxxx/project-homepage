@@ -8,5 +8,4 @@ export const tagsStyle = css`
   display: flex;
   flex-wrap: wrap;
   gap: ${SPACE08}rem;
-  line-height: 2;
 `

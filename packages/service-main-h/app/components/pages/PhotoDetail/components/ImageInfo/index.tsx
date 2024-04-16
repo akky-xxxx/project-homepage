@@ -3,8 +3,10 @@ import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
 import { getHref } from "@shared/utils/getHref"
 
+import { dlStyle } from "./styles/dlStyle"
+import { dtStyle } from "./styles/dtStyle"
 import { tagsStyle } from "./styles/tagsStyle"
-import { thStyle } from "./styles/thStyle"
+import { tagsWrapperStyle } from "./styles/tagsWrapperStyle"
 
 import type { FC } from "hono/jsx"
 import type { ImagesDataBase } from "module-images-db/src"
@@ -17,45 +19,36 @@ export const ImageInfo: FC<Props> = (props) => {
   const dateHref = getHref({ date, id: "PhotoDateDetail" })
 
   return (
-    <table>
-      <tbody>
-        <tr>
-          <th className={thStyle}>
-            <LocationIcon />
-            Location
-          </th>
-          <td>
-            <a href={locationHref}>{area}</a>
-          </td>
-        </tr>
-        <tr>
-          <th className={thStyle}>
-            <DateIcon />
-            Date
-          </th>
-          <td>
-            <a href={dateHref}>{date}</a>
-          </td>
-        </tr>
-        <tr>
-          <th className={thStyle}>
-            <TagIcon />
-            Tags
-          </th>
-          <td>
-            <ul className={tagsStyle}>
-              {tags.map((tag) => {
-                const tagHref = getHref({ id: "PhotoTagDetail", tag })
-                return (
-                  <li>
-                    <a href={tagHref}>{tag}</a>
-                  </li>
-                )
-              })}
-            </ul>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <dl className={dlStyle}>
+      <dt className={dtStyle}>
+        <LocationIcon />
+      </dt>
+      <dd>
+        <a href={locationHref}>{area}</a>
+      </dd>
+
+      <dt className={dtStyle}>
+        <DateIcon />
+      </dt>
+      <dd>
+        <a href={dateHref}>{date}</a>
+      </dd>
+
+      <dt className={dtStyle}>
+        <TagIcon />
+      </dt>
+      <dd className={tagsWrapperStyle}>
+        <ul className={tagsStyle}>
+          {tags.map((tag) => {
+            const tagHref = getHref({ id: "PhotoTagDetail", tag })
+            return (
+              <li>
+                <a href={tagHref}>{tag}</a>
+              </li>
+            )
+          })}
+        </ul>
+      </dd>
+    </dl>
   )
 }
