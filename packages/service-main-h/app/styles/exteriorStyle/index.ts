@@ -1,6 +1,5 @@
 import { css } from "hono/css"
 
-import { ColorSchemaName } from "@shared/const/ColorSchemaName"
 import { Colors } from "@shared/styles/Colors"
 import { getLightDarkValue } from "@shared/utils/getLightDarkValue"
 
@@ -14,11 +13,11 @@ export const exteriorStyle = css`
 
     --secondary-background: ${getLightDarkValue(SECONDARY_BACKGROUND)};
 
-    &:has(input[name="${ColorSchemaName}"]:not(:checked)) {
+    @media (prefers-color-scheme: light) {
       color-scheme: light;
     }
 
-    &:has(input[name="${ColorSchemaName}"]:checked) {
+    @media (prefers-color-scheme: dark) {
       color-scheme: dark;
     }
   }
