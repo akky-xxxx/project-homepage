@@ -12,7 +12,7 @@ const filterPickKeys = ["date", "location", "tag"] satisfies PhotoGalleryFilterK
 export default createRoute((c) => {
   const filterQueries = pick(c.req.query(), filterPickKeys)
   const images = getFilteredImages(filterQueries)(ImagesDataBase)
-  return c.render(<PhotoGallery images={images} />, {
+  return c.render(<PhotoGallery filterQueries={filterQueries} images={images} />, {
     title: "Photo Gallery",
   })
 })
