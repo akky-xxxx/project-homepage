@@ -7,7 +7,7 @@ import { exteriorStyle } from "../styles/exteriorStyle"
 import { globalStyle } from "../styles/globalStyle"
 
 export default jsxRenderer((props) => {
-  const { children, exteriorMode, title } = props
+  const { children, title } = props
   return (
     <html lang="en">
       <head>
@@ -22,7 +22,7 @@ export default jsxRenderer((props) => {
         <Style>{cx(exteriorStyle, globalStyle)}</Style>
       </head>
       <body>
-        <Layout exteriorMode={exteriorMode}>{children}</Layout>
+        <Layout>{children}</Layout>
       </body>
     </html>
   )

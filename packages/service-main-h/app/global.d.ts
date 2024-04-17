@@ -3,11 +3,8 @@
 /* eslint-disable */
 import {} from 'hono'
 
-import type { ExteriorMode } from "@shared/types/ExteriorMode"
-
 type Head = {
   title?: string
-  exteriorMode: ExteriorMode
 }
 
 declare module 'hono' {
