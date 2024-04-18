@@ -13,6 +13,6 @@ export const rootStyle = css`
   transition: background-color 0.2s ease;
 
   ${MEDIA_PC} {
-    height: 100vh;
+    height: 100dvh;
   }
 `

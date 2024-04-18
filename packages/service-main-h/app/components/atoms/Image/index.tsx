@@ -16,5 +16,5 @@ export const Image: FC<Props> = (props) => {
 
 const imageStyle = css`
   margin-inline: auto;
-  max-height: calc(100vh - 130px);
+  max-height: calc(100dvh - 130px);
 `
