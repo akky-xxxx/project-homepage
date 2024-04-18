@@ -6,13 +6,18 @@ import { heading1Style } from "./styles/heading1Style"
 import { labelStyle } from "./styles/labelStyle"
 import { navigationStyle } from "./styles/navigationStyle"
 import { rootStyle } from "./styles/rootStyle"
+import { siteNameStyle } from "./styles/siteNameStyle"
 
 import type { FC } from "hono/jsx"
 
 export const SideColumn: FC = () => (
   <div className={rootStyle}>
     <header className={headerStyle}>
-      <h1 className={heading1Style}>akky-xxxx</h1>
+      <h1 className={heading1Style}>
+        <a className={siteNameStyle} href="/">
+          akky-xxxx
+        </a>
+      </h1>
     </header>
     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     <label className={labelStyle}>
