@@ -1,6 +1,6 @@
+import { Image } from "@atoms/Image"
 import { getHref } from "@shared/utils/getHref"
 
-import { Thumbnail } from "./components/Thumbnail"
 import { ulStyle } from "./styles/ulStyle"
 
 import type { FC } from "hono/jsx"
@@ -22,7 +22,7 @@ export const Images: FC<Props> = (props) => {
           <li key={imageId}>
             {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
             <a href={getHref({ id: "PhotoDetail", imageId })}>
-              <Thumbnail imageId={imageId} />
+              <Image isThumbnail imageId={imageId} />
             </a>
           </li>
         )
