@@ -1,7 +1,7 @@
 import { Image } from "@atoms/Image"
 import { getHref } from "@shared/utils/getHref"
+import { getQueries } from "@shared/utils/getQueries"
 
-import { getQueries } from "./modules/getQueries"
 import { ulStyle } from "./styles/ulStyle"
 
 import type { FilterQueries } from "@shared/types/FilterQueries"
