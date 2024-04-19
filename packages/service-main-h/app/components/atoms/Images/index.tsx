@@ -3,10 +3,12 @@ import { getHref } from "@shared/utils/getHref"
 
 import { ulStyle } from "./styles/ulStyle"
 
+import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 type Props = {
+  filterQueries?: FilterQueries
   images: ImagesDataBaseRecord[]
 }
 
