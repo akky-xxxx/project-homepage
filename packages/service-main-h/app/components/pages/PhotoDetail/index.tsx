@@ -9,7 +9,7 @@ import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesData
 
 type Props = ImagesDataBaseRecord
 
-export const Photo: FC<Props> = (props) => {
+export const PhotoDetail: FC<Props> = (props) => {
   const { area, date, imageId, tags } = props
   return (
     <div>
