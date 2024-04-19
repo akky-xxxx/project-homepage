@@ -23,7 +23,7 @@ export const PhotoGallery: FC<Props> = (props) => {
       <Conditions filterQueries={filterQueries} />
 
       <Block>
-        <Images images={images} />
+        <Images filterQueries={filterQueries} images={images} />
       </Block>
     </div>
   )
