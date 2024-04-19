@@ -3,7 +3,7 @@ import { ImagesDataBase } from "module-images-db/src"
 import { pick } from "remeda"
 
 import { PhotoGallery } from "../../components/pages/PhotoGallery"
-import { getFilteredImages } from "../../modules/photoGallery/getFilteredImages"
+import { getFilteredImages } from "../../shared/utils/getFilteredImages"
 
 import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
 
