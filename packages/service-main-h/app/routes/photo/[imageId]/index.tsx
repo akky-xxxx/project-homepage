@@ -21,5 +21,8 @@ export default createRoute((c) => {
     filteredImages[currentIndex - Sibling],
     filteredImages[currentIndex + Sibling],
   ] satisfies [ImagesDataBaseRecord, ImagesDataBaseRecord]
-  return c.render(<PhotoDetail {...imageInfo} filterQueries={filterQueries} siblingImages={siblingImages} />, { title: "Photo" })
+  return c.render(
+    <PhotoDetail {...imageInfo} filterQueries={filterQueries} siblingImages={siblingImages} />,
+    { title: "Photo" },
+  )
 })
