@@ -5,9 +5,9 @@ import { Image } from "app/components/atoms/Image"
 import { ImageInfo } from "./components/ImageInfo"
 
 import type { FC } from "hono/jsx"
-import type { ImagesDataBase } from "module-images-db/src"
+import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
-type Props = (typeof ImagesDataBase)[number]
+type Props = ImagesDataBaseRecord
 
 export const Photo: FC<Props> = (props) => {
   const { area, date, imageId, tags } = props

@@ -9,9 +9,9 @@ import { tagsStyle } from "./styles/tagsStyle"
 import { tagsWrapperStyle } from "./styles/tagsWrapperStyle"
 
 import type { FC } from "hono/jsx"
-import type { ImagesDataBase } from "module-images-db/src"
+import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
-type Props = Omit<(typeof ImagesDataBase)[number], "imageId">
+type Props = Omit<ImagesDataBaseRecord, "imageId">
 
 export const ImageInfo: FC<Props> = (props) => {
   const { area, date, tags } = props

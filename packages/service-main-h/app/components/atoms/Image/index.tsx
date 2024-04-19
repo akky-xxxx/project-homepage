@@ -2,13 +2,13 @@ import { imageStyle } from "./styles/imageStyle"
 import { thumbnailStyle } from "./styles/thumbnailStyle"
 
 import type { FC } from "hono/jsx"
-import type { ImagesDataBase } from "module-images-db/src"
+import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 const { VITE_IMAGE_HOST: IMAGE_HOST } = import.meta.env
 
 const Placeholder = "https://placehold.jp/1980x1320.png"
 
-type Props = Pick<(typeof ImagesDataBase)[number], "imageId"> & {
+type Props = Pick<ImagesDataBaseRecord, "imageId"> & {
   isThumbnail?: boolean
 }
 
