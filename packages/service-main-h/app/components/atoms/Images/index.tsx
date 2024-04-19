@@ -1,6 +1,7 @@
 import { Image } from "@atoms/Image"
 import { getHref } from "@shared/utils/getHref"
 
+import { getQueries } from "./modules/getQueries"
 import { ulStyle } from "./styles/ulStyle"
 
 import type { FilterQueries } from "@shared/types/FilterQueries"
@@ -13,17 +14,18 @@ type Props = {
 }
 
 export const Images: FC<Props> = (props) => {
-  const { images } = props
+  const { filterQueries, images } = props
 
   return (
     <ul className={ulStyle}>
       {images.map((imageInfo) => {
         const { imageId } = imageInfo
+        const href = [getHref({ id: "PhotoDetail", imageId }), getQueries(filterQueries)].join("?")
 
         return (
           <li key={imageId}>
             {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
-            <a href={getHref({ id: "PhotoDetail", imageId })}>
+            <a href={href}>
               <Image isThumbnail imageId={imageId} />
             </a>
           </li>
