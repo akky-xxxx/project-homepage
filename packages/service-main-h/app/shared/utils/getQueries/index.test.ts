@@ -19,7 +19,7 @@ describe("getQueries", () => {
       },
       output: "date=2024-01-01&location=神奈川県&tag=タグ",
     },
-  ] as const)("引数が「$input」の時、「$outout」を返す", ({ input, output }) => {
+  ] as const)("引数が「$input」の時、「$output」を返す", ({ input, output }) => {
     expect(getQueries(input)).toBe(output)
   })
 })
