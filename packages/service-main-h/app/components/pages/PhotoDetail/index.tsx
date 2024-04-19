@@ -7,7 +7,9 @@ import { ImageInfo } from "./components/ImageInfo"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
-type Props = ImagesDataBaseRecord
+type Props = ImagesDataBaseRecord & {
+  siblingImages: [ImagesDataBaseRecord, ImagesDataBaseRecord]
+}
 
 export const PhotoDetail: FC<Props> = (props) => {
   const { area, date, imageId, tags } = props
