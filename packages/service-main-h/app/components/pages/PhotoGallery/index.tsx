@@ -4,13 +4,13 @@ import { Images } from "@atoms/Images"
 
 import { Conditions } from "./components/Conditions"
 
-import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
+import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 type Props = {
   images: ImagesDataBaseRecord[]
-  filterQueries: Partial<Record<PhotoGalleryFilterKey, string>>
+  filterQueries: FilterQueries
 }
 
 export const PhotoGallery: FC<Props> = (props) => {
