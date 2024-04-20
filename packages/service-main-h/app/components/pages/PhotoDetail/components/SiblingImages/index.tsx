@@ -24,11 +24,12 @@ export const SiblingImages: FC<Props> = (props) => {
   // eslint-disable-next-line react/jsx-fragments, react/jsx-no-useless-fragment
   if (!siblingImages.filter(Boolean).length) return <></>
   const queries = getQueries(filterQueries)
+  const heading3Text = queries ? "Related" : "Others"
 
   return (
     <section>
       <Block>
-        <Heading3>Related</Heading3>
+        <Heading3>{heading3Text}</Heading3>
       </Block>
       <Block>
         <ul className={ulStyle}>
