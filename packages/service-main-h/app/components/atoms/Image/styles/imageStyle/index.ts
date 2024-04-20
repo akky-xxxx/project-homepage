@@ -1,6 +1,6 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-export const imageStyle = css`
-  margin-inline: auto;
-  max-height: calc(100dvh - 130px);
-`
+export const imageStyle = css({
+  marginInline: "auto",
+  maxHeight: "calc(100dvh - 130px)",
+})
