@@ -7,19 +7,13 @@ import type { Child } from "hono/jsx"
 
 export const getConditionData = (filterQueries: FilterQueries) => {
   const { date, location, tag } = filterQueries
-  const baseArray: Child | string = []
-
-  if (location) {
-    baseArray.push([<LocationIcon />, location])
-  }
-
-  if (date) {
-    baseArray.push([<DateIcon />, date])
-  }
-
-  if (tag) {
-    baseArray.push([<TagIcon />, tag])
-  }
-
-  return baseArray.flat()
+  return (
+    [
+      location && [<LocationIcon />, location],
+      date && [<DateIcon />, date],
+      tag && [<TagIcon />, tag],
+    ] satisfies Child | string
+  )
+    .filter(Boolean)
+    .flat()
 }
