@@ -1,37 +1,27 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { Double } from "@shared/const/Double"
-import { MediaQueries } from "@shared/styles/MediaQueries"
-import { Spaces } from "@shared/styles/Spaces"
+export const navigationStyle = css({
+  _pc: {
+    marginTop: "{spacing.s20}",
+  },
 
-import { MenuIconSize } from "../../const/MenuIconSize"
-import { ZIndexes } from "../../const/ZIndexes"
+  _sp: {
+    backgroundColor: "var(--primary-background)",
+    bottom: "calc({spacing.s12} * 2 + {sizes.menuIcon})",
+    boxShadow: "0 5px 5px var(--primary-shadow)",
+    left: 0,
+    overflowY: "auto",
+    position: "fixed",
+    right: 0,
+    top: 0,
+    zIndex: "{zIndex.sideColumn.navigation}",
 
-const { SPACE12, SPACE20 } = Spaces
-const { MEDIA_PC, MEDIA_SP } = MediaQueries
+    "label:has(:not(:checked)) + &": {
+      display: "none",
+    },
 
-export const navigationStyle = css`
-  ${MEDIA_PC} {
-    margin-top: ${SPACE20}rem;
-  }
-
-  ${MEDIA_SP} {
-    background-color: var(--primary-background);
-    bottom: calc(${SPACE12 * Double}rem + ${MenuIconSize}px);
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2); /* TODO: 定数定義して置き換える */
-    left: 0;
-    overflow-y: auto;
-    position: fixed;
-    right: 0;
-    top: 0;
-    z-index: ${ZIndexes.NAVIGATION};
-
-    label:has(:not(:checked)) + & {
-      display: none;
-    }
-
-    label:has(:checked) + & {
-      display: block;
-    }
-  }
-`
+    "label:has(:checked) + &": {
+      display: "block",
+    },
+  },
+})

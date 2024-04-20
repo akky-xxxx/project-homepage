@@ -1,21 +1,16 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { MediaQueries } from "@shared/styles/MediaQueries"
-import { Spaces } from "@shared/styles/Spaces"
+/* eslint-disable sonarjs/no-duplicate-string */
+export const headerStyle = css({
+  columnGap: "{spacing.s12}",
+  display: "flex",
 
-const { SPACE12 } = Spaces
-const { MEDIA_PC, MEDIA_SP } = MediaQueries
+  _pc: {
+    justifyContent: "center",
+  },
 
-export const headerStyle = css`
-  column-gap: ${SPACE12}rem;
-  display: flex;
-
-  ${MEDIA_PC} {
-    justify-content: center;
-  }
-
-  ${MEDIA_SP} {
-    justify-content: space-between;
-    padding-inline: ${SPACE12}rem;
-  }
-`
+  _sp: {
+    justifyContent: "space-between",
+    paddingInline: "{spacing.s12}",
+  },
+})

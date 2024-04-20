@@ -1,33 +1,21 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { MediaQueries } from "@shared/styles/MediaQueries"
-import { Spaces } from "@shared/styles/Spaces"
+export const labelStyle = css({
+  backgroundColor: "var(--secondary-background)",
+  borderRadius: "4px",
+  bottom: "{spacing.s12}",
+  height: "{sizes.menuIcon}",
+  placeContent: "center",
+  position: "fixed",
+  right: "{spacing.s12}",
+  width: "{sizes.menuIcon}",
+  zIndex: "{zIndex.sideColumn.label}",
 
-import { MenuIconSize } from "../../const/MenuIconSize"
-import { ZIndexes } from "../../const/ZIndexes"
+  _pc: {
+    display: "none",
+  },
 
-const { MEDIA_PC, MEDIA_SP } = MediaQueries
-const { SPACE12 } = Spaces
-
-export const labelStyle = css`
-  ${MEDIA_PC} {
-    display: none;
-  }
-
-  ${MEDIA_SP} {
-    background-color: var(--secondary-background);
-    border-radius: 4px;
-    bottom: ${SPACE12}rem;
-    display: grid;
-    height: ${MenuIconSize}px;
-    place-content: center;
-    position: fixed;
-    right: ${SPACE12}rem;
-    width: ${MenuIconSize}px;
-    z-index: ${ZIndexes.LABEL};
-
-    & > input {
-      display: none;
-    }
-  }
-`
+  _sp: {
+    display: "grid",
+  },
+})

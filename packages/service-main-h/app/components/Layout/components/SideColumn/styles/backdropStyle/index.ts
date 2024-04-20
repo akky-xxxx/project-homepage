@@ -1,20 +1,13 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { Double } from "@shared/const/Double"
-import { Spaces } from "@shared/styles/Spaces"
-
-import { MenuIconSize } from "../../const/MenuIconSize"
-
-const { SPACE12 } = Spaces
-
-export const backdropStyle = css`
-  label:has(:checked) ~ & {
-    background-color: var(--primary-background);
-    bottom: 0;
-    height: calc(${SPACE12 * Double}rem + ${MenuIconSize}px);
-    left: 0;
-    opacity: 0.8;
-    position: fixed;
-    right: 0;
-  }
-`
+export const backdropStyle = css({
+  "label:has(:checked) ~ &": {
+    backgroundColor: "var(--primary-background)",
+    bottom: 0,
+    height: "calc({spacing.s12} * 2 + {sizes.menuIcon})",
+    left: 0,
+    opacity: 0.8,
+    position: "fixed",
+    right: 0,
+  },
+})

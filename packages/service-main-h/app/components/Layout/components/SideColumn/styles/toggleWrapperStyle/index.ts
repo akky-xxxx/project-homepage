@@ -1,7 +1,7 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-export const toggleWrapperStyle = css`
-  display: grid;
-  place-content: center;
-  position: relative;
-`
+export const toggleWrapperStyle = css({
+  display: "grid",
+  placeContent: "center",
+  position: "relative",
+})

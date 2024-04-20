@@ -3,6 +3,7 @@ import { Menu } from "./components/Menu"
 import { backdropStyle } from "./styles/backdropStyle"
 import { headerStyle } from "./styles/headerStyle"
 import { heading1Style } from "./styles/heading1Style"
+import { inputStyle } from "./styles/inputStyle"
 import { labelStyle } from "./styles/labelStyle"
 import { navigationStyle } from "./styles/navigationStyle"
 import { rootStyle } from "./styles/rootStyle"
@@ -21,7 +22,7 @@ export const SideColumn: FC = () => (
     </header>
     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     <label className={labelStyle}>
-      <input type="checkbox" />
+      <input className={inputStyle} type="checkbox" />
       <Hamburger />
     </label>
     <nav className={navigationStyle}>

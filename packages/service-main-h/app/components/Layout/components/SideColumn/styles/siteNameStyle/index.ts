@@ -1,10 +1,10 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-export const siteNameStyle = css`
-  color: var(--primary-red);
-  text-decoration: none;
+export const siteNameStyle = css({
+  color: "var(--primary-red)",
+  textDecoration: "none",
 
-  &:visited {
-    color: var(--primary-red);
-  }
-`
+  "&:visited": {
+    color: "var(--primary-red)",
+  },
+})
