@@ -1,12 +1,6 @@
-import { css } from "hono/css"
-
-import { MediaQueries } from "@shared/styles/MediaQueries"
-import { Spaces } from "@shared/styles/Spaces"
+import { css } from "@panda/css"
 
 import type { FcWithChildren } from "@shared/types/FcWithChildren"
-
-const { MEDIA_PC, MEDIA_SP } = MediaQueries
-const { SPACE04, SPACE08, SPACE12 } = Spaces
 
 export const Heading2: FcWithChildren = (props) => {
   const { children } = props
@@ -14,15 +8,15 @@ export const Heading2: FcWithChildren = (props) => {
   return <h2 className={rootStyle}>{children}</h2>
 }
 
-const rootStyle = css`
-  border-bottom: 0.2rem solid var(--primary-red);
+const rootStyle = css({
+  borderBottom: "2px solid var(--primary-red)",
 
-  ${MEDIA_PC} {
-    padding-bottom: ${SPACE12}rem;
-  }
+  _pc: {
+    paddingBottom: "{spacing.s12}",
+  },
 
-  ${MEDIA_SP} {
-    padding-bottom: ${SPACE04}rem;
-    padding-inline: ${SPACE08}rem;
-  }
-`
+  _sp: {
+    paddingBottom: "{spacing.s04}",
+    paddingInline: "{spacing.s08}",
+  },
+})

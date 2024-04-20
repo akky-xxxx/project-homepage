@@ -1,10 +1,6 @@
-import { css } from "hono/css"
-
-import { Spaces } from "@shared/styles/Spaces"
+import { css } from "@panda/css"
 
 import type { FcWithChildren } from "@shared/types/FcWithChildren"
-
-const { SPACE08 } = Spaces
 
 export const Heading3: FcWithChildren = (props) => {
   const { children } = props
@@ -12,9 +8,7 @@ export const Heading3: FcWithChildren = (props) => {
   return <h3 className={rootStyle}>{children}</h3>
 }
 
-const rootStyle = css`
-  border-left-style: solid;
-  border-left-color: var(--primary-red);
-  border-left-width: 1rem;
-  padding-left: ${SPACE08}rem;
-`
+const rootStyle = css({
+  borderLeft: "10px solid var(--primary-red)",
+  paddingLeft: "{spacing.s08}",
+})

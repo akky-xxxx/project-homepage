@@ -1,11 +1,7 @@
-import { css } from "hono/css"
-
 import { NewWindowIcon } from "@icons/NewWindowIcon"
-import { Spaces } from "@shared/styles/Spaces"
+import { css } from "@panda/css"
 
 import type { FcWithChildren } from "@shared/types/FcWithChildren"
-
-const { SPACE04 } = Spaces
 
 type Props = {
   href: string
@@ -24,7 +20,7 @@ export const ExternalLink: FcWithChildren<Props> = (props) => {
   )
 }
 
-const rootStyle = css`
-  display: inline-flex;
-  column-gap: ${SPACE04}rem;
-`
+const rootStyle = css({
+  columnGap: "{spacing.s04}",
+  display: "inline-flex",
+})
