@@ -7,11 +7,13 @@ const { SPACE20 } = Spaces
 export const ulStyle = css`
   display: flex;
   gap: ${SPACE20}rem;
-  justify-content: space-around;
-  place-content: center;
+  justify-content: space-between;
 
-  & li,
+  & li {
+    max-width: 50%;
+  }
+
   & img {
-    width: 100%;
+    max-width: 100%;
   }
 `
