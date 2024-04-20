@@ -1,33 +1,13 @@
 import { Block } from "@atoms/Block"
-import { DateIcon } from "@icons/DateIcon"
-import { LocationIcon } from "@icons/LocationIcon"
-import { TagIcon } from "@icons/TagIcon"
 import { css } from "@panda/css"
 
-import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
-import type { FC, Child } from "hono/jsx"
+import { getConditionData } from "./modules/getConditionData"
 
-const getConditionData = (filterQueries: Props["filterQueries"]) => {
-  const { date, location, tag } = filterQueries
-  const baseArray: Child | string = []
-
-  if (location) {
-    baseArray.push([<LocationIcon />, location])
-  }
-
-  if (date) {
-    baseArray.push([<DateIcon />, date])
-  }
-
-  if (tag) {
-    baseArray.push([<TagIcon />, tag])
-  }
-
-  return baseArray.flat()
-}
+import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { FC } from "hono/jsx"
 
 type Props = {
-  filterQueries: Partial<Record<PhotoGalleryFilterKey, string>>
+  filterQueries: FilterQueries
 }
 
 export const Conditions: FC<Props> = (props) => {
