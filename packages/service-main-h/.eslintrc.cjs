@@ -10,7 +10,7 @@ module.exports = {
     "./config/eslint/strictCheck/index.cjs",
   ],
 
-  ignorePatterns: ["**/dist/**"],
+  ignorePatterns: ["**/dist/**", "**/libs/**"],
   parserOptions: {
     project: ["./tsconfig.json"],
     tsconfigRootDir: __dirname,

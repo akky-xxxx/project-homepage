@@ -1,4 +1,5 @@
 hono
 honox
+pandacss
 remeda
 sonarjs

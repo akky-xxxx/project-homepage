@@ -6,6 +6,7 @@
       "@atoms/*": ["./app/components/atoms/*"],
       "@icons/*": ["./app/components/icons/*"],
       "@islands/*": ["./app/islands/*"],
+      "@panda/*": ["./app/libs/styled-system/*"],
       "@shared/*": ["./app/shared/*"],
     },
     "types": [

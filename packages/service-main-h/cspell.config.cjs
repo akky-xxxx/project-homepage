@@ -1,6 +1,7 @@
 module.exports = {
   version: "0.2",
   language: "en",
+  ignorePaths: ["**/libs/**"],
   dictionaries: ["app", "colors", "packages", "web"],
   dictionaryDefinitions: [
     {
