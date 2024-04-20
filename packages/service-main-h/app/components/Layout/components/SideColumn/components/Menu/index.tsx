@@ -14,7 +14,7 @@ import { Accordion } from "./components/Accordion"
 import { Items } from "./components/Items"
 import { anchorStyle } from "./components/Items/styles/anchorStyle"
 import { itemStyle } from "./components/styles/itemStyle"
-import { menuStyle } from "./styles/menuStyle"
+import { rootStyle } from "./styles/rootStyle"
 
 import type { FC } from "hono/jsx"
 
@@ -37,7 +37,7 @@ export const Menu: FC = () => {
     item: month,
   }))
   return (
-    <menu className={menuStyle} type="toolbar">
+    <menu className={rootStyle} type="toolbar">
       <li>
         <Accordion isOpen icon={<PhotoIcon {...IconProps} />} title="Photo Gallery">
           <ul>

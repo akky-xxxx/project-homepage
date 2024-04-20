@@ -1,6 +1,5 @@
 import { css } from "@panda/css"
 
-// TODO: 名前を rootStyle に変える
-export const menuStyle = css({
+export const rootStyle = css({
   borderBottom: "1px solid var(--primary-color)",
 })
