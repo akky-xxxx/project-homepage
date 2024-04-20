@@ -1,13 +1,5 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { Spaces } from "@shared/styles/Spaces"
-
-const { SPACE20 } = Spaces
-
-export const ulStyle = css`
-  padding-left: ${SPACE20}rem;
-
-  li {
-    list-style: initial;
-  }
-`
+export const ulStyle = css({
+  paddingLeft: "{spacing.s20}",
+})

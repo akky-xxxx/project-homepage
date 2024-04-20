@@ -4,6 +4,7 @@ import { Heading2 } from "@atoms/Heading2"
 import { Heading3 } from "@atoms/Heading3"
 import { Section } from "@atoms/Section"
 
+import { liStyle } from "./styles/liStyle"
 import { ulStyle } from "./styles/ulStyle"
 
 import type { FC } from "hono/jsx"
@@ -57,9 +58,9 @@ export const Profile: FC = () => (
 
       <Block>
         <ul className={ulStyle}>
-          <li>スノーボード</li>
-          <li>カメラ</li>
-          <li>酒</li>
+          <li className={liStyle}>スノーボード</li>
+          <li className={liStyle}>カメラ</li>
+          <li className={liStyle}>酒</li>
         </ul>
       </Block>
     </Section>
