@@ -1,21 +1,16 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { MediaQueries } from "@shared/styles/MediaQueries"
-import { Spaces } from "@shared/styles/Spaces"
+/* eslint-disable sonarjs/no-duplicate-string */
+export const mainStyle = css({
+  overflowY: "auto",
 
-const { MEDIA_PC, MEDIA_SP } = MediaQueries
+  _pc: {
+    padding: "{spacing.s20}",
+  },
 
-const HeaderSize = 81
-
-export const mainStyle = css`
-  overflow-y: auto;
-
-  ${MEDIA_PC} {
-    padding: ${Spaces.SPACE20}rem;
-  }
-
-  ${MEDIA_SP} {
-    height: calc(100dvh - ${HeaderSize}px);
-    padding-block: ${Spaces.SPACE20}rem;
-  }
-`
+  _sp: {
+    height: "calc(100dvh - 81px)",
+    paddingBottom: "{spacing.s20}",
+    paddingTop: "{spacing.s20}",
+  },
+})

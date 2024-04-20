@@ -1,14 +1,10 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { MediaQueries } from "@shared/styles/MediaQueries"
+export const rootStyle = css({
+  display: "grid",
 
-const { MEDIA_PC } = MediaQueries
-
-export const rootStyle = css`
-  display: grid;
-
-  ${MEDIA_PC} {
-    grid-template-columns: 30rem 1fr;
-    height: 100dvh;
-  }
-`
+  _pc: {
+    gridTemplateColumns: "30rem 1fr",
+    height: "100dvh",
+  },
+})
