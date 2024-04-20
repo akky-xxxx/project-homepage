@@ -1,9 +1,8 @@
-import { css } from "hono/css"
-
 import { Block } from "@atoms/Block"
 import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
+import { css } from "@panda/css"
 
 import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
 import type { FC, Child } from "hono/jsx"
@@ -48,10 +47,10 @@ export const Conditions: FC<Props> = (props) => {
   )
 }
 
-const conditionStyle = css`
-  display: inline-flex;
-  flex-wrap: wrap;
-  column-gap: 4px;
-  align-items: center;
-  fill: var(--primary-color);
-`
+const conditionStyle = css({
+  alignItems: "center",
+  columnGap: "{spacing.s04}",
+  display: "inline-flex",
+  fill: "var(--primary-color)",
+  flexWrap: "wrap",
+})
