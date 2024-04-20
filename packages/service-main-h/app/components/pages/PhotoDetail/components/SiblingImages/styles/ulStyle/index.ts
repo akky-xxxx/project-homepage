@@ -1,19 +1,7 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-import { Spaces } from "@shared/styles/Spaces"
-
-const { SPACE20 } = Spaces
-
-export const ulStyle = css`
-  display: flex;
-  gap: ${SPACE20}rem;
-  justify-content: space-between;
-
-  & li {
-    max-width: 50%;
-  }
-
-  & img {
-    max-width: 100%;
-  }
-`
+export const ulStyle = css({
+  display: "flex",
+  gap: "{spacing.s20}",
+  justifyContent: "space-between",
+})

@@ -4,6 +4,7 @@ import { Image } from "@atoms/Image"
 import { getHref } from "@shared/utils/getHref"
 import { getQueries } from "@shared/utils/getQueries"
 
+import { liStyle } from "./styles/liStyle"
 import { ulStyle } from "./styles/ulStyle"
 
 import type { FilterQueries } from "@shared/types/FilterQueries"
@@ -34,12 +35,12 @@ export const SiblingImages: FC<Props> = (props) => {
       <Block>
         <ul className={ulStyle}>
           {siblingImages.map((imageInfo) => {
-            if (!imageInfo) return <li />
+            if (!imageInfo) return <li className={liStyle} />
             const { imageId } = imageInfo
             const href = [getHref({ id: "PhotoDetail", imageId }), queries].join("?")
 
             return (
-              <li key={imageId}>
+              <li key={imageId} className={liStyle}>
                 {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                 <a href={href}>
                   <Image isThumbnail imageId={imageId} />
