@@ -1,7 +1,7 @@
-import { css } from "hono/css"
+import { css } from "@panda/css"
 
-export const dtStyle = css`
-  align-items: center;
-  display: flex;
-  fill: var(--primary-color);
-`
+export const dtStyle = css({
+  alignItems: "center",
+  display: "flex",
+  fill: "var(--primary-color)",
+})
