@@ -1,87 +1,84 @@
-import { css } from "hono/css"
+import { css, cx } from "@panda/css"
 
 import type { FC } from "hono/jsx"
 
 export const Hamburger: FC = () => (
-  <div className={root}>
-    <div />
-    <div />
-    <div />
-    <div />
-    <div />
+  <div className={rootStyle}>
+    <div className={cx(barStyle, withoutCenterBarStyle, firstBarStyle)} />
+    <div className={cx(barStyle, withoutCenterBarStyle, secondBarStyle)} />
+    <div className={cx(barStyle, thirdBarStyle)} />
+    <div className={cx(barStyle, withoutCenterBarStyle, fourthBarStyle)} />
+    <div className={cx(barStyle, withoutCenterBarStyle, fifthBarStyle)} />
   </div>
 )
 
-const root = css`
-  height: 25px;
-  position: relative;
-  width: 25px;
+const rootStyle = css({
+  height: "25px",
+  position: "relative",
+  width: "25px",
+})
 
-  & > div {
-    background-color: var(--primary-color);
-    height: 4px;
-    position: absolute;
-    transition: transform 0.2s ease;
+const barStyle = css({
+  backgroundColor: "var(--primary-color)",
+  height: "4px",
+  position: "absolute",
+  transition: "transform {animations.02}",
+})
 
-    &:nth-of-type(1),
-    &:nth-of-type(2),
-    &:nth-of-type(4),
-    &:nth-of-type(5) {
-      width: 75%;
-      border-radius: 9999px;
-    }
+const withoutCenterBarStyle = css({
+  borderRadius: "9999px",
+  width: "75%",
+})
 
-    &:nth-of-type(1) {
-      left: 0;
-      top: 1px;
-      transform-origin: top left;
+const firstBarStyle = css({
+  left: 0,
+  top: "1px",
+  transformOrigin: "top left",
 
-      :checked + div & {
-        transform: rotate(45deg) translateY(-3px);
-      }
-    }
+  ":checked + div &": {
+    transform: "rotate(45deg) translateY(-3px)",
+  },
+})
 
-    &:nth-of-type(2) {
-      right: 0;
-      top: 1px;
-      transform-origin: top right;
+const secondBarStyle = css({
+  right: 0,
+  top: "1px",
+  transformOrigin: "top right",
 
-      :checked + div & {
-        transform: rotate(-45deg) translateY(-3px);
-      }
-    }
+  ":checked + div &": {
+    transform: "rotate(-45deg) translateY(-3px)",
+  },
+})
 
-    &:nth-of-type(3) {
-      border-radius: 9999px;
-      bottom: 0;
-      left: 0;
-      margin-block: auto;
-      right: 0;
-      top: 0;
+const thirdBarStyle = css({
+  borderRadius: "9999px",
+  bottom: 0,
+  left: 0,
+  marginBlock: "auto",
+  right: 0,
+  top: 0,
 
-      :checked + div & {
-        transform: scaleX(0);
-      }
-    }
+  ":checked + div &": {
+    transform: "scaleX(0)",
+  },
+})
 
-    &:nth-of-type(4) {
-      bottom: 1px;
-      left: 0;
-      transform-origin: bottom left;
+const fourthBarStyle = css({
+  bottom: "1px",
+  left: 0,
+  transformOrigin: "bottom left",
 
-      :checked + div & {
-        transform: rotate(-45deg) translateY(3px);
-      }
-    }
+  ":checked + div &": {
+    transform: "rotate(-45deg) translateY(3px)",
+  },
+})
 
-    &:nth-of-type(5) {
-      bottom: 1px;
-      right: 0;
-      transform-origin: bottom right;
+const fifthBarStyle = css({
+  bottom: "1px",
+  right: 0,
+  transformOrigin: "bottom right",
 
-      :checked + div & {
-        transform: rotate(45deg) translateY(3px);
-      }
-    }
-  }
-`
+  ":checked + div &": {
+    transform: "rotate(45deg) translateY(3px)",
+  },
+})
