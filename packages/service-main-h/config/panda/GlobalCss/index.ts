@@ -17,7 +17,8 @@ export const GlobalCss = defineGlobalStyles({
   body: {
     backgroundColor: "var(--primary-background)",
     color: "var(--primary-color)",
-    fontFamily: '"Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif',
+    fontFamily:
+      '"Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif',
     fontSize: "1.6rem",
     overflowY: "hidden",
     transitionDuration: "0.2s",
