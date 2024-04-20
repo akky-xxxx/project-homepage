@@ -1,10 +1,7 @@
-import { cx, Style } from "hono/css"
 import { jsxRenderer } from "hono/jsx-renderer"
 import { Script } from "honox/server"
 
 import { Layout } from "../components/Layout"
-import { exteriorStyle } from "../styles/exteriorStyle"
-import { globalStyle } from "../styles/globalStyle"
 
 export default jsxRenderer((props) => {
   const { children, title } = props
@@ -18,8 +15,8 @@ export default jsxRenderer((props) => {
           href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css"
           rel="stylesheet"
         />
+        <link href="/app/index.css" rel="stylesheet" />
         <Script async src="/app/client.ts" />
-        <Style>{cx(exteriorStyle, globalStyle)}</Style>
       </head>
       <body>
         <Layout>{children}</Layout>
