@@ -5,9 +5,4 @@ export const SizeToken = {
   menuIcon: {
     value: "45px",
   },
-  thumbnail: {
-    width: {
-      value: "30rem",
-    },
-  },
 } as const satisfies Tokens["sizes"]
