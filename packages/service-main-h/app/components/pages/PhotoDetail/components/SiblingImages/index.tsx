@@ -23,6 +23,7 @@ export const SiblingImages: FC<Props> = (props) => {
   // TODO: early return に適した値が型上ないための回避策
   // eslint-disable-next-line react/jsx-fragments, react/jsx-no-useless-fragment
   if (!siblingImages.filter(Boolean).length) return <></>
+  const queries = getQueries(filterQueries)
 
   return (
     <section>
@@ -34,9 +35,7 @@ export const SiblingImages: FC<Props> = (props) => {
           {siblingImages.map((imageInfo) => {
             if (!imageInfo) return <li />
             const { imageId } = imageInfo
-            const href = [getHref({ id: "PhotoDetail", imageId }), getQueries(filterQueries)].join(
-              "?",
-            )
+            const href = [getHref({ id: "PhotoDetail", imageId }), queries].join("?")
 
             return (
               <li key={imageId}>
