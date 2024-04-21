@@ -38,20 +38,6 @@ export const Profile: FC = () => (
 
     <Section>
       <Block>
-        <Heading3>About this site</Heading3>
-      </Block>
-
-      <Block>
-        <p>
-          思いのままに作っているので、クロスブラウザとかは考慮してません
-          <br />
-          Chrome の最新版ならだいたい見れると思います
-        </p>
-      </Block>
-    </Section>
-
-    <Section>
-      <Block>
         <Heading3>Hobby</Heading3>
       </Block>
 
