@@ -2,7 +2,9 @@
   "name": "service-main-h",
   "version": "0.0.0",
   "scripts": {
-    "build": "vite build --mode client && vite build",
+    "build": "run-s build:vite build:panda",
+    "build:panda": "panda cssgen --minify --outfile ./dist/static/index.css",
+    "build:vite": "vite build --mode client && vite build",
     "check-code": "npm-run-all -p lint spell-check type-check -c",
     "deploy": "$npm_execpath run build && wrangler pages deploy ./dist",
     "dev": "vite",
@@ -22,7 +24,7 @@
     "lint:ts": "run-s lint-ts-by-prettier lint-ts-by-eslint",
     "log": "wrangler pages deployment tail",
     "prepare": "panda codegen",
-    "preview": "wrangler pages dev ./dist",
+    "preview": "$npm_execpath run build && wrangler pages dev ./dist",
     "spell-check": "cspell \"./{config,app}/**\" --no-progress",
     "type-check": "tsc"
   },
