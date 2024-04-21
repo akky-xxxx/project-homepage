@@ -11034,7 +11034,7 @@ module-definition@^5.0.1:
     ast-module-types "^5.0.0"
     node-source-walk "^6.0.1"
 
-"module-images-db@module-images-db", "module-images-db@packages/module-images-db":
+"module-images-db@packages/module-images-db":
   version "workspace:packages/module-images-db"
   resolved "workspace:packages/module-images-db"
   devDependencies:
@@ -12999,7 +12999,7 @@ serve-static@1.15.0:
     hono "^4.2.2"
     honox "^0.1.9"
     js-cookie "3.0.5"
-    module-images-db "module-images-db"
+    module-images-db "packages/module-images-db"
 
 set-cookie-parser@^2.4.6:
   version "2.6.0"
