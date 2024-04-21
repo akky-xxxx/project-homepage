@@ -16,8 +16,8 @@ export default createRoute((c) => {
   const imageInfo = ImagesDataBase.find((record) => record.imageId === c.req.param("imageId"))
   if (!imageInfo) return c.notFound()
   const filterQueries = pick(c.req.query(), filterPickKeys)
-  const { date, area } = imageInfo
-  const siblingImages = getSiblingImages(imageInfo.imageId, ImagesDataBase, filterQueries)
+  const { date, imageId, area } = imageInfo
+  const siblingImages = getSiblingImages(imageId, ImagesDataBase, filterQueries)
 
   return c.render(
     <PhotoDetail {...imageInfo} filterQueries={filterQueries} siblingImages={siblingImages} />,
