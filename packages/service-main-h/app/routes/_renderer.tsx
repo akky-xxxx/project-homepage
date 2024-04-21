@@ -5,6 +5,10 @@ import { Layout } from "../components/Layout"
 
 export default jsxRenderer((props) => {
   const { children, title } = props
+  // @ts-expect-error: dot access と bracket access のルールがコンフリしてる
+  const cssDirectory = import.meta.env.PROD ? "static" : "app"
+  const cssHref = `/${cssDirectory}/index.css`
+
   return (
     <html lang="en">
       <head>
@@ -15,7 +19,7 @@ export default jsxRenderer((props) => {
           href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css"
           rel="stylesheet"
         />
-        <link href="/app/index.css" rel="stylesheet" />
+        <link href={cssHref} rel="stylesheet" />
         <Script async src="/app/client.ts" />
       </head>
       <body>
