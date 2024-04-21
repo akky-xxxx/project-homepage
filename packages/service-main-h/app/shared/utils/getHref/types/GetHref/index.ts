@@ -11,6 +11,9 @@ type Props =
   | {
       id: "PhotoGallery"
     }
+  | {
+      id: "Profile"
+    }
   | (Record<Extract<PhotoGalleryFilterKey, "date">, string> & {
       id: "PhotoDateDetail"
     })

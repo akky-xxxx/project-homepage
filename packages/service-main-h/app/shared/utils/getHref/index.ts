@@ -29,6 +29,9 @@ export const getHref: GetHref = (props) => {
     case "PhotoGallery": {
       return "/photo-gallery"
     }
+    case "Profile": {
+      return "/profile"
+    }
     default: {
       return unreachable(id)
     }
