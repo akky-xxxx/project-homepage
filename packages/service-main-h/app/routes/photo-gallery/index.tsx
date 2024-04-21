@@ -13,6 +13,7 @@ export default createRoute((c) => {
   const filterQueries = pick(c.req.query(), filterPickKeys)
   const images = getFilteredImages(filterQueries)(ImagesDataBase)
   return c.render(<PhotoGallery filterQueries={filterQueries} images={images} />, {
+    description: "趣味で撮った写真一覧",
     title: "Photo Gallery",
   })
 })

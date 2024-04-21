@@ -4,6 +4,7 @@
 import {} from 'hono'
 
 type Head = {
+  description: string
   title?: string
 }
 
