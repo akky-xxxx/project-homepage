@@ -1,12 +1,16 @@
+import { format } from "@formkit/tempo"
 import { css } from "hono/css"
 
 import { Block } from "@atoms/Block"
 import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
+import { TempoFormats } from "@shared/const/TempoFormats"
 
 import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
 import type { FC, Child } from "hono/jsx"
+
+const FullDigitDate = 10
 
 const getConditionData = (filterQueries: Props["filterQueries"]) => {
   const { date, location, tag } = filterQueries
@@ -17,7 +21,8 @@ const getConditionData = (filterQueries: Props["filterQueries"]) => {
   }
 
   if (date) {
-    baseArray.push([<DateIcon />, date])
+    const formatName = date.length === FullDigitDate ? "YYYY年M月D日" : "YYYY年M月"
+    baseArray.push([<DateIcon />, format(date, TempoFormats[formatName])])
   }
 
   if (tag) {

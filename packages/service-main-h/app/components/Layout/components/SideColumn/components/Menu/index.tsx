@@ -1,3 +1,4 @@
+import { format } from "@formkit/tempo"
 import { cx } from "hono/css"
 import { Months, Locations, Tags } from "module-images-db/src"
 
@@ -9,7 +10,9 @@ import { LocationIcon } from "@icons/LocationIcon"
 import { PhotoIcon } from "@icons/PhotoIcon"
 import { ProfileIcon } from "@icons/ProfileIcon"
 import { TagIcon } from "@icons/TagIcon"
+import { TempoFormats } from "@shared/const/TempoFormats"
 import { getHref } from "@shared/utils/getHref"
+
 
 import { Accordion } from "./components/Accordion"
 import { Items } from "./components/Items"
@@ -35,7 +38,7 @@ export const Menu: FC = () => {
   }))
   const monthItems = Months.map((month) => ({
     href: getHref({ date: month, id: "PhotoDateDetail" }),
-    item: month,
+    item: format(month, TempoFormats.YYYY年M月),
   }))
   return (
     <menu className={menuStyle} type="toolbar">

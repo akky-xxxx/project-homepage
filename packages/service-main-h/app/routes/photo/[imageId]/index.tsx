@@ -1,6 +1,9 @@
+import { format } from "@formkit/tempo"
 import { createRoute } from "honox/factory"
 import { ImagesDataBase } from "module-images-db/src"
 import { pick } from "remeda"
+
+import { TempoFormats } from "@shared/const/TempoFormats"
 
 import { PhotoDetail } from "../../../components/pages/PhotoDetail"
 import { getSiblingImages } from "../../../modules/photoDetail/getSiblingImages"
@@ -18,6 +21,9 @@ export default createRoute((c) => {
 
   return c.render(
     <PhotoDetail {...imageInfo} filterQueries={filterQueries} siblingImages={siblingImages} />,
-    { description: `${area}で${date}に撮った写真`, title: "Photo" },
+    {
+      description: `${area}で${format(date, TempoFormats.YYYY年M月D日)}に撮った写真`,
+      title: "Photo",
+    },
   )
 })

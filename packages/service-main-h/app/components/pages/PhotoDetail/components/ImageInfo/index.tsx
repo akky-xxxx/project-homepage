@@ -1,6 +1,9 @@
+import { format } from "@formkit/tempo"
+
 import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
+import { TempoFormats } from "@shared/const/TempoFormats"
 import { getHref } from "@shared/utils/getHref"
 
 import { dlStyle } from "./styles/dlStyle"
@@ -10,6 +13,7 @@ import { tagsWrapperStyle } from "./styles/tagsWrapperStyle"
 
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
+
 
 type Props = Omit<ImagesDataBaseRecord, "imageId">
 
@@ -31,7 +35,7 @@ export const ImageInfo: FC<Props> = (props) => {
         <DateIcon />
       </dt>
       <dd>
-        <a href={dateHref}>{date}</a>
+        <a href={dateHref}>{format(date, TempoFormats.YYYY年M月D日)}</a>
       </dd>
 
       <dt className={dtStyle}>
