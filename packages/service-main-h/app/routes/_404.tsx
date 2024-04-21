@@ -1,11 +1,8 @@
-// FIXME: 正しく作動しない
+import { Error404 } from "../components/pages/Error404"
+
 import type { NotFoundHandler } from "hono"
 
-const notFoundHandler: NotFoundHandler = (c) => {
-  // eslint-disable-next-line no-console
-  console.log({ c })
-  return c.render(<h1>404エラーページ</h1>)
-}
+const notFoundHandler: NotFoundHandler = (c) => c.render(<Error404 />)
 
 // eslint-disable-next-line import/no-default-export
 export default notFoundHandler
