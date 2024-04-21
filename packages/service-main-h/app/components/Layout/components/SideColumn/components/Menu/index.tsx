@@ -68,7 +68,7 @@ export const Menu: FC = () => {
         </Accordion>
       </li>
       <li>
-        <a className={cx(itemStyle, anchorStyle)} href="/">
+        <a className={cx(itemStyle, anchorStyle)} href={getHref({ id: "Profile" })}>
           <TextWithIcon icon={<ProfileIcon {...IconProps} />}>Profile</TextWithIcon>
         </a>
       </li>
