@@ -13,7 +13,6 @@ import { TagIcon } from "@icons/TagIcon"
 import { TempoFormats } from "@shared/const/TempoFormats"
 import { getHref } from "@shared/utils/getHref"
 
-
 import { Accordion } from "./components/Accordion"
 import { Items } from "./components/Items"
 import { anchorStyle } from "./components/Items/styles/anchorStyle"

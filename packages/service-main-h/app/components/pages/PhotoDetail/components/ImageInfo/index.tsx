@@ -14,7 +14,6 @@ import { tagsWrapperStyle } from "./styles/tagsWrapperStyle"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
-
 type Props = Omit<ImagesDataBaseRecord, "imageId">
 
 export const ImageInfo: FC<Props> = (props) => {
