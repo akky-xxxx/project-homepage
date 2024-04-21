@@ -2,6 +2,9 @@ import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
 
 type Props =
   | {
+      id: "About"
+    }
+  | {
       id: "PhotoDetail"
       imageId: string
     }

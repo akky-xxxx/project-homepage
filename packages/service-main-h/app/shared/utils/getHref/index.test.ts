@@ -4,6 +4,7 @@ import { getHref } from "."
 
 describe("shared/utils/getHref", () => {
   it.each<[Parameters<typeof getHref>[0], string]>([
+    [{ id: "About" }, "/about"],
     [{ id: "PhotoGallery" }, "/photo-gallery"],
     [{ id: "PhotoDetail", imageId: "image-id-value" }, "/photo/image-id-value"],
     [

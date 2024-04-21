@@ -7,6 +7,9 @@ export const getHref: GetHref = (props) => {
   const { id } = props
 
   switch (id) {
+    case "About": {
+      return "/about"
+    }
     case "PhotoDetail": {
       const { imageId } = props
       return `/photo/${imageId}`
