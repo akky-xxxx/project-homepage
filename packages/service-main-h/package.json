@@ -26,6 +26,7 @@
     "type-check": "tsc"
   },
   "dependencies": {
+    "@formkit/tempo": "0.1.1",
     "hono": "^4.2.2",
     "honox": "^0.1.9",
     "js-cookie": "3.0.5",
