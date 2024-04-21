@@ -2,6 +2,7 @@ import { cx } from "hono/css"
 import { Months, Locations, Tags } from "module-images-db/src"
 
 import { TextWithIcon } from "@atoms/TextWithIcon"
+import { AboutIcon } from "@icons/AboutIcon"
 import { AllIcon } from "@icons/AllIcon"
 import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
@@ -69,6 +70,11 @@ export const Menu: FC = () => {
       <li>
         <a className={cx(itemStyle, anchorStyle)} href="/">
           <TextWithIcon icon={<ProfileIcon {...IconProps} />}>Profile</TextWithIcon>
+        </a>
+      </li>
+      <li>
+        <a className={cx(itemStyle, anchorStyle)} href={getHref({ id: "About" })}>
+          <TextWithIcon icon={<AboutIcon {...IconProps} />}>About</TextWithIcon>
         </a>
       </li>
     </menu>
