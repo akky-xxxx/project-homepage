@@ -143,6 +143,48 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC9700-d4363871-14a3-472a-b489-147bca1f1dac",
     tags: ["冬", "月", "室蘭"],
   },
+  {
+    area: "山形県",
+    date: "2019-01-03",
+    imageId: "DSC_0004-2714b1e6-0931-401d-8a5c-d3c139e068cd",
+    tags: ["冬", "雪", "樹氷", "蔵王"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-03",
+    imageId: "DSC_0016-86e51262-5cb0-4049-ab61-6fbc60b39fff",
+    tags: ["冬", "雪", "樹氷", "蔵王"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-03",
+    imageId: "DSC_0052-f1a907c1-c00e-42bb-a901-8e2f1833e1ce",
+    tags: ["冬", "雪", "樹氷", "蔵王"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-03",
+    imageId: "DSC_0071-c836043e-e252-4dd7-9f64-e29eeb0efb57",
+    tags: ["冬", "雪", "植物", "建物", "蔵王"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-03",
+    imageId: "DSC_0077-425f1c13-73e5-443c-a678-03c520cee622",
+    tags: ["冬", "雪", "植物", "空", "蔵王"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-03",
+    imageId: "DSC_0083-24fcdbb0-108e-4d9d-b1d4-5fef46ddd858",
+    tags: ["冬", "雪", "空", "蔵王"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-03",
+    imageId: "DSC_0093-61a24e58-d958-42ce-ad36-34a26ac959db",
+    tags: ["冬", "雪", "空", "植物", "夕日", "蔵王"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
