@@ -107,6 +107,42 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC9436-fc374590-f8a3-4885-affe-b0606e81d2db",
     tags: ["冬", "雪", "小樽", "運河", "夜景", "イルミネーション"],
   },
+  {
+    area: "北海道",
+    date: "2017-11-25",
+    imageId: "_DSC9451-cef68639-5905-42e1-9ee8-a05f9026406c",
+    tags: ["冬", "雪", "森", "空"],
+  },
+  {
+    area: "北海道",
+    date: "2017-11-25",
+    imageId: "_DSC9471-d3963e44-d0b5-4bf4-97c7-d0f7e0ca87a2",
+    tags: ["冬", "雪", "空"],
+  },
+  {
+    area: "北海道",
+    date: "2017-11-25",
+    imageId: "_DSC9498-078f2dac-a7ea-4253-97ab-ce8869aa6d8e",
+    tags: ["冬", "雪"],
+  },
+  {
+    area: "北海道",
+    date: "2017-11-25",
+    imageId: "_DSC9613-c789adf6-13f8-4203-ba10-289a25bbd83a",
+    tags: ["冬", "室蘭", "橋", "夜景"],
+  },
+  {
+    area: "北海道",
+    date: "2017-11-25",
+    imageId: "_DSC9691-4faf518c-b036-4b8f-955b-834007ac19d7",
+    tags: ["冬", "室蘭", "夜景"],
+  },
+  {
+    area: "北海道",
+    date: "2017-11-25",
+    imageId: "_DSC9700-d4363871-14a3-472a-b489-147bca1f1dac",
+    tags: ["冬", "月", "室蘭"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)

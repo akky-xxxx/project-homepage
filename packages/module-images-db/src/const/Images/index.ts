@@ -16,4 +16,10 @@ export const Images = [
   "_DSC9403-e7369210-48b0-42b5-9713-0f2b34456875",
   "_DSC9410-3aa7c8b2-f525-4f37-8b99-17337da5917a",
   "_DSC9436-fc374590-f8a3-4885-affe-b0606e81d2db",
+  "_DSC9451-cef68639-5905-42e1-9ee8-a05f9026406c",
+  "_DSC9471-d3963e44-d0b5-4bf4-97c7-d0f7e0ca87a2",
+  "_DSC9498-078f2dac-a7ea-4253-97ab-ce8869aa6d8e",
+  "_DSC9613-c789adf6-13f8-4203-ba10-289a25bbd83a",
+  "_DSC9691-4faf518c-b036-4b8f-955b-834007ac19d7",
+  "_DSC9700-d4363871-14a3-472a-b489-147bca1f1dac",
 ] as const
