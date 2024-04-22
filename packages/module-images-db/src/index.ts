@@ -185,6 +185,30 @@ const ImagesDataBaseOrigin = [
     imageId: "DSC_0093-61a24e58-d958-42ce-ad36-34a26ac959db",
     tags: ["冬", "雪", "空", "植物", "夕日", "蔵王"],
   },
+  {
+    area: "山形県",
+    date: "2019-01-05",
+    imageId: "_DSC0732-a12b450d-3624-489b-9536-5e51917ce604",
+    tags: ["冬", "雪", "街灯", "建物", "銀山温泉"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-05",
+    imageId: "_DSC0749-8261a1c7-0378-4fff-b28d-2b785be13fec",
+    tags: ["冬", "雪", "街灯", "建物", "銀山温泉"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-05",
+    imageId: "_DSC0790-29a78491-2298-4a7c-970a-1605ef7e0825",
+    tags: ["冬", "雪", "街灯", "建物", "銀山温泉"],
+  },
+  {
+    area: "山形県",
+    date: "2019-01-05",
+    imageId: "_DSC0809-b81ca6df-a179-4871-b8ca-a69920427737",
+    tags: ["冬", "雪", "街灯", "建物", "銀山温泉"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
