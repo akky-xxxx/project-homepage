@@ -413,6 +413,96 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC0910-54441657-61d8-4800-a189-44bced0986b9",
     tags: ["植物", "ツツジ"],
   },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8066-e4ac630a-7db6-4ee5-8d68-840cd9486c0d",
+    tags: ["秋", "紅葉", "噴水", "庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8084-5b5be37b-f4d3-419e-9921-9db3bca94afe",
+    tags: ["秋", "橋", "池", "庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8092-70451b02-b98a-4375-a361-42089d5f9593",
+    tags: ["庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8098-66ce330c-d82f-43c6-b061-54a3007dc977",
+    tags: ["秋", "紅葉", "池", "庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8108-80479982-14a7-43e6-8b51-e598b7d6566a",
+    tags: ["秋", "紅葉", "池", "庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8144-be0aea2e-a2ef-48c3-9f7e-31fe78e3f15e",
+    tags: ["秋", "紅葉", "庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8169-25de3072-f429-471b-967b-ce1ac6946f62",
+    tags: ["秋", "橋", "紅葉", "庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8190-9621f5bc-e3f7-4c2c-a11e-3ee983dfb4e9",
+    tags: ["秋", "紅葉", "植物", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8292-cc1e151a-aa0f-4d2a-b417-8dbf2a9cd747",
+    tags: ["秋", "紅葉", "池", "庭園", "兼六園"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8485-0d1a4f06-62b9-48e6-93e7-9a7e37397b50",
+    tags: ["秋", "棚田", "海", "空"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8493-be577484-b53a-496c-ab74-422329c37cfa",
+    tags: ["秋", "棚田", "海", "空", "イルミネーション"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8502-f5ac971c-5287-47c1-8466-9222a1003e4d",
+    tags: ["秋", "棚田", "海", "空", "イルミネーション"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8504-e22947f8-03be-468d-96e0-0edc8e045f69",
+    tags: ["秋", "棚田", "海", "イルミネーション"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8513-819cd692-95d3-4942-8327-1635da5b85a9",
+    tags: ["秋", "棚田", "海", "イルミネーション"],
+  },
+  {
+    area: "石川県",
+    date: "2015-11-25",
+    imageId: "_DSC8529-a2d93279-54a7-4670-87b9-577a1783262d",
+    tags: ["秋", "棚田", "イルミネーション"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
