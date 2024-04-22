@@ -317,6 +317,48 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC2802-45a423b7-65e9-48f1-ac0c-eb1170da0e8a",
     tags: ["植物", "紫陽花"],
   },
+  {
+    area: "神奈川県",
+    date: "2018-11-23",
+    imageId: "_DSC0508-b0fc5877-b58f-48a6-8f64-e295922f8f94",
+    tags: ["すすき"],
+  },
+  {
+    area: "神奈川県",
+    date: "2018-11-23",
+    imageId: "_DSC0528-cd66eb62-c93a-4115-ae3a-0abb28da543b",
+    tags: ["紅葉"],
+  },
+  {
+    area: "神奈川県",
+    date: "2018-11-23",
+    imageId: "_DSC0547-1594a7bc-e5f9-4267-996a-fa043e6c9347",
+    tags: ["紅葉"],
+  },
+  {
+    area: "神奈川県",
+    date: "2018-11-23",
+    imageId: "_DSC0583-f32c9626-5768-461d-8779-f23d3c10a4c0",
+    tags: ["紅葉", "池"],
+  },
+  {
+    area: "神奈川県",
+    date: "2018-11-23",
+    imageId: "_DSC0595-95b808e7-37c6-4db0-860b-cbaf60217e35",
+    tags: ["紅葉", "池"],
+  },
+  {
+    area: "神奈川県",
+    date: "2018-11-23",
+    imageId: "_DSC0609-f068dc02-6a4c-4e47-89a6-67ed5ed5734b",
+    tags: ["紅葉"],
+  },
+  {
+    area: "神奈川県",
+    date: "2018-11-23",
+    imageId: "_DSC0615-02e9c22f-3ac6-40dc-b7df-7fc85c28966d",
+    tags: ["紅葉", "マクロ"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
