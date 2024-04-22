@@ -209,6 +209,60 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC0809-b81ca6df-a179-4871-b8ca-a69920427737",
     tags: ["冬", "雪", "街灯", "建物", "銀山温泉"],
   },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC2937-fa0dc9ae-e504-4b78-942d-e58e439bb8e4",
+    tags: ["建物", "日光"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC2977-f3d474a7-bd14-430d-ade5-289db7890bf5",
+    tags: ["湖", "滝", "山", "日光", "中禅寺湖", "華厳の滝"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC3154-e3ff4f64-cd23-4daa-826e-5c3f8521d89f",
+    tags: ["山", "空", "日光", "戦場ヶ原"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC3164-0d11eb7c-6b28-4232-9576-d482e79c9a72",
+    tags: ["植物", "マクロ", "日光"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC3172-c9b33948-93a4-458d-bf34-627280b41d0f",
+    tags: ["山", "空", "日光", "男体山"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC3228-c762b409-23b1-4841-8e9f-ff25780e3a6a",
+    tags: ["植物", "壁", "通り", "日光"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC3233-f784e081-a7e9-4a82-9d65-a66fd2799860",
+    tags: ["植物", "マクロ", "日光"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC3238-7c4b388b-78da-4f85-a518-d381e36a2519",
+    tags: ["通り", "植物", "日光"],
+  },
+  {
+    area: "栃木県",
+    date: "2014-09-09",
+    imageId: "_DSC3312-095f558e-de2a-4d80-9796-813092933294",
+    tags: ["通り", "植物", "日光"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
