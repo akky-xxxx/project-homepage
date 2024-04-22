@@ -359,6 +359,60 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC0615-02e9c22f-3ac6-40dc-b7df-7fc85c28966d",
     tags: ["紅葉", "マクロ"],
   },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0820-9efc8743-077d-46ac-a2b2-a57f6ec2499b",
+    tags: ["植物", "ツツジ"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0826-2af0c16e-f456-42c3-a6bf-60e47cf7cbe9",
+    tags: ["植物", "ツツジ", "空"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0828-05d92d15-87e7-4285-a22d-c12b875b2887",
+    tags: ["植物", "ツツジ", "虫"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0838-3b9c8c41-a761-42dc-a8ac-81141140ecb4",
+    tags: ["植物", "ツツジ"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0842-bc7bdb44-f2a9-4260-8f4b-c33363786c31",
+    tags: ["植物", "ツツジ", "虫"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0843-839b769c-e68d-4c59-a2fc-c1c860307a5d",
+    tags: ["植物", "ツツジ"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0868-3c12920a-33e0-43a4-bc80-a671fe7a35a3",
+    tags: ["植物", "ツツジ"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0878-74868f81-8d26-4b1f-99d6-70ac8f6a96cb",
+    tags: ["植物", "ツツジ"],
+  },
+  {
+    area: "神奈川県",
+    date: "2019-05-02",
+    imageId: "_DSC0910-54441657-61d8-4800-a189-44bced0986b9",
+    tags: ["植物", "ツツジ"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
