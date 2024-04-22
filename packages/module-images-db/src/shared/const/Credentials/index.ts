@@ -3,7 +3,7 @@ import path from "path"
 
 import { credentialSchema } from "../../schema/credentialSchema"
 
-const ProjectName = "project-my-homepage"
+const ProjectName = "project-homepage"
 const FirstCharacter = 0
 
 const credentialsJson: unknown = JSON.parse(
