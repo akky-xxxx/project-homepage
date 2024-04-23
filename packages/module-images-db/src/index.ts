@@ -623,6 +623,48 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC7400-d760c555-620c-4715-960b-fd7a8758609e",
     tags: ["秋", "岩", "川"],
   },
+  {
+    area: "長野県",
+    date: "2015-11-22",
+    imageId: "_DSC7430-e736c124-b50c-4c92-830a-ac003a4d70a1",
+    tags: ["秋", "城", "松本城", "空", "松本"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-22",
+    imageId: "_DSC7449-aff10942-4cdc-4947-aba4-53e2b9b328a0",
+    tags: ["秋", "城", "松本城", "空", "松本"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-22",
+    imageId: "_DSC7478-3c957ae4-a994-4db3-a565-25b8c08b0c59",
+    tags: ["秋", "城", "松本城", "空", "橋", "鳥", "白鳥", "松本"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-22",
+    imageId: "_DSC7522-51f41b4c-80cf-4870-a76d-2da8cd931ad9",
+    tags: ["秋", "紅葉", "城", "松本城", "空", "松本"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-22",
+    imageId: "_DSC7566-9f6b29d6-844f-4a49-9d34-aef6480108d6",
+    tags: ["秋", "森"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-22",
+    imageId: "_DSC7603-9e111e4f-5013-4813-add1-212f7a9d1333",
+    tags: ["秋", "植物"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-22",
+    imageId: "_DSC7672-404482b6-f410-45e5-a3b4-b98eb03f5893",
+    tags: ["秋", "植物"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
