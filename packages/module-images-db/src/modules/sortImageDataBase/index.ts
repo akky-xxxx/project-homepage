@@ -10,8 +10,8 @@ export const sortImageDataBase = (a: SortTarget, b: SortTarget) => {
   const aDate = new Date(a.date)
   const bDate = new Date(b.date)
 
-  if (aDate > bDate) return 1
-  if (aDate < bDate) return -1
+  if (aDate > bDate) return -1
+  if (aDate < bDate) return 1
 
   const { area: aArea, imageId: aId } = a
   const { area: bArea, imageId: bId } = b
