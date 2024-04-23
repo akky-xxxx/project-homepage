@@ -809,6 +809,54 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC4007-4c2f1057-02ef-4094-8dc8-d99c21d758e8",
     tags: ["秋", "紅葉", "ライトアップ", "建物", "庭園"],
   },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4103-c58de169-61f7-4e1c-b071-fd8cd9b64d14",
+    tags: ["秋", "紅葉", "金閣寺", "池", "空"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4191-677fa4d1-c634-4dec-b49d-19095dbb9fa7",
+    tags: ["秋", "紅葉", "金閣寺", "空"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4292-a81967a5-9c33-4e15-a888-485d902429a4",
+    tags: ["秋", "庭園"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4396-58570303-4bda-4580-a8dc-75193e6fc6e5",
+    tags: ["秋", "紅葉", "庭園"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4488-4ba935ab-7941-4120-893b-1f2dc56ff1f1",
+    tags: ["秋", "紅葉", "すすき"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4496-652b42e1-87fa-4db7-9c0f-c5a8dd6d98bf",
+    tags: ["秋", "紅葉", "池"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4515-baae1724-f559-42e1-a207-09336ac0647c",
+    tags: ["庭園"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-21",
+    imageId: "_DSC4691-cedd80a0-b76c-4212-8a5e-e7fe8ff7c7f0",
+    tags: ["紅葉", "ライトアップ", "マクロ"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
