@@ -20,7 +20,9 @@ export const Images: FC<Props> = (props) => {
     <ul className={ulStyle}>
       {images.map((imageInfo) => {
         const { imageId } = imageInfo
-        const href = [getHref({ id: "PhotoDetail", imageId }), getQueries(filterQueries)].join("?")
+        const href = [getHref({ id: "PhotoDetail", imageId }), getQueries(filterQueries)]
+          .filter(Boolean)
+          .join("?")
 
         return (
           <li key={imageId}>
