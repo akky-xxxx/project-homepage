@@ -857,6 +857,42 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC4691-cedd80a0-b76c-4212-8a5e-e7fe8ff7c7f0",
     tags: ["紅葉", "ライトアップ", "マクロ"],
   },
+  {
+    area: "京都府",
+    date: "2014-11-22",
+    imageId: "_DSC4850-27879030-4d43-42e8-b4c2-c67b55d124c5",
+    tags: ["秋", "紅葉", "すすき", "橋"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-22",
+    imageId: "_DSC4868-33308e1f-20a0-4131-bf7c-2b3269972622",
+    tags: ["秋", "紅葉", "空"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-22",
+    imageId: "_DSC4878-8762aabb-5088-418b-8c19-a65c03d19ce7",
+    tags: ["秋", "紅葉", "建物"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-22",
+    imageId: "_DSC4918-a2c10c5a-e0c5-4ebd-b6ff-c125f9c822a4",
+    tags: ["秋", "紅葉", "庭園", "池", "山", "空"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-22",
+    imageId: "_DSC4936-ec263ae8-5b62-49f5-9ff8-2fe89ab58780",
+    tags: ["庭園"],
+  },
+  {
+    area: "京都府",
+    date: "2014-11-22",
+    imageId: "_DSC4996-da264e44-f8f0-4d42-b557-0a82376917b5",
+    tags: ["秋", "紅葉", "橋"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
