@@ -665,6 +665,42 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC7672-404482b6-f410-45e5-a3b4-b98eb03f5893",
     tags: ["秋", "植物"],
   },
+  {
+    area: "長野県",
+    date: "2016-09-22",
+    imageId: "_DSC8668-7ea4d1ff-63d6-4005-8ee1-2bd98534a840",
+    tags: ["川", "森", "上高地"],
+  },
+  {
+    area: "長野県",
+    date: "2016-09-22",
+    imageId: "_DSC8694-38302ae0-75a9-40eb-bc38-afbe193862c1",
+    tags: ["川", "上高地"],
+  },
+  {
+    area: "長野県",
+    date: "2016-09-22",
+    imageId: "_DSC8696-5e4bd04d-bfaf-45d8-9af1-188e16418b37",
+    tags: ["森", "川", "上高地"],
+  },
+  {
+    area: "長野県",
+    date: "2016-09-22",
+    imageId: "_DSC8804-f50bd564-7e94-494a-9feb-3df717a76c74",
+    tags: ["森", "上高地", "動物", "猿"],
+  },
+  {
+    area: "長野県",
+    date: "2016-09-22",
+    imageId: "_DSC8839-e77f0706-41a5-48e7-b4d4-cf863633e1a7",
+    tags: ["植物", "きのこ", "上高地"],
+  },
+  {
+    area: "長野県",
+    date: "2016-09-22",
+    imageId: "_DSC8858-d2dd48dc-201a-4f8b-80c6-ee80ce75035f",
+    tags: ["森", "川", "上高地"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
