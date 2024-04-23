@@ -23,4 +23,12 @@ module.exports = {
       typescript: [],
     },
   },
+  overrides: [
+    {
+      files: ["src/const/Images/index.ts", "src/types/Tag/index.ts"],
+      rules: {
+        "max-lines": "off",
+      },
+    },
+  ],
 }
