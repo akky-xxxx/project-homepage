@@ -701,6 +701,18 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC8858-d2dd48dc-201a-4f8b-80c6-ee80ce75035f",
     tags: ["森", "川", "上高地"],
   },
+  {
+    area: "長野県",
+    date: "2016-09-24",
+    imageId: "_DSC8926-b941b639-62b6-442e-9d59-a8c7ccb48b77",
+    tags: ["川", "虫", "大王わさび農場"],
+  },
+  {
+    area: "長野県",
+    date: "2016-09-24",
+    imageId: "_DSC8989-c27417b4-45e7-41da-8336-5475c1cead0c",
+    tags: ["植物", "彼岸花", "大王わさび農場"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
