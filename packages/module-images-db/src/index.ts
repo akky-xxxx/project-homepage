@@ -1,6 +1,7 @@
 /* eslint-disable sonarjs/no-duplicate-string, strict-check/forbidden-multiple-named-exports, max-lines */
 import { sortImageDataBase } from "./modules/sortImageDataBase"
 import { sortTags } from "./modules/sortTags"
+import { Prefectures } from "./shared/const/Prefectures"
 
 import type { ImagesDataBaseRecord } from "./types/ImagesDataBaseRecord"
 
@@ -896,7 +897,10 @@ const ImagesDataBaseOrigin = [
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
-export const Locations = [...new Set(ImagesDataBase.map(({ area }) => area))]
+const uniqueRegisterPrefectures = new Set<string>(ImagesDataBase.map(({ area }) => area))
+export const Locations = Prefectures.filter((prefecture) =>
+  uniqueRegisterPrefectures.has(prefecture),
+)
 export const Tags = [...new Set(ImagesDataBase.flatMap(({ tags }) => tags))].sort()
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const Months = [...new Set(ImagesDataBase.map(({ date }) => date.slice(0, -3)))]
