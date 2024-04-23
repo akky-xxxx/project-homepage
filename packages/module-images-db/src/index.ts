@@ -713,6 +713,54 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC8989-c27417b4-45e7-41da-8336-5475c1cead0c",
     tags: ["植物", "彼岸花", "大王わさび農場"],
   },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9169-8f9b1c57-d45e-449c-afa0-27fba0dcf71e",
+    tags: ["森", "滝", "軽井沢"],
+  },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9172-a406cbe4-6364-41e3-bc8b-bb462a09c9ce",
+    tags: ["森", "滝", "軽井沢"],
+  },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9183-0fc63c5b-49fb-4a4e-b3cd-e3315b601d2d",
+    tags: ["森", "滝", "軽井沢"],
+  },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9207-ee6e5918-84c8-4deb-8264-b1ab7fd49078",
+    tags: ["森", "通り", "軽井沢"],
+  },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9223-c7fec87d-a767-4d92-b134-579161504ee1",
+    tags: ["森", "軽井沢"],
+  },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9229-a20d5b24-9ece-4eda-91f6-b2664cf3f0f8",
+    tags: ["紅葉", "池", "軽井沢"],
+  },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9243-977624ff-35da-4a78-90d4-32a3ca5443f8",
+    tags: ["蛇", "軽井沢"],
+  },
+  {
+    area: "長野県",
+    date: "2016-10-15",
+    imageId: "_DSC9277-8021dda3-75fc-4438-bf20-e48afd6eeb21",
+    tags: ["空", "池", "軽井沢"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
