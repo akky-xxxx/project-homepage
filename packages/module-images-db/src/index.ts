@@ -551,6 +551,78 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC8031-c5a59e72-7ab3-4ca8-8ad1-80adcf3cb5d5",
     tags: ["秋", "建物", "白川郷"],
   },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7148-7d470f05-8f37-4826-9c9f-5bd1612b63a3",
+    tags: ["秋", "宿場町", "奈良井宿", "建物"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7156-672952c7-e8b3-4d6e-b09d-cf7dc385c3a9",
+    tags: ["秋", "宿場町", "奈良井宿", "建物"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7162-359fd07a-63be-4262-bad3-7616413d8d78",
+    tags: ["秋", "宿場町", "奈良井宿", "建物"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7166-32923f99-bc10-4b8a-b675-dd61713eeebd",
+    tags: ["秋", "宿場町", "奈良井宿", "建物", "マクロ"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7171-e1931b1c-bb1e-4d7c-85cb-feb44aa08730",
+    tags: ["秋", "宿場町", "奈良井宿", "建物"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7197-d780c505-213a-4e97-9f3c-71b409bb4b6b",
+    tags: ["秋", "宿場町", "奈良井宿", "建物"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7274-bf5fe235-7555-4950-8791-d14763109193",
+    tags: ["秋", "森"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7293-4219d970-72f8-4ed2-bd1b-30c6b639a543",
+    tags: ["秋", "地蔵"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7319-0ef66c63-942f-4642-aad1-d7c14f17a9f5",
+    tags: ["秋", "岩", "川"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7325-348a7cfe-c4b2-4cc3-ab17-79f97d13681b",
+    tags: ["秋", "紅葉", "山"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7340-8bb4d856-cfad-44ae-962a-1cf721c76a60",
+    tags: ["秋", "紅葉", "岩", "川"],
+  },
+  {
+    area: "長野県",
+    date: "2015-11-21",
+    imageId: "_DSC7400-d760c555-620c-4715-960b-fd7a8758609e",
+    tags: ["秋", "岩", "川"],
+  },
 ] satisfies Readonly<ImagesDataBaseRecord[]>
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
