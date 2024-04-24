@@ -1,6 +1,6 @@
 import { css } from "hono/css"
 
-export const ulStyle = css`
+export const sitemapUlStyle = css`
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;

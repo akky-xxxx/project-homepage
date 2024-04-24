@@ -12,9 +12,9 @@ import { LocationIcon } from "@icons/LocationIcon"
 import { PhotoIcon } from "@icons/PhotoIcon"
 import { TagIcon } from "@icons/TagIcon"
 import { TempoFormats } from "@shared/const/TempoFormats"
+import { sitemapUlStyle } from "@shared/styles/sitemapUlStyle"
 import { getHref } from "@shared/utils/getHref"
 
-import { ulStyle } from "./styles/ulStyle"
 
 import type { FC } from "hono/jsx"
 
@@ -26,7 +26,7 @@ export const Sitemap: FC = () => (
       </Heading4>
 
       <Block>
-        <ul class={ulStyle}>
+        <ul class={sitemapUlStyle}>
           <li>
             <a href={getHref({ id: "Profile" })}>Profile</a>
           </li>
