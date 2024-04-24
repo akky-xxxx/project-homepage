@@ -1,5 +1,9 @@
 import { css } from "hono/css"
 
+import { MediaQueries } from "@shared/styles/MediaQueries"
+
+const { MEDIA_ONLY_HOVER } = MediaQueries
+
 export const crossIconStyle = css`
   background-color: var(--primary-background);
   border-radius: 50%;
@@ -22,6 +26,7 @@ export const crossIconStyle = css`
     right: 0;
     top: 0;
     transform-origin: center center;
+    transition: transform 0.5s ease;
     width: 75%;
   }
 
@@ -31,5 +36,17 @@ export const crossIconStyle = css`
 
   &::after {
     transform: rotate(-45deg);
+  }
+
+  ${MEDIA_ONLY_HOVER} {
+    &:hover {
+      &::before {
+        transform: rotate(405deg);
+      }
+
+      &::after {
+        transform: rotate(-405deg);
+      }
+    }
   }
 `
