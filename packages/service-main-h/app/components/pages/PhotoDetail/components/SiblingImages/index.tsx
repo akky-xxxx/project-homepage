@@ -10,6 +10,7 @@ import { ulStyle } from "./styles/ulStyle"
 import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
+import {getPhotoText} from "@shared/utils/getPhotoText"
 
 type OptionalImageInfo = ImagesDataBaseRecord | undefined
 
@@ -38,12 +39,13 @@ export const SiblingImages: FC<Props> = (props) => {
             if (!imageInfo) return <li />
             const { imageId } = imageInfo
             const href = [getHref({ id: "PhotoDetail", imageId }), queries].join("?")
+            const alt = getPhotoText(imageInfo)
 
             return (
               <li key={imageId}>
                 {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                 <a href={href}>
-                  <Image isThumbnail className={thumbnailStyle} imageId={imageId} />
+                  <Image isThumbnail alt={alt} className={thumbnailStyle} imageId={imageId} />
                 </a>
               </li>
             )

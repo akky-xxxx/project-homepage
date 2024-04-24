@@ -12,6 +12,7 @@ import { SiblingImages } from "./components/SiblingImages"
 import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
+import {getPhotoText} from "@shared/utils/getPhotoText"
 
 type OptionalImageInfo = ImagesDataBaseRecord | undefined
 
@@ -24,13 +25,14 @@ const ModalId = "modal-switch"
 
 export const PhotoDetail: FC<Props> = (props) => {
   const { area, date, filterQueries, imageId, siblingImages, tags } = props
+  const alt =  getPhotoText({ area, date, tags })
   return (
     <div>
       <Heading2>Photo</Heading2>
 
       <Block>
         <ForLabel htmlFor={ModalId}>
-          <Image className={imageStyle} imageId={imageId} />
+          <Image alt={alt} className={imageStyle} imageId={imageId} />
         </ForLabel>
       </Block>
 
@@ -41,7 +43,7 @@ export const PhotoDetail: FC<Props> = (props) => {
       <SiblingImages filterQueries={filterQueries} siblingImages={siblingImages} />
 
       <Modal modalId={ModalId}>
-        <Image className={modalImageStyle} imageId={imageId} />
+        <Image alt={alt} className={modalImageStyle} imageId={imageId} />
       </Modal>
     </div>
   )

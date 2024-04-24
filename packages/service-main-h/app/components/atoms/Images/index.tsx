@@ -8,6 +8,7 @@ import { ulStyle } from "./styles/ulStyle"
 import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
+import {getPhotoText} from "@shared/utils/getPhotoText"
 
 type Props = {
   filterQueries?: FilterQueries
@@ -24,12 +25,13 @@ export const Images: FC<Props> = (props) => {
         const href = [getHref({ id: "PhotoDetail", imageId }), getQueries(filterQueries)]
           .filter(Boolean)
           .join("?")
+        const alt = getPhotoText(imageInfo)
 
         return (
           <li key={imageId}>
             {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
             <a href={href}>
-              <Image isThumbnail className={thumbnailStyle} imageId={imageId} />
+              <Image isThumbnail alt={alt} className={thumbnailStyle} imageId={imageId} />
             </a>
           </li>
         )
