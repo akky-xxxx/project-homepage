@@ -1,10 +1,10 @@
 import { css } from "hono/css"
 
+import { Block } from "@atoms/Block"
 import { ForLabel } from "@atoms/ForLabel"
 import { Heading2 } from "@atoms/Heading2"
 import { Image } from "@atoms/Image"
 import { Modal } from "@atoms/Modal"
-import { Block } from "app/components/atoms/Block"
 
 import { ImageInfo } from "./components/ImageInfo"
 import { SiblingImages } from "./components/SiblingImages"
