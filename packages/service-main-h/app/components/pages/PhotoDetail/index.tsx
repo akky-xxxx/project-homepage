@@ -1,8 +1,10 @@
+import { css } from "hono/css"
+
 import { ForLabel } from "@atoms/ForLabel"
 import { Heading2 } from "@atoms/Heading2"
+import { Image } from "@atoms/Image"
 import { Modal } from "@atoms/Modal"
 import { Block } from "app/components/atoms/Block"
-import { Image } from "app/components/atoms/Image"
 
 import { ImageInfo } from "./components/ImageInfo"
 import { SiblingImages } from "./components/SiblingImages"
@@ -28,7 +30,7 @@ export const PhotoDetail: FC<Props> = (props) => {
 
       <Block>
         <ForLabel htmlFor={ModalId}>
-          <Image imageId={imageId} />
+          <Image className={imageStyle} imageId={imageId} />
         </ForLabel>
       </Block>
 
@@ -39,8 +41,19 @@ export const PhotoDetail: FC<Props> = (props) => {
       <SiblingImages filterQueries={filterQueries} siblingImages={siblingImages} />
 
       <Modal modalId={ModalId}>
-        <Image imageId={imageId} />
+        <Image className={modalImageStyle} imageId={imageId} />
       </Modal>
     </div>
   )
 }
+
+const imageStyle = css`
+  max-height: calc(100dvh - 130px);
+  margin-inline: auto;
+`
+
+const modalImageStyle = css`
+  width: 100dvw;
+  height: 100dvh;
+  object-fit: contain;
+`
