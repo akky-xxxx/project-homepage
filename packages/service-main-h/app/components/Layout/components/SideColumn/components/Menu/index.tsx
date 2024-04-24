@@ -31,17 +31,17 @@ type Props = FilterQueries
 
 export const Menu: FC<Props> = (props) => {
   const { date, location, tag } = props
-  const locationItems = Locations.map((location) => ({
-    href: getHref({ id: "PhotoLocationDetail", location }),
-    item: location,
+  const locationItems = Locations.map((item) => ({
+    href: getHref({ id: "PhotoLocationDetail", location: item }),
+    item,
   }))
-  const tagItems = Tags.map((tag) => ({
-    href: getHref({ id: "PhotoTagDetail", tag }),
-    item: tag,
+  const tagItems = Tags.map((item) => ({
+    href: getHref({ id: "PhotoTagDetail", tag: item }),
+    item,
   }))
-  const monthItems = Months.map((month) => ({
-    href: getHref({ date: month, id: "PhotoDateDetail" }),
-    item: format(month, TempoFormats.YYYY年M月),
+  const monthItems = Months.map((item) => ({
+    href: getHref({ date: item, id: "PhotoDateDetail" }),
+    item: format(item, TempoFormats.YYYY年M月),
   }))
   return (
     <menu class={menuStyle} type="toolbar">
