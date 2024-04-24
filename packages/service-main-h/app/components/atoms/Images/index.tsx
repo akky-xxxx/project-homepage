@@ -1,4 +1,8 @@
+import { Block } from "@atoms/Block"
+import { ContentsWidthBlock } from "@atoms/ContentsWidthBlock"
+import { Heading3 } from "@atoms/Heading3"
 import { Image } from "@atoms/Image"
+import { PhotoGallerySitemap } from "@atoms/PhotoGallerySitemap"
 import { thumbnailStyle } from "@shared/styles/thumbnailStyle"
 import { getHref } from "@shared/utils/getHref"
 import { getPhotoText } from "@shared/utils/getPhotoText"
@@ -17,6 +21,26 @@ type Props = {
 
 export const Images: FC<Props> = (props) => {
   const { filterQueries, images } = props
+
+  if (!images.length)
+    return (
+      <section>
+        <Heading3>Not found image</Heading3>
+        <Block>
+          <ContentsWidthBlock>
+            <p>Please search other conditions.</p>
+          </ContentsWidthBlock>
+        </Block>
+
+        <section>
+          <Block>
+            <ContentsWidthBlock>
+              <PhotoGallerySitemap />
+            </ContentsWidthBlock>
+          </Block>
+        </section>
+      </section>
+    )
 
   return (
     <ul class={ulStyle}>
