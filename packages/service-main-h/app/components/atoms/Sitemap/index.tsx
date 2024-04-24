@@ -1,5 +1,4 @@
 import { format } from "@formkit/tempo"
-import { css } from "hono/css"
 import { Fragment } from "hono/jsx"
 import { Locations, Months, Tags } from "module-images-db/src"
 
@@ -8,6 +7,8 @@ import { Heading4 } from "@atoms/Heading4"
 import { Heading5 } from "@atoms/Heading5"
 import { TempoFormats } from "@shared/const/TempoFormats"
 import { getHref } from "@shared/utils/getHref"
+
+import { ulStyle } from "./styles/ulStyle"
 
 import type { FC } from "hono/jsx"
 
@@ -79,10 +80,3 @@ export const Sitemap: FC = () => (
     </section>
   </Fragment>
 )
-
-const ulStyle = css`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-  margin-top: 1.2rem;
-`
