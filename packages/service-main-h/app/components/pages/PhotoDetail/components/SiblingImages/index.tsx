@@ -1,6 +1,7 @@
 import { Block } from "@atoms/Block"
 import { Heading3 } from "@atoms/Heading3"
 import { Image } from "@atoms/Image"
+import { thumbnailStyle } from "@shared/styles/thumbnailStyle"
 import { getHref } from "@shared/utils/getHref"
 import { getQueries } from "@shared/utils/getQueries"
 
@@ -42,7 +43,7 @@ export const SiblingImages: FC<Props> = (props) => {
               <li key={imageId}>
                 {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                 <a href={href}>
-                  <Image isThumbnail imageId={imageId} />
+                  <Image isThumbnail className={thumbnailStyle} imageId={imageId} />
                 </a>
               </li>
             )

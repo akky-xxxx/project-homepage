@@ -1,4 +1,5 @@
 import { Image } from "@atoms/Image"
+import { thumbnailStyle } from "@shared/styles/thumbnailStyle"
 import { getHref } from "@shared/utils/getHref"
 import { getQueries } from "@shared/utils/getQueries"
 
@@ -28,7 +29,7 @@ export const Images: FC<Props> = (props) => {
           <li key={imageId}>
             {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
             <a href={href}>
-              <Image isThumbnail imageId={imageId} />
+              <Image isThumbnail className={thumbnailStyle} imageId={imageId} />
             </a>
           </li>
         )
