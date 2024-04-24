@@ -11,7 +11,7 @@ const { MEDIA_SP } = MediaQueries
 export const Section: FcWithChildren = (props) => {
   const { children } = props
 
-  return <section className={blockStyle}>{children}</section>
+  return <section class={blockStyle}>{children}</section>
 }
 
 const blockStyle = css`

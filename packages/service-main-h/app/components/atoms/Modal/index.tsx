@@ -19,14 +19,14 @@ export const Modal: FcWithChildren<Props> = (props) => {
   const { children, modalId } = props
 
   return (
-    <div className={rootStyle}>
-      <div className={closeButtonWrapperStyle}>
+    <div class={rootStyle}>
+      <div class={closeButtonWrapperStyle}>
         <ForLabel htmlFor={modalId}>
-          <div className={crossIconStyle} />
+          <div class={crossIconStyle} />
         </ForLabel>
       </div>
-      <div className={contentStyle}>{children}</div>
-      <input className={cx(ScrollLockClass, inputStyle)} id={modalId} type="checkbox" />
+      <div class={contentStyle}>{children}</div>
+      <input class={cx(ScrollLockClass, inputStyle)} id={modalId} type="checkbox" />
     </div>
   )
 }

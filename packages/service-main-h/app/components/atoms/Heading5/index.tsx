@@ -5,7 +5,7 @@ import type { FcWithChildren } from "@shared/types/FcWithChildren"
 export const Heading5: FcWithChildren = (props) => {
   const { children } = props
 
-  return <h5 className={rootStyle}>{children}</h5>
+  return <h5 class={rootStyle}>{children}</h5>
 }
 
 const rootStyle = css`

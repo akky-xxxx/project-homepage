@@ -11,7 +11,7 @@ const { SPACE04, SPACE08, SPACE12 } = Spaces
 export const Heading2: FcWithChildren = (props) => {
   const { children } = props
 
-  return <h2 className={rootStyle}>{children}</h2>
+  return <h2 class={rootStyle}>{children}</h2>
 }
 
 const rootStyle = css`

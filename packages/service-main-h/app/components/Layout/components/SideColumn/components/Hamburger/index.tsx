@@ -3,7 +3,7 @@ import { css } from "hono/css"
 import type { FC } from "hono/jsx"
 
 export const Hamburger: FC = () => (
-  <div className={root}>
+  <div class={root}>
     <div />
     <div />
     <div />

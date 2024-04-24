@@ -11,22 +11,22 @@ import { siteNameStyle } from "./styles/siteNameStyle"
 import type { FC } from "hono/jsx"
 
 export const SideColumn: FC = () => (
-  <div className={rootStyle}>
-    <header className={headerStyle}>
-      <h1 className={heading1Style}>
-        <a className={siteNameStyle} href="/">
+  <div class={rootStyle}>
+    <header class={headerStyle}>
+      <h1 class={heading1Style}>
+        <a class={siteNameStyle} href="/">
           akky-xxxx
         </a>
       </h1>
     </header>
     {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-    <label className={labelStyle}>
+    <label class={labelStyle}>
       <input type="checkbox" />
       <Hamburger />
     </label>
-    <nav className={navigationStyle}>
+    <nav class={navigationStyle}>
       <Menu />
     </nav>
-    <div className={backdropStyle} />
+    <div class={backdropStyle} />
   </div>
 )

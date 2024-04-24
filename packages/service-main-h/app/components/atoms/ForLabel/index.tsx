@@ -10,7 +10,7 @@ export const ForLabel: FcWithChildren<Props> = (props) => {
   const { children, htmlFor } = props
 
   return (
-    <label className={rootStyle} for={htmlFor}>
+    <label class={rootStyle} for={htmlFor}>
       {children}
     </label>
   )

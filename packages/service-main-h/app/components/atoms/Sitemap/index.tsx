@@ -15,7 +15,7 @@ export const Sitemap: FC = () => (
       <Heading4>Common</Heading4>
 
       <Block>
-        <ul className={ulStyle}>
+        <ul class={ulStyle}>
           <li>
             <a href={getHref({ id: "Profile" })}>Profile</a>
           </li>
@@ -34,7 +34,7 @@ export const Sitemap: FC = () => (
           <section>
             <Heading5>Location</Heading5>
 
-            <ul className={ulStyle}>
+            <ul class={ulStyle}>
               {Locations.map((location) => (
                 <li key={location}>
                   <a href={getHref({ id: "PhotoLocationDetail", location })}>{location}</a>
@@ -49,7 +49,7 @@ export const Sitemap: FC = () => (
         <section>
           <Heading5>Dates</Heading5>
 
-          <ul className={ulStyle}>
+          <ul class={ulStyle}>
             {Months.map((month) => (
               <li key={month}>
                 <a href={getHref({ date: month, id: "PhotoDateDetail" })}>{month}</a>
@@ -63,7 +63,7 @@ export const Sitemap: FC = () => (
         <section>
           <Heading5>Tags</Heading5>
 
-          <ul className={ulStyle}>
+          <ul class={ulStyle}>
             {Tags.map((tag) => (
               <li key={tag}>
                 <a href={getHref({ id: "PhotoTagDetail", tag })}>{tag}</a>

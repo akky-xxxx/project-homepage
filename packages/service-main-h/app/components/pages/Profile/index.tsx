@@ -42,7 +42,7 @@ export const Profile: FC = () => (
       </Block>
 
       <Block>
-        <ul className={ulStyle}>
+        <ul class={ulStyle}>
           <li>スノーボード</li>
           <li>カメラ</li>
           <li>酒</li>

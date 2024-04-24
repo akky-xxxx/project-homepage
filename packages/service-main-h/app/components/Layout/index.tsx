@@ -8,10 +8,10 @@ export const Layout: FcWithChildren = (props) => {
   const { children } = props
 
   return (
-    <div className={rootStyle}>
+    <div class={rootStyle}>
       <SideColumn />
 
-      <main className={mainStyle}>{children}</main>
+      <main class={mainStyle}>{children}</main>
     </div>
   )
 }

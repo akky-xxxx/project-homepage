@@ -22,26 +22,26 @@ export const ImageInfo: FC<Props> = (props) => {
   const dateHref = getHref({ date, id: "PhotoDateDetail" })
 
   return (
-    <dl className={dlStyle}>
-      <dt className={dtStyle}>
+    <dl class={dlStyle}>
+      <dt class={dtStyle}>
         <LocationIcon />
       </dt>
       <dd>
         <a href={locationHref}>{area}</a>
       </dd>
 
-      <dt className={dtStyle}>
+      <dt class={dtStyle}>
         <DateIcon />
       </dt>
       <dd>
         <a href={dateHref}>{format(date, TempoFormats.YYYY年M月D日)}</a>
       </dd>
 
-      <dt className={dtStyle}>
+      <dt class={dtStyle}>
         <TagIcon />
       </dt>
-      <dd className={tagsWrapperStyle}>
-        <ul className={tagsStyle}>
+      <dd class={tagsWrapperStyle}>
+        <ul class={tagsStyle}>
           {tags.map((tag) => {
             const tagHref = getHref({ id: "PhotoTagDetail", tag })
             return (

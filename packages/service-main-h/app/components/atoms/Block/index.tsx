@@ -9,7 +9,7 @@ const { SPACE20 } = Spaces
 export const Block: FcWithChildren = (props) => {
   const { children } = props
 
-  return <div className={blockStyle}>{children}</div>
+  return <div class={blockStyle}>{children}</div>
 }
 
 const blockStyle = css`

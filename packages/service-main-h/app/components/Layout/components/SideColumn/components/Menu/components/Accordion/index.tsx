@@ -33,9 +33,9 @@ export const Accordion: FcWithChildren<Props> = (props) => {
 
   return (
     <details open={isOpen}>
-      <summary className={cx(itemStyle, summaryStyle)}>
+      <summary class={cx(itemStyle, summaryStyle)}>
         <TextWithIcon icon={icon}>{title}</TextWithIcon>
-        <div className={arrowIconWrapper}>
+        <div class={arrowIconWrapper}>
           <ArrowIcon />
         </div>
       </summary>

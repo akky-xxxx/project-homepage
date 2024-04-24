@@ -45,7 +45,7 @@ export const Conditions: FC<Props> = (props) => {
 
   return (
     <Block>
-      <p className={conditionStyle}>
+      <p class={conditionStyle}>
         <span>検索条件：</span>
         {conditionData.map((record) => record)}
       </p>

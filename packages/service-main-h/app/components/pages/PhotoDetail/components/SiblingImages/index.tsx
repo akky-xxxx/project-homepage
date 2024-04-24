@@ -32,7 +32,7 @@ export const SiblingImages: FC<Props> = (props) => {
         <Heading3>{heading3Text}</Heading3>
       </Block>
       <Block>
-        <ul className={ulStyle}>
+        <ul class={ulStyle}>
           {siblingImages.map((imageInfo) => {
             if (!imageInfo) return <li />
             const { imageId } = imageInfo

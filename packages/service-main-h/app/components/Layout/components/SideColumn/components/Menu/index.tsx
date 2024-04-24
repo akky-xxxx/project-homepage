@@ -40,12 +40,12 @@ export const Menu: FC = () => {
     item: format(month, TempoFormats.YYYY年M月),
   }))
   return (
-    <menu className={menuStyle} type="toolbar">
+    <menu class={menuStyle} type="toolbar">
       <li>
         <Accordion isOpen icon={<PhotoIcon {...IconProps} />} title="Photo Gallery">
           <ul>
             <li>
-              <a className={cx(itemStyle, anchorStyle)} href={getHref({ id: "PhotoGallery" })}>
+              <a class={cx(itemStyle, anchorStyle)} href={getHref({ id: "PhotoGallery" })}>
                 <TextWithIcon icon={<AllIcon {...IconProps} />}>All</TextWithIcon>
               </a>
             </li>
@@ -70,12 +70,12 @@ export const Menu: FC = () => {
         </Accordion>
       </li>
       <li>
-        <a className={cx(itemStyle, anchorStyle)} href={getHref({ id: "Profile" })}>
+        <a class={cx(itemStyle, anchorStyle)} href={getHref({ id: "Profile" })}>
           <TextWithIcon icon={<ProfileIcon {...IconProps} />}>Profile</TextWithIcon>
         </a>
       </li>
       <li>
-        <a className={cx(itemStyle, anchorStyle)} href={getHref({ id: "About" })}>
+        <a class={cx(itemStyle, anchorStyle)} href={getHref({ id: "About" })}>
           <TextWithIcon icon={<AboutIcon {...IconProps} />}>About</TextWithIcon>
         </a>
       </li>

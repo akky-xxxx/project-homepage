@@ -19,20 +19,20 @@ export const View: FC<Props> = (props) => {
     // TODO: jsx-a11y/label-has-associated-control の上書きがうまくいってない？
     //  https://zenn.dev/krntmm/articles/756fdf2f8fcdff
     // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <label className={labelStyle}>
+    <label class={labelStyle}>
       <input
         checked={isChecked}
-        className={inputStyle}
+        class={inputStyle}
         name={ColorSchemaName}
         type="checkbox"
         onChange={handleChange}
       />
-      <div className={switchStyle}>
-        <div className={ICONS}>
-          <span className={ICON_DAY}>
+      <div class={switchStyle}>
+        <div class={ICONS}>
+          <span class={ICON_DAY}>
             <SunIcon height={IconSize} width={IconSize} />
           </span>
-          <span className={ICON_NIGHT}>
+          <span class={ICON_NIGHT}>
             <MoonIcon height={IconSize} width={IconSize} />
           </span>
         </div>

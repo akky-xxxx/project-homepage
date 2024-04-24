@@ -18,5 +18,5 @@ export const Image: FC<Props> = (props) => {
   const style = isThumbnail ? thumbnailStyle : imageStyle
   const source = IMAGE_HOST ? `${IMAGE_HOST}/${imageId}${extension}` : Placeholder
 
-  return <img alt="" className={style} decoding="async" src={source} />
+  return <img alt="" class={style} decoding="async" src={source} />
 }

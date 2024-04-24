@@ -15,7 +15,7 @@ export const ExternalLink: FcWithChildren<Props> = (props) => {
   const { children, href } = props
 
   return (
-    <a className={rootStyle} href={href} rel="noreferrer" target="_blank">
+    <a class={rootStyle} href={href} rel="noreferrer" target="_blank">
       {children}
       <span style={{ fill: "red" }}>
         <NewWindowIcon />

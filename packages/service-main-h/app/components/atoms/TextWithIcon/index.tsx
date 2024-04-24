@@ -10,7 +10,7 @@ type Props = {
 export const TextWithIcon: FcWithChildren<Props> = (props) => {
   const { icon, children } = props
   return (
-    <div className={rootStyle}>
+    <div class={rootStyle}>
       {icon}
       <div>{children}</div>
     </div>

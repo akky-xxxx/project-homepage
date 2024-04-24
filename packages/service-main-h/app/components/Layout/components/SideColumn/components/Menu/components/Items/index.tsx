@@ -18,7 +18,7 @@ export const Items: FC<Props> = (props) => {
         const { item, href } = record
         return (
           <li key={item}>
-            <a className={cx(itemStyle, anchorStyle)} href={href}>
+            <a class={cx(itemStyle, anchorStyle)} href={href}>
               {item}
             </a>
           </li>

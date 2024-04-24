@@ -11,7 +11,7 @@ const { MEDIA_SP } = MediaQueries
 export const ContentsWidthBlock: FcWithChildren = (props) => {
   const { children } = props
 
-  return <div className={root}>{children}</div>
+  return <div class={root}>{children}</div>
 }
 
 const root = css`
