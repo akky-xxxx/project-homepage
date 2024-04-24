@@ -2,11 +2,12 @@ import { createRoute } from "honox/factory"
 import { ImagesDataBase } from "module-images-db/src"
 import { pick } from "remeda"
 
+import { getPhotoText } from "@shared/utils/getPhotoText"
+
 import { PhotoDetail } from "../../../components/pages/PhotoDetail"
 import { getSiblingImages } from "../../../modules/photoDetail/getSiblingImages"
 
 import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
-import {getPhotoText} from "@shared/utils/getPhotoText"
 
 const filterPickKeys = ["date", "location", "tag"] satisfies PhotoGalleryFilterKey[]
 

@@ -3,6 +3,7 @@ import { Heading3 } from "@atoms/Heading3"
 import { Image } from "@atoms/Image"
 import { thumbnailStyle } from "@shared/styles/thumbnailStyle"
 import { getHref } from "@shared/utils/getHref"
+import { getPhotoText } from "@shared/utils/getPhotoText"
 import { getQueries } from "@shared/utils/getQueries"
 
 import { ulStyle } from "./styles/ulStyle"
@@ -10,7 +11,6 @@ import { ulStyle } from "./styles/ulStyle"
 import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
-import {getPhotoText} from "@shared/utils/getPhotoText"
 
 type OptionalImageInfo = ImagesDataBaseRecord | undefined
 
@@ -43,7 +43,6 @@ export const SiblingImages: FC<Props> = (props) => {
 
             return (
               <li key={imageId}>
-                {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
                 <a href={href}>
                   <Image isThumbnail alt={alt} className={thumbnailStyle} imageId={imageId} />
                 </a>

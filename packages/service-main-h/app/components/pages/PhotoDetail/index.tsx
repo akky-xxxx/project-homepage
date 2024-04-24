@@ -5,6 +5,7 @@ import { ForLabel } from "@atoms/ForLabel"
 import { Heading2 } from "@atoms/Heading2"
 import { Image } from "@atoms/Image"
 import { Modal } from "@atoms/Modal"
+import { getPhotoText } from "@shared/utils/getPhotoText"
 
 import { ImageInfo } from "./components/ImageInfo"
 import { SiblingImages } from "./components/SiblingImages"
@@ -12,7 +13,6 @@ import { SiblingImages } from "./components/SiblingImages"
 import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
-import {getPhotoText} from "@shared/utils/getPhotoText"
 
 type OptionalImageInfo = ImagesDataBaseRecord | undefined
 
@@ -25,7 +25,7 @@ const ModalId = "modal-switch"
 
 export const PhotoDetail: FC<Props> = (props) => {
   const { area, date, filterQueries, imageId, siblingImages, tags } = props
-  const alt =  getPhotoText({ area, date, tags })
+  const alt = getPhotoText({ area, date, tags })
   return (
     <div>
       <Heading2>Photo</Heading2>
