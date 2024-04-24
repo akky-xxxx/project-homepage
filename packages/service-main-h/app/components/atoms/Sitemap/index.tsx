@@ -5,6 +5,12 @@ import { Locations, Months, Tags } from "module-images-db/src"
 import { Block } from "@atoms/Block"
 import { Heading4 } from "@atoms/Heading4"
 import { Heading5 } from "@atoms/Heading5"
+import { TextWithIcon } from "@atoms/TextWithIcon"
+import { AboutIcon } from "@icons/AboutIcon"
+import { DateIcon } from "@icons/DateIcon"
+import { LocationIcon } from "@icons/LocationIcon"
+import { PhotoIcon } from "@icons/PhotoIcon"
+import { TagIcon } from "@icons/TagIcon"
 import { TempoFormats } from "@shared/const/TempoFormats"
 import { getHref } from "@shared/utils/getHref"
 
@@ -15,7 +21,9 @@ import type { FC } from "hono/jsx"
 export const Sitemap: FC = () => (
   <Fragment>
     <section>
-      <Heading4>Common</Heading4>
+      <Heading4>
+        <TextWithIcon icon={<AboutIcon />}>Common</TextWithIcon>
+      </Heading4>
 
       <Block>
         <ul class={ulStyle}>
@@ -31,11 +39,15 @@ export const Sitemap: FC = () => (
 
     <section>
       <Block>
-        <Heading4>Photo Gallery</Heading4>
+        <Heading4>
+          <TextWithIcon icon={<PhotoIcon />}>Photo Gallery</TextWithIcon>
+        </Heading4>
 
         <Block>
           <section>
-            <Heading5>Location</Heading5>
+            <Heading5>
+              <TextWithIcon icon={<LocationIcon />}>Location</TextWithIcon>
+            </Heading5>
 
             <ul class={ulStyle}>
               {Locations.map((location) => (
@@ -50,7 +62,9 @@ export const Sitemap: FC = () => (
 
       <Block>
         <section>
-          <Heading5>Dates</Heading5>
+          <Heading5>
+            <TextWithIcon icon={<DateIcon />}>Dates</TextWithIcon>
+          </Heading5>
 
           <ul class={ulStyle}>
             {Months.map((month) => (
@@ -66,7 +80,9 @@ export const Sitemap: FC = () => (
 
       <Block>
         <section>
-          <Heading5>Tags</Heading5>
+          <Heading5>
+            <TextWithIcon icon={<TagIcon />}>Tags</TextWithIcon>
+          </Heading5>
 
           <ul class={ulStyle}>
             {Tags.map((tag) => (
