@@ -1,4 +1,6 @@
+import { ForLabel } from "@atoms/ForLabel"
 import { Heading2 } from "@atoms/Heading2"
+import { Modal } from "@atoms/Modal"
 import { Block } from "app/components/atoms/Block"
 import { Image } from "app/components/atoms/Image"
 
@@ -16,6 +18,8 @@ type Props = ImagesDataBaseRecord & {
   siblingImages: [OptionalImageInfo, OptionalImageInfo]
 }
 
+const ModalId = "modal-switch"
+
 export const PhotoDetail: FC<Props> = (props) => {
   const { area, date, filterQueries, imageId, siblingImages, tags } = props
   return (
@@ -23,7 +27,9 @@ export const PhotoDetail: FC<Props> = (props) => {
       <Heading2>Photo</Heading2>
 
       <Block>
-        <Image imageId={imageId} />
+        <ForLabel htmlFor={ModalId}>
+          <Image imageId={imageId} />
+        </ForLabel>
       </Block>
 
       <Block>
@@ -31,6 +37,10 @@ export const PhotoDetail: FC<Props> = (props) => {
       </Block>
 
       <SiblingImages filterQueries={filterQueries} siblingImages={siblingImages} />
+
+      <Modal modalId={ModalId}>
+        <Image imageId={imageId} />
+      </Modal>
     </div>
   )
 }
