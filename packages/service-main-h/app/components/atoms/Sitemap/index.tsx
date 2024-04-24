@@ -1,3 +1,4 @@
+import { format } from "@formkit/tempo"
 import { css } from "hono/css"
 import { Fragment } from "hono/jsx"
 import { Locations, Months, Tags } from "module-images-db/src"
@@ -5,6 +6,7 @@ import { Locations, Months, Tags } from "module-images-db/src"
 import { Block } from "@atoms/Block"
 import { Heading4 } from "@atoms/Heading4"
 import { Heading5 } from "@atoms/Heading5"
+import { TempoFormats } from "@shared/const/TempoFormats"
 import { getHref } from "@shared/utils/getHref"
 
 import type { FC } from "hono/jsx"
@@ -52,7 +54,9 @@ export const Sitemap: FC = () => (
           <ul class={ulStyle}>
             {Months.map((month) => (
               <li key={month}>
-                <a href={getHref({ date: month, id: "PhotoDateDetail" })}>{month}</a>
+                <a href={getHref({ date: month, id: "PhotoDateDetail" })}>
+                  {format(month, TempoFormats.YYYY年M月)}
+                </a>
               </li>
             ))}
           </ul>
