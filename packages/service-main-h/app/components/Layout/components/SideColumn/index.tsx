@@ -8,9 +8,12 @@ import { navigationStyle } from "./styles/navigationStyle"
 import { rootStyle } from "./styles/rootStyle"
 import { siteNameStyle } from "./styles/siteNameStyle"
 
+import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 
-export const SideColumn: FC = () => (
+type Props = FilterQueries
+
+export const SideColumn: FC = (props: Props) => (
   <div class={rootStyle}>
     <header class={headerStyle}>
       <h1 class={heading1Style}>
@@ -25,7 +28,7 @@ export const SideColumn: FC = () => (
       <Hamburger />
     </label>
     <nav class={navigationStyle}>
-      <Menu />
+      <Menu {...props} />
     </nav>
     <div class={backdropStyle} />
   </div>

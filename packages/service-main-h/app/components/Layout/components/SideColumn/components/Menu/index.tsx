@@ -19,6 +19,7 @@ import { anchorStyle } from "./components/Items/styles/anchorStyle"
 import { itemStyle } from "./components/styles/itemStyle"
 import { menuStyle } from "./styles/menuStyle"
 
+import type { FilterQueries } from "@shared/types/FilterQueries"
 import type { FC } from "hono/jsx"
 
 const IconProps = {
@@ -26,7 +27,10 @@ const IconProps = {
   width: 20,
 } as const
 
-export const Menu: FC = () => {
+type Props = FilterQueries
+
+export const Menu: FC<Props> = (props) => {
+  const { date, location, tag } = props
   const locationItems = Locations.map((location) => ({
     href: getHref({ id: "PhotoLocationDetail", location }),
     item: location,
@@ -50,19 +54,23 @@ export const Menu: FC = () => {
               </a>
             </li>
             <li>
-              <Accordion icon={<LocationIcon {...IconProps} />} title="Locations">
+              <Accordion
+                icon={<LocationIcon {...IconProps} />}
+                isOpen={Boolean(location)}
+                title="Locations"
+              >
                 <Items items={locationItems} />
               </Accordion>
             </li>
 
             <li>
-              <Accordion icon={<TagIcon {...IconProps} />} title="Tags">
+              <Accordion icon={<TagIcon {...IconProps} />} isOpen={Boolean(tag)} title="Tags">
                 <Items items={tagItems} />
               </Accordion>
             </li>
 
             <li>
-              <Accordion icon={<DateIcon {...IconProps} />} title="Dates">
+              <Accordion icon={<DateIcon {...IconProps} />} isOpen={Boolean(date)} title="Dates">
                 <Items items={monthItems} />
               </Accordion>
             </li>
