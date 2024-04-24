@@ -8,6 +8,7 @@ module.exports = {
     "../../config/eslint/import/index.cjs",
     "./config/eslint/import/index.cjs",
     "./config/eslint/strictCheck/index.cjs",
+    "./config/eslint/react/index.cjs",
   ],
 
   ignorePatterns: ["**/dist/**"],
