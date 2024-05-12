@@ -9,11 +9,12 @@ type Props =
       imageId: string
     }
   | {
-      id: "PhotoGallery"
-    }
-  | {
       id: "Profile"
     }
+  | (Partial<Record<PhotoGalleryFilterKey, string>> & {
+      id: "PhotoGallery"
+      page?: number
+    })
   | (Record<Extract<PhotoGalleryFilterKey, "date">, string> & {
       id: "PhotoDateDetail"
     })

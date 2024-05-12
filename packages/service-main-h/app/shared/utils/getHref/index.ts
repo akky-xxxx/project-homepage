@@ -1,5 +1,7 @@
 import { unreachable } from "@shared/utils/unreachable"
 
+import { getPhotoGalleryHref } from "./modules/getPhotoGalleryHref"
+
 import type { GetHref } from "@shared/utils/getHref/types/GetHref"
 
 // eslint-disable-next-line max-statements, complexity
@@ -27,7 +29,7 @@ export const getHref: GetHref = (props) => {
       return `/photo-gallery?tag=${encodeURIComponent(tag)}`
     }
     case "PhotoGallery": {
-      return "/photo-gallery"
+      return getPhotoGalleryHref(props)
     }
     case "Profile": {
       return "/profile"
