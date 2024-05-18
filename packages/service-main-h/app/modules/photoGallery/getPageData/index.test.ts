@@ -1,5 +1,7 @@
 import { describe, it, expect } from "bun:test"
 
+import { ImagesPerPage } from "@shared/const/ImagesPerPage"
+
 import { getPageData } from "."
 
 describe("getPageData", () => {
@@ -19,10 +21,10 @@ describe("getPageData", () => {
 
   describe("totalPages", () => {
     it.each<[number, number]>([
-      [10, 1],
-      [11, 2],
-      [20, 2],
-      [21, 3],
+      [ImagesPerPage, 1],
+      [ImagesPerPage + 1, 2],
+      [ImagesPerPage * 2, 2],
+      [ImagesPerPage * 2 + 1, 3],
     ])("allImages が「%i」の時、「%i」を返す", (input, output) => {
       const { totalPages } = getPageData("", input)
       expect(totalPages).toBe(output)

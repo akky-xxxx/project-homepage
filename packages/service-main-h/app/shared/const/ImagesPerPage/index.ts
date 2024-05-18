@@ -1,1 +1,1 @@
-export const ImagesPerPage = 10
+export const ImagesPerPage = 30
