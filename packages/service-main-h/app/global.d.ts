@@ -3,12 +3,12 @@
 /* eslint-disable */
 import {} from 'hono'
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 
 type Head = {
   description: string
   title?: string
-  filterQueries?: FilterQueries
+  photoGallerySearchQueries?: PhotoGallerySearchQueries
 }
 
 declare module 'hono' {

@@ -2,15 +2,15 @@ import { isIncludesTag } from "./modules/isIncludesTag"
 import { isSameLocation } from "./modules/isSameLocation"
 import { isStartsWithDate } from "./modules/isStartsWithDate"
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
-type GetFilteredImages = (
-  filterQueries: FilterQueries,
+type GetSearchedImages = (
+  photoGallerySearchQueries: PhotoGallerySearchQueries,
 ) => (images: ImagesDataBaseRecord[]) => ImagesDataBaseRecord[]
 
-export const getFilteredImages: GetFilteredImages = (filterQueries) => (images) => {
-  const { date, location, tag } = filterQueries
+export const getSearchedImages: GetSearchedImages = (photoGallerySearchQueries) => (images) => {
+  const { date, location, tag } = photoGallerySearchQueries
 
   const isSameLocationMain = isSameLocation(location || "")
   const isStartsWithDateMain = isStartsWithDate(date || "")

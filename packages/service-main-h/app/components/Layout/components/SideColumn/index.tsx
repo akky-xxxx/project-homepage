@@ -8,10 +8,10 @@ import { navigationStyle } from "./styles/navigationStyle"
 import { rootStyle } from "./styles/rootStyle"
 import { siteNameStyle } from "./styles/siteNameStyle"
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
 
-type Props = FilterQueries
+type Props = PhotoGallerySearchQueries
 
 export const SideColumn: FC = (props: Props) => (
   <div class={rootStyle}>

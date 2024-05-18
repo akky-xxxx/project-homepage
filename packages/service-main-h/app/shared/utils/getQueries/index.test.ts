@@ -2,10 +2,10 @@ import { describe, it, expect } from "bun:test"
 
 import { getQueries } from "."
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 
 describe("getQueries", () => {
-  it.each<[FilterQueries | undefined, string]>([
+  it.each<[PhotoGallerySearchQueries | undefined, string]>([
     [undefined, ""],
     [{}, ""],
     [{ date: "2024-01-01" }, "date=2024-01-01"],

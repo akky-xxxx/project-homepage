@@ -10,17 +10,17 @@ import { getQueries } from "@shared/utils/getQueries"
 
 import { ulStyle } from "./styles/ulStyle"
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 type Props = {
-  filterQueries?: FilterQueries
+  searchQueries?: PhotoGallerySearchQueries
   images: ImagesDataBaseRecord[]
 }
 
 export const Images: FC<Props> = (props) => {
-  const { filterQueries, images } = props
+  const { searchQueries, images } = props
 
   if (!images.length)
     return (
@@ -46,7 +46,7 @@ export const Images: FC<Props> = (props) => {
     <ul class={ulStyle}>
       {images.map((imageInfo) => {
         const { imageId } = imageInfo
-        const href = [getHref({ id: "PhotoDetail", imageId }), getQueries(filterQueries)]
+        const href = [getHref({ id: "PhotoDetail", imageId }), getQueries(searchQueries)]
           .filter(Boolean)
           .join("?")
         const alt = getPhotoText(imageInfo)

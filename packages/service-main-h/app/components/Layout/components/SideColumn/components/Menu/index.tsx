@@ -19,7 +19,7 @@ import { anchorStyle } from "./components/Items/styles/anchorStyle"
 import { itemStyle } from "./components/styles/itemStyle"
 import { menuStyle } from "./styles/menuStyle"
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
 
 const IconProps = {
@@ -27,7 +27,7 @@ const IconProps = {
   width: 20,
 } as const
 
-type Props = FilterQueries
+type Props = PhotoGallerySearchQueries
 
 export const Menu: FC<Props> = (props) => {
   const { date, location, tag } = props

@@ -1,11 +1,11 @@
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 
 const FirstIndex = 0
 const Previous = -1
 const Next = 1
 const Same = 0
 
-type GetQueries = (queries?: FilterQueries) => string
+type GetQueries = (queries?: PhotoGallerySearchQueries) => string
 
 export const getQueries: GetQueries = (queries) => {
   if (!queries) return ""

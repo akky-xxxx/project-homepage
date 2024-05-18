@@ -1,4 +1,4 @@
-import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
+import type { PhotoGallerySearchKey } from "app/shared/types/PhotoGallerySearchKey"
 
 type Props =
   | {
@@ -11,17 +11,17 @@ type Props =
   | {
       id: "Profile"
     }
-  | (Partial<Record<PhotoGalleryFilterKey, string>> & {
+  | (Partial<Record<PhotoGallerySearchKey, string>> & {
       id: "PhotoGallery"
       page?: number
     })
-  | (Record<Extract<PhotoGalleryFilterKey, "date">, string> & {
+  | (Record<Extract<PhotoGallerySearchKey, "date">, string> & {
       id: "PhotoDateDetail"
     })
-  | (Record<Extract<PhotoGalleryFilterKey, "location">, string> & {
+  | (Record<Extract<PhotoGallerySearchKey, "location">, string> & {
       id: "PhotoLocationDetail"
     })
-  | (Record<Extract<PhotoGalleryFilterKey, "tag">, string> & {
+  | (Record<Extract<PhotoGallerySearchKey, "tag">, string> & {
       id: "PhotoTagDetail"
     })
 

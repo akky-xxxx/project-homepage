@@ -7,19 +7,19 @@ import { getDisplayAnchorText } from "./modules/getDisplayAnchorText"
 import { getPageForAnchor } from "./modules/getPageForAnchor"
 import { getPaginationData } from "./modules/getPaginationData"
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
 
 const { SPACE12, SPACE16 } = Spaces
 
 type Props = {
   currentPage: number
-  filterQueries: FilterQueries
+  searchQueries: PhotoGallerySearchQueries
   totalPages: number
 }
 
 export const Pagination: FC<Props> = (props) => {
-  const { currentPage, filterQueries, totalPages } = props
+  const { currentPage, searchQueries, totalPages } = props
   const paginationData = getPaginationData({ currentPage, totalPages })
 
   return (
@@ -34,7 +34,7 @@ export const Pagination: FC<Props> = (props) => {
         const href = getHref({
           id: "PhotoGallery",
           page,
-          ...filterQueries,
+          ...searchQueries,
         })
 
         return (

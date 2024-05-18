@@ -3,16 +3,16 @@ import { mainStyle } from "./styles/mainStyle"
 import { rootStyle } from "./styles/rootStyle"
 
 import type { FcWithChildren } from "@shared/types/FcWithChildren"
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 
-type Props = FilterQueries
+type Props = PhotoGallerySearchQueries
 
 export const Layout: FcWithChildren<Props> = (props) => {
-  const { children, ...filterQueries } = props
+  const { children, ...photoGallerySearchQueries } = props
 
   return (
     <div class={rootStyle}>
-      <SideColumn {...filterQueries} />
+      <SideColumn {...photoGallerySearchQueries} />
 
       <main class={mainStyle}>{children}</main>
     </div>

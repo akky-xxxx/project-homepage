@@ -7,34 +7,34 @@ import { Images } from "@atoms/Images"
 import { Conditions } from "./components/Conditions"
 import { Pagination } from "./components/Pagination"
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 type Props = {
   currentPage: number
   images: ImagesDataBaseRecord[]
-  filterQueries: FilterQueries
+  searchQueries: PhotoGallerySearchQueries
   totalPages: number
 }
 
 const ONE_PAGE = 1
 
 export const PhotoGallery: FC<Props> = (props) => {
-  const { currentPage, images, filterQueries, totalPages } = props
+  const { currentPage, images, searchQueries, totalPages } = props
 
   return (
     <div>
       <Heading2>Photo Gallery</Heading2>
 
-      <Conditions filterQueries={filterQueries} />
+      <Conditions searchQueries={searchQueries} />
 
       <Block>
         {currentPage} of {totalPages} pages
       </Block>
 
       <Block>
-        <Images filterQueries={filterQueries} images={images} />
+        <Images searchQueries={searchQueries} images={images} />
       </Block>
 
       {totalPages > ONE_PAGE && (
@@ -42,7 +42,7 @@ export const PhotoGallery: FC<Props> = (props) => {
           <div class={paginationWrapperStyle}>
             <Pagination
               currentPage={currentPage}
-              filterQueries={filterQueries}
+              searchQueries={searchQueries}
               totalPages={totalPages}
             />
           </div>

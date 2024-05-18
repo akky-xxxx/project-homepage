@@ -1,6 +1,6 @@
-import { getFilteredImages } from "@shared/utils/getFilteredImages"
+import { getSearchedImages } from "app/shared/utils/getSearchedImages"
 
-import type { FilterQueries } from "@shared/types/FilterQueries"
+import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 const Sibling = 1
@@ -10,11 +10,11 @@ type OptionalImageInfo = ImagesDataBaseRecord | undefined
 type GetSiblingImages = (
   imageId: string,
   images: ImagesDataBaseRecord[],
-  filterQueries: FilterQueries,
+  searchQueries: PhotoGallerySearchQueries,
 ) => [OptionalImageInfo, OptionalImageInfo]
 
-export const getSiblingImages: GetSiblingImages = (imageId, images, filterQueries) => {
-  const filteredImages = getFilteredImages(filterQueries)(images)
+export const getSiblingImages: GetSiblingImages = (imageId, images, searchQueries) => {
+  const filteredImages = getSearchedImages(searchQueries)(images)
   const currentIndex = filteredImages.findIndex((imageInfo) => imageInfo.imageId === imageId)
   return [
     filteredImages[currentIndex - Sibling],

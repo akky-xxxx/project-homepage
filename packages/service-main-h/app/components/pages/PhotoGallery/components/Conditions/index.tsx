@@ -7,13 +7,13 @@ import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
 import { TempoFormats } from "@shared/const/TempoFormats"
 
-import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
+import type { PhotoGallerySearchKey } from "app/shared/types/PhotoGallerySearchKey"
 import type { FC, Child } from "hono/jsx"
 
 const FullDigitDate = 10
 
-const getConditionData = (filterQueries: Props["filterQueries"]) => {
-  const { date, location, tag } = filterQueries
+const getConditionData = (searchQueries: Props["searchQueries"]) => {
+  const { date, location, tag } = searchQueries
   const baseArray: Child | string = []
 
   if (location) {
@@ -33,12 +33,12 @@ const getConditionData = (filterQueries: Props["filterQueries"]) => {
 }
 
 type Props = {
-  filterQueries: Partial<Record<PhotoGalleryFilterKey, string>>
+  searchQueries: Partial<Record<PhotoGallerySearchKey, string>>
 }
 
 export const Conditions: FC<Props> = (props) => {
-  const { filterQueries } = props
-  const conditionData = getConditionData(filterQueries)
+  const { searchQueries } = props
+  const conditionData = getConditionData(searchQueries)
   // TODO: early return に適した値が型上ないための回避策
   // eslint-disable-next-line react/jsx-fragments, react/jsx-no-useless-fragment
   if (!conditionData.length) return <></>
