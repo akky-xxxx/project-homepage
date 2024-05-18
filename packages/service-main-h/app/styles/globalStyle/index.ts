@@ -1,8 +1,9 @@
 import { css } from "hono/css"
 
+import { ShowClasses } from "@shared/const/ShowClasses"
 import { MediaQueries } from "@shared/styles/MediaQueries"
 
-const { MEDIA_ONLY_HOVER } = MediaQueries
+const { MEDIA_ONLY_HOVER, MEDIA_PC, MEDIA_SP } = MediaQueries
 
 export const globalStyle = css`
   :-hono-global {
@@ -48,6 +49,20 @@ export const globalStyle = css`
       ${MEDIA_ONLY_HOVER} {
         &:hover {
           opacity: 0.5;
+        }
+      }
+    }
+
+    body {
+      .${ShowClasses.PC} {
+        ${MEDIA_SP} {
+          display: none;
+        }
+      }
+
+      .${ShowClasses.SP} {
+        ${MEDIA_PC} {
+          display: none;
         }
       }
     }
