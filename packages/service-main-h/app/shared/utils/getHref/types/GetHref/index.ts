@@ -1,4 +1,4 @@
-import type { PhotoGallerySearchKey } from "app/shared/types/PhotoGallerySearchKey"
+import type { PhotoGallerySearchQueries } from "@shared/types/PhotoGallerySearchQueries"
 
 type Props =
   | {
@@ -14,17 +14,17 @@ type Props =
   | {
       id: "Search"
     }
-  | (Partial<Record<PhotoGallerySearchKey, string>> & {
+  | (PhotoGallerySearchQueries & {
       id: "PhotoGallery"
       page?: number
     })
-  | (Record<Extract<PhotoGallerySearchKey, "date">, string> & {
+  | (Pick<Required<PhotoGallerySearchQueries>, "date"> & {
       id: "PhotoDateDetail"
     })
-  | (Record<Extract<PhotoGallerySearchKey, "location">, string> & {
+  | (Pick<Required<PhotoGallerySearchQueries>, "location"> & {
       id: "PhotoLocationDetail"
     })
-  | (Record<Extract<PhotoGallerySearchKey, "tag">, string> & {
+  | (Pick<Required<PhotoGallerySearchQueries>, "tag"> & {
       id: "PhotoTagDetail"
     })
 

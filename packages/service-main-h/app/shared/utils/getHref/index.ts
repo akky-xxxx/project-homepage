@@ -26,7 +26,8 @@ export const getHref: GetHref = (props) => {
     }
     case "PhotoTagDetail": {
       const { tag } = props
-      return `/photo-gallery?tag=${encodeURIComponent(tag)}`
+      const query = tag.map((record) => `tag=${encodeURIComponent(record)}}`).join("&")
+      return `/photo-gallery?tag=${query}`
     }
     case "PhotoGallery": {
       return getPhotoGalleryHref(props)

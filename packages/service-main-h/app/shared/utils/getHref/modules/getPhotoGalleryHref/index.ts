@@ -12,7 +12,7 @@ export const getPhotoGalleryHref: GetPhotoGalleryHref = (props) => {
   const { date, location, page, tag } = props
 
   // TODO: filter(Boolean) で型が変わるようになったらリファクタ
-  const queries: [string, number | string][] = []
+  const queries: [string, string[] | number | string][] = []
   if (location) queries.push(["location", location])
   if (date) queries.push(["date", date])
   if (tag) queries.push(["tag", tag])

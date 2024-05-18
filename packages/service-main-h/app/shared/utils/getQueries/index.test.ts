@@ -10,12 +10,12 @@ describe("getQueries", () => {
     [{}, ""],
     [{ date: "2024-01-01" }, "date=2024-01-01"],
     [{ location: "神奈川県" }, "location=神奈川県"],
-    [{ tag: "タグ" }, "tag=タグ"],
+    [{ tag: ["タグ"] }, "tag=タグ"],
     [
       {
         date: "2024-01-01",
         location: "神奈川県",
-        tag: "タグ",
+        tag: ["タグ"],
       },
       "date=2024-01-01&location=神奈川県&tag=タグ",
     ],
