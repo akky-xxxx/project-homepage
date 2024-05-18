@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import { format } from "@formkit/tempo"
 import { cx } from "hono/css"
 import { Months, Locations, Tags } from "module-images-db/src"
@@ -51,6 +52,11 @@ export const Menu: FC<Props> = (props) => {
             <li>
               <a class={cx(itemStyle, anchorStyle)} href={getHref({ id: "PhotoGallery" })}>
                 <TextWithIcon icon={<AllIcon {...IconProps} />}>All</TextWithIcon>
+              </a>
+            </li>
+            <li>
+              <a class={cx(itemStyle, anchorStyle)} href={getHref({ id: "Search" })}>
+                <TextWithIcon icon={<ProfileIcon {...IconProps} />}>Search</TextWithIcon>
               </a>
             </li>
             <li>
