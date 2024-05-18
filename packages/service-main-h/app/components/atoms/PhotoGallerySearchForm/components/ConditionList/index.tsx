@@ -7,7 +7,8 @@ import type { FC } from "hono/jsx"
 
 const { SPACE04, SPACE12 } = Spaces
 
-type ListItemProps = ConditionComponentProps["items"][number] & Pick<ConditionComponentProps, "isMultiple" | "name">
+type ListItemProps = ConditionComponentProps["items"][number] &
+  Pick<ConditionComponentProps, "isMultiple" | "name">
 
 const ListItem: FC<ListItemProps> = (props) => {
   const { display, isMultiple, name, value } = props

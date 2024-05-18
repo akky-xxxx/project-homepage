@@ -6,6 +6,7 @@ import { getHref } from "@shared/utils/getHref"
 import { getDisplayAnchorText } from "./modules/getDisplayAnchorText"
 import { getPageForAnchor } from "./modules/getPageForAnchor"
 import { getPaginationData } from "./modules/getPaginationData"
+import { getShowClass } from "./modules/getShowClass"
 
 import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
@@ -25,9 +26,10 @@ export const Pagination: FC<Props> = (props) => {
   return (
     <div class={rootStyle}>
       {paginationData.map((value) => {
+        const showClass = getShowClass(value)
         if (value === "ellipsis" || value === currentPage) {
           const displayText = value === "ellipsis" ? "..." : value
-          return <span className={itemStyle}>{displayText}</span>
+          return <span className={cx(itemStyle, showClass)}>{displayText}</span>
         }
 
         const page = getPageForAnchor({ currentPage, value })
@@ -38,7 +40,7 @@ export const Pagination: FC<Props> = (props) => {
         })
 
         return (
-          <a className={cx(itemStyle, anchorStyle)} href={href}>
+          <a className={cx(itemStyle, anchorStyle, showClass)} href={href}>
             {getDisplayAnchorText(value)}
           </a>
         )
