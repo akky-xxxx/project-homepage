@@ -32,7 +32,7 @@ export const Pagination: FC<Props> = (props) => {
           return <span className={cx(itemStyle, showClass)}>{displayText}</span>
         }
 
-        const page = getPageForAnchor({ currentPage, value })
+        const page = getPageForAnchor({ currentPage, totalPages, value })
         const href = getHref({
           id: "PhotoGallery",
           page,

@@ -10,8 +10,10 @@ type TestCase = [Props, Return]
 describe("getDisplayAnchorText", () => {
   describe("引数が文字列の時", () => {
     it.each<TestCase>([
+      ["first", "<<"],
       ["previous", "<"],
       ["next", ">"],
+      ["last", ">>"],
     ])("引数が「%s」の時、「%s」を返す", (input, output) => {
       expect(getDisplayAnchorText(input)).toStrictEqual(output)
     })

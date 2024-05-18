@@ -13,7 +13,7 @@ describe("getShowClass", () => {
   })
 
   describe("is-show-sp を返すパターン", () => {
-    it.each<Props>(["previous", "next"])("引数が「%o」の時", (input) => {
+    it.each<Props>(["first", "previous", "next", "last"])("引数が「%o」の時", (input) => {
       expect(getShowClass(input)).toStrictEqual("is-show-sp")
     })
   })

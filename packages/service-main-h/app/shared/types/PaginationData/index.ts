@@ -1,1 +1,1 @@
-export type PaginationData = number | "ellipsis" | "next" | "previous"
+export type PaginationData = number | "ellipsis" | "first" | "last" | "next" | "previous"
