@@ -27,11 +27,7 @@ export const Pagination: FC<Props> = (props) => {
       {paginationData.map((value) => {
         if (value === "ellipsis" || value === currentPage) {
           const displayText = value === "ellipsis" ? "..." : value
-          return (
-            <span className={itemStyle}>
-              {displayText}
-            </span>
-          )
+          return <span className={itemStyle}>{displayText}</span>
         }
 
         const page = getPageForAnchor({ currentPage, value })

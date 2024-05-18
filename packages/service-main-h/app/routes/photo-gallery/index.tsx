@@ -3,10 +3,10 @@ import { ImagesDataBase } from "module-images-db/src"
 import { pick } from "remeda"
 
 import { ImagesPerPage } from "@shared/const/ImagesPerPage"
+import { getFilteredImages } from "@shared/utils/getFilteredImages"
 
 import { PhotoGallery } from "../../components/pages/PhotoGallery"
 import { getPageData } from "../../modules/photoGallery/getPageData"
-import { getFilteredImages } from "../../shared/utils/getFilteredImages"
 
 import type { PhotoGalleryFilterKey } from "@shared/types/PhotoGalleryFilterKey"
 
