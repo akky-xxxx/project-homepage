@@ -7,14 +7,16 @@ import { getPhotoText } from "@shared/utils/getPhotoText"
 import { PhotoDetail } from "../../../components/pages/PhotoDetail"
 import { getSiblingImages } from "../../../modules/photoDetail/getSiblingImages"
 
-import type { PhotoGallerySearchKey } from "app/shared/types/PhotoGallerySearchKey"
-
-const filterPickKeys = ["date", "location", "tag"] satisfies PhotoGallerySearchKey[]
-
 export default createRoute((c) => {
   const imageInfo = ImagesDataBase.find((record) => record.imageId === c.req.param("imageId"))
   if (!imageInfo) return c.notFound()
-  const searchQueries = pick(c.req.query(), filterPickKeys)
+
+  const query = c.req.query()
+  const queries = c.req.queries()
+  const searchQueries = {
+    ...pick(query, ["data", "location"]),
+    ...pick(queries, ["tag"]),
+  }
   const { imageId } = imageInfo
   const siblingImages = getSiblingImages(imageId, ImagesDataBase, searchQueries)
 
