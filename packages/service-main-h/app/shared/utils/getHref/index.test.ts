@@ -61,6 +61,7 @@ describe("shared/utils/getHref", () => {
     [{ id: "PhotoDateDetail", date: "date-value" }, "/photo-gallery?date=date-value"],
     [{ id: "PhotoTagDetail", tag: "tag-value" }, "/photo-gallery?tag=tag-value"],
     [{ id: "Profile" }, "/profile"],
+    [{ id: "Search" }, "/search"],
   ] as const)("引数が「%o」の時、「%s」を返す", (input, output) => {
     expect(getHref(input)).toBe(output)
   })

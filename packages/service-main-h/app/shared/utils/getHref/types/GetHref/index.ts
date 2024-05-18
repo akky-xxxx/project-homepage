@@ -11,6 +11,9 @@ type Props =
   | {
       id: "Profile"
     }
+  | {
+      id: "Search"
+    }
   | (Partial<Record<PhotoGallerySearchKey, string>> & {
       id: "PhotoGallery"
       page?: number

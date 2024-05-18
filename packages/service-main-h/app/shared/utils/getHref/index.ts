@@ -34,6 +34,9 @@ export const getHref: GetHref = (props) => {
     case "Profile": {
       return "/profile"
     }
+    case "Search": {
+      return "/search"
+    }
     default: {
       return unreachable(id)
     }
