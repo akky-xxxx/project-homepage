@@ -9,7 +9,7 @@ describe("shared/utils/getExteriorMode/index.test.ts", () => {
       ["", "light"],
       ["test", "light"],
       ["light", "light"],
-    ] as const)("引数が「%s」の時", (input, output) => {
+    ] as const)("引数が「%o」の時", (input, output) => {
       expect(getExteriorMode(input)).toBe(output)
     })
   })

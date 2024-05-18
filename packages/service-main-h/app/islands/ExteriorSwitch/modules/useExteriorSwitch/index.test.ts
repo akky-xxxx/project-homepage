@@ -17,7 +17,7 @@ describe("useExteriorSwitch", () => {
         },
         false,
       ],
-    ] as const)("引数が「%o」の時、 isChecked の値は「%s」", (input, output) => {
+    ] as const)("引数が「%o」の時、 isChecked の値は「%o」", (input, output) => {
       expect(useExteriorSwitch(input).isChecked).toBe(output)
     })
   })
