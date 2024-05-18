@@ -26,8 +26,8 @@ export default createRoute((c) => {
   return c.render(
     <PhotoGallery
       currentPage={currentPage}
-      searchQueries={searchQueries}
       images={images}
+      searchQueries={searchQueries}
       totalPages={totalPages}
     />,
     {

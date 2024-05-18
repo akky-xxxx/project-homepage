@@ -34,7 +34,7 @@ export const PhotoGallery: FC<Props> = (props) => {
       </Block>
 
       <Block>
-        <Images searchQueries={searchQueries} images={images} />
+        <Images images={images} searchQueries={searchQueries} />
       </Block>
 
       {totalPages > ONE_PAGE && (
