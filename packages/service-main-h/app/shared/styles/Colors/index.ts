@@ -4,6 +4,8 @@ import type { Color } from "../../types/Color"
 type ColorsTypeKey = Uppercase<`COLOR_${number | string}`>
 type ColorsType = Record<ColorsTypeKey, Color> | Record<Uppercase<string>, ByExterior>
 
+const COLOR_0000AA = "#0000AA"
+const COLOR_0000FF = "#0000FF"
 const COLOR_303030 = "#303030"
 const COLOR_363636 = "#363636"
 const COLOR_663030 = "#663030"
@@ -33,7 +35,19 @@ const PRIMARY_RED = {
   LIGHT: COLOR_AA0000,
 } as const satisfies ByExterior
 
+const ACTIVE_COLOR = {
+  DARK: COLOR_0000AA,
+  LIGHT: COLOR_0000FF,
+} as const satisfies ByExterior
+
+const NEGATIVE_COLOR = {
+  DARK: COLOR_AA0000,
+  LIGHT: COLOR_FF0000,
+} as const satisfies ByExterior
+
 export const Colors = {
+  COLOR_0000AA,
+  COLOR_0000FF,
   COLOR_303030,
   COLOR_363636,
   COLOR_663030,
@@ -48,4 +62,7 @@ export const Colors = {
   PRIMARY_RED,
 
   SECONDARY_BACKGROUND,
+
+  ACTIVE_COLOR,
+  NEGATIVE_COLOR,
 } as const satisfies ColorsType
