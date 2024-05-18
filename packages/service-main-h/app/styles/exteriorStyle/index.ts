@@ -3,7 +3,14 @@ import { css } from "hono/css"
 import { Colors } from "@shared/styles/Colors"
 import { getLightDarkValue } from "@shared/utils/getLightDarkValue"
 
-const { PRIMARY_BACKGROUND, PRIMARY_COLOR, PRIMARY_RED, SECONDARY_BACKGROUND } = Colors
+const {
+  PRIMARY_BACKGROUND,
+  PRIMARY_COLOR,
+  PRIMARY_RED,
+  SECONDARY_BACKGROUND,
+  ACTIVE_COLOR,
+  NEGATIVE_COLOR,
+} = Colors
 
 export const exteriorStyle = css`
   :root {
@@ -12,6 +19,9 @@ export const exteriorStyle = css`
     --primary-red: ${getLightDarkValue(PRIMARY_RED)};
 
     --secondary-background: ${getLightDarkValue(SECONDARY_BACKGROUND)};
+
+    --active-color: ${getLightDarkValue(ACTIVE_COLOR)};
+    --negative-color: ${getLightDarkValue(NEGATIVE_COLOR)};
 
     @media (prefers-color-scheme: light) {
       color-scheme: light;
