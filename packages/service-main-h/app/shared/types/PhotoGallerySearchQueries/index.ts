@@ -1,3 +1,6 @@
 import type { PhotoGallerySearchKey } from "app/shared/types/PhotoGallerySearchKey"
 
-export type PhotoGallerySearchQueries = Partial<Record<PhotoGallerySearchKey, string>>
+type StringQuery = Record<Extract<PhotoGallerySearchKey, "date" | "location">, string>
+type StringArrayQuery = Record<Extract<PhotoGallerySearchKey, "tag">, string[]>
+
+export type PhotoGallerySearchQueries = Partial<StringArrayQuery & StringQuery>
