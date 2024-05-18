@@ -1,6 +1,7 @@
 import { css } from "hono/css"
 
 import { Block } from "@atoms/Block"
+import { ContentsWidthBlock } from "@atoms/ContentsWidthBlock"
 import { Heading2 } from "@atoms/Heading2"
 import { Images } from "@atoms/Images"
 
@@ -30,7 +31,9 @@ export const PhotoGallery: FC<Props> = (props) => {
       <Conditions searchQueries={searchQueries} />
 
       <Block>
-        {currentPage} of {totalPages} pages
+        <ContentsWidthBlock>
+          {currentPage} of {totalPages} pages
+        </ContentsWidthBlock>
       </Block>
 
       <Block>
