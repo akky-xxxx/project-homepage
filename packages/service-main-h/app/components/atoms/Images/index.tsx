@@ -25,12 +25,12 @@ export const Images: FC<Props> = (props) => {
   if (!images.length)
     return (
       <section>
-        <Heading3>Not found image</Heading3>
-        <Block>
-          <ContentsWidthBlock>
+        <ContentsWidthBlock>
+          <Heading3>Not found image</Heading3>
+          <Block>
             <p>Please search other conditions.</p>
-          </ContentsWidthBlock>
-        </Block>
+          </Block>
+        </ContentsWidthBlock>
 
         <section>
           <Block>
