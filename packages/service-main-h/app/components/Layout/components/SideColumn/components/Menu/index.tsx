@@ -64,7 +64,11 @@ export const Menu: FC<Props> = (props) => {
             </li>
 
             <li>
-              <Accordion icon={<TagIcon {...IconProps} />} isOpen={Boolean(tag)} title="Tags">
+              <Accordion
+                icon={<TagIcon {...IconProps} />}
+                isOpen={Boolean(tag?.length)}
+                title="Tags"
+              >
                 <Items items={tagItems} />
               </Accordion>
             </li>
