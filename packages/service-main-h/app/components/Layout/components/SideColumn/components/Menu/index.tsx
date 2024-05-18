@@ -37,7 +37,7 @@ export const Menu: FC<Props> = (props) => {
     item,
   }))
   const tagItems = Tags.map((item) => ({
-    href: getHref({ id: "PhotoTagDetail", tag: item }),
+    href: getHref({ id: "PhotoTagDetail", tag: [item] }),
     item,
   }))
   const monthItems = Months.map((item) => ({

@@ -66,7 +66,7 @@ export const PhotoGallerySitemap: FC = () => (
         <ul className={sitemapUlStyle}>
           {Tags.map((tag) => (
             <li key={tag}>
-              <a href={getHref({ id: "PhotoTagDetail", tag })}>{tag}</a>
+              <a href={getHref({ id: "PhotoTagDetail", tag: [tag] })}>{tag}</a>
             </li>
           ))}
         </ul>

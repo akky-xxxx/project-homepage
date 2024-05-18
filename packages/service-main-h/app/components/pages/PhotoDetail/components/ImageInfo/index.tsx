@@ -43,7 +43,7 @@ export const ImageInfo: FC<Props> = (props) => {
       <dd class={tagsWrapperStyle}>
         <ul class={tagsStyle}>
           {tags.map((tag) => {
-            const tagHref = getHref({ id: "PhotoTagDetail", tag })
+            const tagHref = getHref({ id: "PhotoTagDetail", tag: [tag] })
             return (
               <li>
                 <a href={tagHref}>{tag}</a>
