@@ -2,6 +2,7 @@ import { format } from "@formkit/tempo"
 import { css } from "hono/css"
 
 import { Block } from "@atoms/Block"
+import { ContentsWidthBlock } from "@atoms/ContentsWidthBlock"
 import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
@@ -45,10 +46,12 @@ export const Conditions: FC<Props> = (props) => {
 
   return (
     <Block>
-      <p class={conditionStyle}>
-        <span>検索条件：</span>
-        {conditionData.map((record) => record)}
-      </p>
+      <ContentsWidthBlock>
+        <p class={conditionStyle}>
+          <span>検索条件：</span>
+          {conditionData.map((record) => record)}
+        </p>
+      </ContentsWidthBlock>
     </Block>
   )
 }
