@@ -1,6 +1,8 @@
+import type { PhotoGallerySearchQueries } from "@shared/types/PhotoGallerySearchQueries"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
-export const isIncludesTag = (tag: string) => (record: Pick<ImagesDataBaseRecord, "tags">) => {
+export const isIncludesTag = (tags: Required<PhotoGallerySearchQueries>["tag"]) => (record: Pick<ImagesDataBaseRecord, "tags">) => {
+  if (!tags.length) return true
   const upperCastedTags: readonly string[] = record.tags
-  return tag ? upperCastedTags.includes(tag) : true
+  return tags.every((tag) => upperCastedTags.includes(tag))
 }

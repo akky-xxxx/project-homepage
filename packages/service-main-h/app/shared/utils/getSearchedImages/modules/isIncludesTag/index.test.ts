@@ -6,12 +6,19 @@ import { isIncludesTag } from "."
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 // @ts-expect-error
-const baseArray = [{ tags: ["tag-value"] }, { tags: ["tag-value1"] }] as ImagesDataBaseRecord[]
+const baseArray = [
+  { tags: ["tag-a", "tag-b", "tag-c"] },
+  { tags: ["tag-a"] },
+] as ImagesDataBaseRecord[]
 
 describe("isIncludesTag", () => {
-  it("対象配列内の tags array に引数を含んだものだけ抽出する", () => {
-    const result = baseArray.filter(isIncludesTag("tag-value"))
+  it.each([
+    [[], [{ tags: ["tag-a", "tag-b", "tag-c"] }, { tags: ["tag-a"] }]],
+    [["tag-a"], [{ tags: ["tag-a", "tag-b", "tag-c"] }, { tags: ["tag-a"] }]],
+    [["tag-a", "tag-b"], [{ tags: ["tag-a", "tag-b", "tag-c"] }]],
+  ])("引数が「%o」の時、 filter は「%o」を返す", (input, output) => {
+    const result = baseArray.filter(isIncludesTag(input))
     // @ts-expect-error
-    expect(result).toStrictEqual([{ tags: ["tag-value"] }])
+    expect(result).toStrictEqual(output)
   })
 })

@@ -14,7 +14,7 @@ export const getSearchedImages: GetSearchedImages = (photoGallerySearchQueries) 
 
   const isSameLocationMain = isSameLocation(location || "")
   const isStartsWithDateMain = isStartsWithDate(date || "")
-  const isIncludesTagMain = isIncludesTag(tag || "")
+  const isIncludesTagMain = isIncludesTag(tag || [])
 
   return images.filter(isSameLocationMain).filter(isStartsWithDateMain).filter(isIncludesTagMain)
 }
