@@ -23,6 +23,7 @@ const ONE_PAGE = 1
 
 export const PhotoGallery: FC<Props> = (props) => {
   const { currentPage, images, searchQueries, totalPages } = props
+  const hasPages = totalPages > ONE_PAGE
 
   return (
     <div>
@@ -30,17 +31,19 @@ export const PhotoGallery: FC<Props> = (props) => {
 
       <Conditions searchQueries={searchQueries} />
 
-      <Block>
-        <ContentsWidthBlock>
-          {currentPage} of {totalPages} pages
-        </ContentsWidthBlock>
-      </Block>
+      {Boolean(hasPages) && (
+        <Block>
+          <ContentsWidthBlock>
+            {currentPage} of {totalPages} pages
+          </ContentsWidthBlock>
+        </Block>
+      )}
 
       <Block>
         <Images images={images} searchQueries={searchQueries} />
       </Block>
 
-      {totalPages > ONE_PAGE && (
+      {Boolean(hasPages) && (
         <Block>
           <div class={paginationWrapperStyle}>
             <Pagination
