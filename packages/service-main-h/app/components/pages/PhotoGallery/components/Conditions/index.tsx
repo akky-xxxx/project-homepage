@@ -7,7 +7,7 @@ import { LocationIcon } from "@icons/LocationIcon"
 import { TagIcon } from "@icons/TagIcon"
 import { TempoFormats } from "@shared/const/TempoFormats"
 
-import type { PhotoGallerySearchKey } from "app/shared/types/PhotoGallerySearchKey"
+import type { PhotoGallerySearchQueries } from "@shared/types/PhotoGallerySearchQueries"
 import type { FC, Child } from "hono/jsx"
 
 const FullDigitDate = 10
@@ -25,15 +25,15 @@ const getConditionData = (searchQueries: Props["searchQueries"]) => {
     baseArray.push([<DateIcon />, format(date, TempoFormats[formatName])])
   }
 
-  if (tag) {
-    baseArray.push([<TagIcon />, tag])
+  if (tag?.length) {
+    baseArray.push([<TagIcon />, tag.join(", ")])
   }
 
   return baseArray.flat()
 }
 
 type Props = {
-  searchQueries: Partial<Record<PhotoGallerySearchKey, string>>
+  searchQueries: PhotoGallerySearchQueries
 }
 
 export const Conditions: FC<Props> = (props) => {
