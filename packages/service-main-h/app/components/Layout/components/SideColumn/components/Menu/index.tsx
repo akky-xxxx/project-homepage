@@ -10,6 +10,7 @@ import { DateIcon } from "@icons/DateIcon"
 import { LocationIcon } from "@icons/LocationIcon"
 import { PhotoIcon } from "@icons/PhotoIcon"
 import { ProfileIcon } from "@icons/ProfileIcon"
+import { SearchIcon } from "@icons/SearchIcon"
 import { TagIcon } from "@icons/TagIcon"
 import { TempoFormats } from "@shared/const/TempoFormats"
 import { getHref } from "@shared/utils/getHref"
@@ -56,7 +57,7 @@ export const Menu: FC<Props> = (props) => {
             </li>
             <li>
               <a class={cx(itemStyle, anchorStyle)} href={getHref({ id: "Search" })}>
-                <TextWithIcon icon={<ProfileIcon {...IconProps} />}>Search</TextWithIcon>
+                <TextWithIcon icon={<SearchIcon {...IconProps} />}>Search</TextWithIcon>
               </a>
             </li>
             <li>
