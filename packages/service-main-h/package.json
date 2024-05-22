@@ -21,6 +21,7 @@
     "lint:pack": "fixpack --dryRun",
     "lint:ts": "run-s lint-ts-by-prettier lint-ts-by-eslint",
     "log": "wrangler pages deployment tail",
+    "predeploy": "bun check-code && bun test",
     "preview": "wrangler pages dev ./dist",
     "spell-check": "cspell \"./{config,app}/**\" --no-progress",
     "type-check": "tsc"
