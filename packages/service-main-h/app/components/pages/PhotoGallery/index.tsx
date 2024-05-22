@@ -67,7 +67,7 @@ export const PhotoGallery: FC<Props> = (props) => {
         </Block>
       )}
 
-      <SearchModal />
+      <SearchModal searchQueries={searchQueries} />
     </div>
   )
 }

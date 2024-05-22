@@ -13,8 +13,8 @@ export const ConditionSelect: FC<ConditionComponentProps> = (props) => {
     <select className={selectStyle} multiple={isMultiple} name={name}>
       {!isMultiple && <option value="">選択してください</option>}
       {items.map((item) => {
-        const { display, value } = item
-        return <option value={value}>{display}</option>
+        const { checked, display, value } = item
+        return <option selected={checked} value={value}>{display}</option>
       })}
     </select>
   )

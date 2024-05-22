@@ -12,27 +12,36 @@ import { SearchModalId } from "../../const/SearchModalId"
 import { labelStyle } from "../../styles/labelStyle"
 import { Heading2Inner } from "../Heading2Inner"
 
+import type { PhotoGallerySearchQueries } from "@shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
 
-export const SearchModal: FC = () => (
-  <div class={rootStyle}>
-    <div class={contentsStyle}>
-      <div class={heading2WrapperStyle}>
-        <Heading2>
-          <Heading2Inner>
-            <span>Search</span>
-            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-            <label class={labelStyle}>
-              <input class={invisibleInputStyle} id={SearchModalId} type="checkbox" />
-              <div class={crossIconStyle} />
-            </label>
-          </Heading2Inner>
-        </Heading2>
+type Props = {
+  searchQueries: PhotoGallerySearchQueries
+}
+
+export const SearchModal: FC<Props> = (props) => {
+  const { searchQueries } = props
+
+  return (
+    <div class={rootStyle}>
+      <div class={contentsStyle}>
+        <div class={heading2WrapperStyle}>
+          <Heading2>
+            <Heading2Inner>
+              <span>Search</span>
+              {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+              <label class={labelStyle}>
+                <input class={invisibleInputStyle} id={SearchModalId} type="checkbox" />
+                <div class={crossIconStyle} />
+              </label>
+            </Heading2Inner>
+          </Heading2>
+        </div>
+        <ContentsWidthBlock>
+          <PhotoGallerySearchForm searchQueries={searchQueries} />
+        </ContentsWidthBlock>
       </div>
-      <ContentsWidthBlock>
-        <PhotoGallerySearchForm />
-      </ContentsWidthBlock>
+      <div class={backdropStyle} />
     </div>
-    <div class={backdropStyle} />
-  </div>
-)
+  )
+}

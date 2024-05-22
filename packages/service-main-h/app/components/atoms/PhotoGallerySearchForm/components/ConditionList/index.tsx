@@ -11,13 +11,13 @@ type ListItemProps = ConditionComponentProps["items"][number] &
   Pick<ConditionComponentProps, "isMultiple" | "name">
 
 const ListItem: FC<ListItemProps> = (props) => {
-  const { display, isMultiple, name, value } = props
+  const { checked, display, isMultiple, name, value } = props
   const type = isMultiple ? "checkbox" : "radio"
 
   return (
     <li>
       <label class={labelStyle}>
-        <input name={name} type={type} value={value} />
+        <input checked={checked} name={name} type={type} value={value} />
         <span>{display}</span>
       </label>
     </li>
@@ -28,10 +28,10 @@ export const ConditionList: FC<ConditionComponentProps> = (props) => {
   const { name, isMultiple, items } = props
   return (
     <ul className={ulStyle}>
-      {!isMultiple && <ListItem display="選択してください" name={name} value="" />}
+      {!isMultiple && <ListItem checked={false} display="選択してください" name={name} value="" />}
       {items.map((item) => {
-        const { display, value } = item
-        return <ListItem display={display} isMultiple={isMultiple} name={name} value={value} />
+        const { checked, display, value } = item
+        return <ListItem checked={checked} display={display} isMultiple={isMultiple} name={name} value={value} />
       })}
     </ul>
   )

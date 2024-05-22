@@ -10,48 +10,59 @@ import { ConditionList } from "./components/ConditionList"
 import { ConditionSelect } from "./components/ConditionSelect"
 
 import type { ConditionComponentProps } from "./types/ConditionComponentProps"
+import type { PhotoGallerySearchQueries } from "@shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
 
-const locationConditionData = {
-  items: Locations.map((location) => ({
-    display: location,
-    value: location,
-  })),
-  name: "location",
-} as const satisfies ConditionComponentProps
+type Props = {
+  searchQueries?: PhotoGallerySearchQueries
+}
 
-const monthConditionData = {
-  items: Months.map((month) => ({
-    display: format(month, TempoFormats.YYYY年M月),
-    value: month,
-  })),
-  name: "date",
-} as const satisfies ConditionComponentProps
+export const PhotoGallerySearchForm: FC<Props> = (props) => {
+  const { searchQueries } = props
+  const locationConditionData = {
+    items: Locations.map((location) => ({
+      checked: location === searchQueries?.location,
+      display: location,
+      value: location,
+    })),
+    name: "location",
+  } as const satisfies ConditionComponentProps
 
-const tagConditionData = {
-  isMultiple: true,
-  items: Tags.map((tag) => ({
-    display: tag,
-    value: tag,
-  })),
-  name: "tag",
-} as const satisfies ConditionComponentProps
+  const monthConditionData = {
+    items: Months.map((month) => ({
+      checked: month === searchQueries?.date,
+      display: format(month, TempoFormats.YYYY年M月),
+      value: month,
+    })),
+    name: "date",
+  } as const satisfies ConditionComponentProps
 
-export const PhotoGallerySearchForm: FC = () => (
-  <Fragment>
-    <div class={ShowClasses.PC}>
-      <FormBase
-        locationCondition={<ConditionList {...locationConditionData} />}
-        monthCondition={<ConditionList {...monthConditionData} />}
-        tagCondition={<ConditionList {...tagConditionData} />}
-      />
-    </div>
-    <div class={ShowClasses.SP}>
-      <FormBase
-        locationCondition={<ConditionSelect {...locationConditionData} />}
-        monthCondition={<ConditionSelect {...monthConditionData} />}
-        tagCondition={<ConditionSelect {...tagConditionData} />}
-      />
-    </div>
-  </Fragment>
-)
+  const tagConditionData = {
+    isMultiple: true,
+    items: Tags.map((tag) => ({
+      checked: searchQueries?.tag?.includes(tag),
+      display: tag,
+      value: tag,
+    })),
+    name: "tag",
+  } as const satisfies ConditionComponentProps
+
+  return (
+    <Fragment>
+      <div class={ShowClasses.PC}>
+        <FormBase
+          locationCondition={<ConditionList {...locationConditionData} />}
+          monthCondition={<ConditionList {...monthConditionData} />}
+          tagCondition={<ConditionList {...tagConditionData} />}
+        />
+      </div>
+      <div class={ShowClasses.SP}>
+        <FormBase
+          locationCondition={<ConditionSelect {...locationConditionData} />}
+          monthCondition={<ConditionSelect {...monthConditionData} />}
+          tagCondition={<ConditionSelect {...tagConditionData} />}
+        />
+      </div>
+    </Fragment>
+  )
+}
