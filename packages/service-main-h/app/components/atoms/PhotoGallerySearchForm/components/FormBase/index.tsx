@@ -12,7 +12,7 @@ import { getHref } from "@shared/utils/getHref"
 import type { FC } from "hono/jsx"
 
 const { COLOR_FAFAFA } = Colors
-const { MEDIA_PC, MEDIA_SP } = MediaQueries
+const { MEDIA_ONLY_HOVER, MEDIA_PC, MEDIA_SP } = MediaQueries
 const { SPACE12 } = Spaces
 
 type FcReturn = ReturnType<FC>
@@ -70,7 +70,15 @@ const buttonStyle = css`
   border: none;
   border-radius: 4px;
   color: ${COLOR_FAFAFA};
+  cursor: pointer;
   padding: ${SPACE12}rem;
+  transition: opacity 0.2s ease;
+
+  ${MEDIA_ONLY_HOVER} {
+    &:hover {
+      opacity: 0.5;
+    }
+  }
 `
 
 const searchButtonStyle = css`
