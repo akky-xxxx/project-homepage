@@ -1,12 +1,16 @@
-import { css } from "hono/css"
-
 import { Block } from "@atoms/Block"
 import { ContentsWidthBlock } from "@atoms/ContentsWidthBlock"
 import { Heading2 } from "@atoms/Heading2"
 import { Images } from "@atoms/Images"
+import { SearchIcon } from "@icons/SearchIcon"
 
 import { Conditions } from "./components/Conditions"
+import { Heading2Inner } from "./components/Heading2Inner"
 import { Pagination } from "./components/Pagination"
+import { PaginationWrapper } from "./components/PaginationWrapper"
+import { SearchModal } from "./components/SearchModal"
+import { SearchModalId } from "./const/SearchModalId"
+import { labelStyle } from "./styles/labelStyle"
 
 import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
 import type { FC } from "hono/jsx"
@@ -27,7 +31,15 @@ export const PhotoGallery: FC<Props> = (props) => {
 
   return (
     <div>
-      <Heading2>Photo Gallery</Heading2>
+      <Heading2>
+        <Heading2Inner>
+          <span>Photo Gallery</span>
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label class={labelStyle} for={SearchModalId}>
+            <SearchIcon height={30} width={30} />
+          </label>
+        </Heading2Inner>
+      </Heading2>
 
       <Conditions searchQueries={searchQueries} />
 
@@ -45,20 +57,17 @@ export const PhotoGallery: FC<Props> = (props) => {
 
       {Boolean(hasPages) && (
         <Block>
-          <div class={paginationWrapperStyle}>
+          <PaginationWrapper>
             <Pagination
               currentPage={currentPage}
               searchQueries={searchQueries}
               totalPages={totalPages}
             />
-          </div>
+          </PaginationWrapper>
         </Block>
       )}
+
+      <SearchModal />
     </div>
   )
 }
-
-const paginationWrapperStyle = css`
-  display: flex;
-  place-content: center;
-`
