@@ -31,7 +31,7 @@ const ListItem: FC<ListItemProps> = (props) => {
 export const ConditionList: FC<ConditionComponentProps> = (props) => {
   const { name, isMultiple, items } = props
   return (
-    <ul className={ulStyle}>
+    <ul className={rootStyle}>
       {!isMultiple && <ListItem checked={false} display="選択してください" name={name} value="" />}
       {items.map((item) => {
         const { checked, display, value } = item
@@ -49,7 +49,7 @@ export const ConditionList: FC<ConditionComponentProps> = (props) => {
   )
 }
 
-const ulStyle = css`
+const rootStyle = css`
   display: flex;
   flex-wrap: wrap;
   gap: ${SPACE12}rem;
