@@ -1,6 +1,7 @@
 type Item = Partial<{
   checked: boolean
-}> & Record<"display" | "value", string>
+}> &
+  Record<"display" | "value", string>
 
 export type ConditionComponentProps = {
   name: string

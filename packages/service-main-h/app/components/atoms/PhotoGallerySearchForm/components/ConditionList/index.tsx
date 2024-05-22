@@ -31,7 +31,15 @@ export const ConditionList: FC<ConditionComponentProps> = (props) => {
       {!isMultiple && <ListItem checked={false} display="選択してください" name={name} value="" />}
       {items.map((item) => {
         const { checked, display, value } = item
-        return <ListItem checked={checked} display={display} isMultiple={isMultiple} name={name} value={value} />
+        return (
+          <ListItem
+            checked={checked}
+            display={display}
+            isMultiple={isMultiple}
+            name={name}
+            value={value}
+          />
+        )
       })}
     </ul>
   )
