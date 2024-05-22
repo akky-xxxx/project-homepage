@@ -1,9 +1,9 @@
 import { MoonIcon } from "@icons/MoonIcon"
 import { SunIcon } from "@icons/SunIcon"
 import { ColorSchemaName } from "@shared/const/ColorSchemaName"
+import { invisibleInputStyle } from "@shared/styles/invisibleInputStyle"
 
 import { ClassNames } from "./const/ClassNames"
-import { inputStyle } from "./styles/inputStyle"
 import { labelStyle } from "./styles/labelStyle"
 import { switchStyle } from "./styles/switchStyle"
 
@@ -22,7 +22,7 @@ export const View: FC<Props> = (props) => {
     <label class={labelStyle}>
       <input
         checked={isChecked}
-        class={inputStyle}
+        class={invisibleInputStyle}
         name={ColorSchemaName}
         type="checkbox"
         onChange={handleChange}

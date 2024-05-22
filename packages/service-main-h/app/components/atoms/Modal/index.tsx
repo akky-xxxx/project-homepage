@@ -2,11 +2,11 @@ import { cx } from "hono/css"
 
 import { ForLabel } from "@atoms/ForLabel"
 import { ScrollLockClass } from "@shared/const/ScrollLockClass"
+import { invisibleInputStyle } from "@shared/styles/invisibleInputStyle"
 
 import { closeButtonWrapperStyle } from "./styles/closeButtonWrapperStyle"
 import { contentStyle } from "./styles/contentStyle"
 import { crossIconStyle } from "./styles/crossIconStyle"
-import { inputStyle } from "./styles/inputStyle"
 import { rootStyle } from "./styles/rootStyle"
 
 import type { FcWithChildren } from "@shared/types/FcWithChildren"
@@ -26,7 +26,7 @@ export const Modal: FcWithChildren<Props> = (props) => {
         </ForLabel>
       </div>
       <div class={contentStyle}>{children}</div>
-      <input class={cx(ScrollLockClass, inputStyle)} id={modalId} type="checkbox" />
+      <input class={cx(ScrollLockClass, invisibleInputStyle)} id={modalId} type="checkbox" />
     </div>
   )
 }
