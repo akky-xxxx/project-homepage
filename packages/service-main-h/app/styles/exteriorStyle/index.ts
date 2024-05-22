@@ -17,6 +17,7 @@ export const exteriorStyle = css`
     --primary-background: ${getLightDarkValue(PRIMARY_BACKGROUND)};
     --primary-color: ${getLightDarkValue(PRIMARY_COLOR)};
     --primary-red: ${getLightDarkValue(PRIMARY_RED)};
+    --primary-shadow: light-dark(rgb(0, 0, 0, 1), rgb(255, 255, 255, 1));
 
     --secondary-background: ${getLightDarkValue(SECONDARY_BACKGROUND)};
 
