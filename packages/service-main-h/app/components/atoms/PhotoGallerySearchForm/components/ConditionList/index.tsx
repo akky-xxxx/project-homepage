@@ -1,10 +1,14 @@
 import { css } from "hono/css"
 
+import { Colors } from "@shared/styles/Colors"
+import { MediaQueries } from "@shared/styles/MediaQueries"
 import { Spaces } from "@shared/styles/Spaces"
 
 import type { ConditionComponentProps } from "../../types/ConditionComponentProps"
 import type { FC } from "hono/jsx"
 
+const { COLOR_FAFAFA } = Colors
+const { MEDIA_ONLY_HOVER } = MediaQueries
 const { SPACE04, SPACE12 } = Spaces
 
 type ListItemProps = ConditionComponentProps["items"][number] &
@@ -17,7 +21,7 @@ const ListItem: FC<ListItemProps> = (props) => {
   return (
     <li>
       <label class={labelStyle}>
-        <input checked={checked} name={name} type={type} value={value} />
+        <input checked={checked} class={inputStyle} name={name} type={type} value={value} />
         <span>{display}</span>
       </label>
     </li>
@@ -50,7 +54,27 @@ const ulStyle = css`
   flex-wrap: wrap;
   gap: ${SPACE12}rem;
 `
+
 const labelStyle = css`
+  border-radius: 9999px;
+  border: 1px solid var(--primary-color);
+  column-gap: ${SPACE04}rem;
+  cursor: pointer;
   display: flex;
-  gap: ${SPACE04}rem;
+  padding: ${SPACE04}rem ${SPACE12}rem;
+
+  ${MEDIA_ONLY_HOVER} {
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  &:has(input:checked) {
+    background-color: var(--primary-red);
+    color: ${COLOR_FAFAFA};
+  }
+`
+
+const inputStyle = css`
+  margin: 0;
 `
