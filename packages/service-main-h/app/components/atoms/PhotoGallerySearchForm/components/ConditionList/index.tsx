@@ -1,15 +1,9 @@
-import { css } from "hono/css"
-
-import { Colors } from "@shared/styles/Colors"
-import { MediaQueries } from "@shared/styles/MediaQueries"
-import { Spaces } from "@shared/styles/Spaces"
+import { inputStyle } from "./styles/inputStyle"
+import { labelStyle } from "./styles/labelStyle"
+import { rootStyle } from "./styles/rootStyle"
 
 import type { ConditionComponentProps } from "../../types/ConditionComponentProps"
 import type { FC } from "hono/jsx"
-
-const { COLOR_FAFAFA } = Colors
-const { MEDIA_ONLY_HOVER } = MediaQueries
-const { SPACE04, SPACE12 } = Spaces
 
 type ListItemProps = ConditionComponentProps["items"][number] &
   Pick<ConditionComponentProps, "isMultiple" | "name">
@@ -48,33 +42,3 @@ export const ConditionList: FC<ConditionComponentProps> = (props) => {
     </ul>
   )
 }
-
-const rootStyle = css`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${SPACE12}rem;
-`
-
-const labelStyle = css`
-  border-radius: 9999px;
-  border: 1px solid var(--primary-color);
-  column-gap: ${SPACE04}rem;
-  cursor: pointer;
-  display: flex;
-  padding: ${SPACE04}rem ${SPACE12}rem;
-
-  ${MEDIA_ONLY_HOVER} {
-    &:hover {
-      opacity: 0.5;
-    }
-  }
-
-  &:has(input:checked) {
-    background-color: var(--primary-red);
-    color: ${COLOR_FAFAFA};
-  }
-`
-
-const inputStyle = css`
-  margin: 0;
-`
