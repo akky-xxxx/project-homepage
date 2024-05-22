@@ -1,6 +1,6 @@
 import { css } from "hono/css"
 
-import { LayerIndex } from "../../const LayerIndex"
+import { LayerIndex } from "../../const/LayerIndex"
 
 export const contentsStyle = css`
   height: 100%;

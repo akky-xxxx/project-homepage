@@ -2,7 +2,7 @@ import { css } from "hono/css"
 
 import { MediaQueries } from "@shared/styles/MediaQueries"
 
-import { LayerIndex } from "../../const LayerIndex"
+import { LayerIndex } from "../../const/LayerIndex"
 
 const { MEDIA_SP } = MediaQueries
 
