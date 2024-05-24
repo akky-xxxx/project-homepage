@@ -26,8 +26,8 @@
     "ws:type-check": "manypkg exec bun type-check"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.2.1",
-    "@commitlint/config-conventional": "19.1.0",
+    "@commitlint/cli": "19.3.0",
+    "@commitlint/config-conventional": "19.2.2",
     "@happy-dom/global-registrator": "14.7.0",
     "@manypkg/cli": "0.21.3",
     "@markuplint/jsx-parser": "4.5.0",
