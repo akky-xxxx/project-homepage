@@ -1,7 +1,7 @@
 module.exports = {
   extends: [
     "strict-check/react-max",
-    "plugin:sonarjs/recommended",
+    "plugin:sonarjs/recommended-legacy",
     "../../config/eslint/import/index.cjs",
     "../../config/eslint/strictCheck/index.cjs",
     "../../config/eslint/strictDependencies/index.cjs",

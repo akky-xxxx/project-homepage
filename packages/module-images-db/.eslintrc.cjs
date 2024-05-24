@@ -4,7 +4,7 @@ module.exports = {
   },
   extends: [
     "strict-check/typescript-max",
-    "plugin:sonarjs/recommended",
+    "plugin:sonarjs/recommended-legacy",
     "../../config/eslint/import/index.cjs",
     "../../config/eslint/strictCheck/index.cjs",
   ],
