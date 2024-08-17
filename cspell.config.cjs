@@ -1,7 +1,4 @@
 module.exports = {
-  version: "0.2",
-  language: "en",
-  ignorePaths: ["./packages/**"],
   dictionaries: ["packages"],
   dictionaryDefinitions: [
     {
@@ -9,4 +6,7 @@ module.exports = {
       path: "./config/cspell/packages.txt",
     },
   ],
+  ignorePaths: ["./packages/**"],
+  language: "en",
+  version: "0.2",
 }
