@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/consistent-type-assertions, sonarjs/no-duplicate-string */
+/* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/consistent-type-assertions */
 import { describe, it, expect } from "bun:test"
 
 import { isStartsWithDate } from "."

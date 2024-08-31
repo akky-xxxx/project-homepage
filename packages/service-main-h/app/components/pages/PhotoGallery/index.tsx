@@ -46,7 +46,12 @@ export const PhotoGallery: FC<Props> = (props) => {
       {Boolean(hasPages) && (
         <Block>
           <ContentsWidthBlock>
-            {currentPage} of {totalPages} pages
+            {currentPage}
+            {" "}
+            of
+            {totalPages}
+            {" "}
+            pages
           </ContentsWidthBlock>
         </Block>
       )}

@@ -10,10 +10,7 @@ const sortByNumberAsc = (a: number, b: number): number => {
   return a > b ? 1 : -1
 }
 
-const isWithinZeroToMax =
-  (max: number) =>
-  (value: number): boolean =>
-    value > 0 && value <= max
+const isWithinZeroToMax = (max: number) => (value: number): boolean => value > 0 && value <= max
 
 const addEllipsis: ReduceCallback<PaginationData[], PaginationData> = (
   previousValue,

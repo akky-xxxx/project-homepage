@@ -22,7 +22,7 @@ type Props = {
 export const Images: FC<Props> = (props) => {
   const { searchQueries, images } = props
 
-  if (!images.length)
+  if (!images.length) {
     return (
       <section>
         <ContentsWidthBlock>
@@ -41,6 +41,7 @@ export const Images: FC<Props> = (props) => {
         </section>
       </section>
     )
+  }
 
   return (
     <ul class={ulStyle}>

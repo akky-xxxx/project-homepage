@@ -6,13 +6,12 @@ type GetPhotoGalleryHref = (props: Props) => string
 
 // eslint-disable-next-line complexity
 export const getPhotoGalleryHref: GetPhotoGalleryHref = (props) => {
-  if (props.id !== "PhotoGallery")
-    throw new Error("Do not use this function when id is not PhotoGallery.")
+  if (props.id !== "PhotoGallery") throw new Error("Do not use this function when id is not PhotoGallery.")
 
   const { date, location, page, tag } = props
 
   // TODO: filter(Boolean) で型が変わるようになったらリファクタ
-  const queries: [string, string[] | number | string][] = []
+  const queries: Array<[string, string[] | number | string]> = []
   if (location) queries.push(["location", location])
   if (date) queries.push(["date", date])
   if (tag) queries.push(["tag", tag])

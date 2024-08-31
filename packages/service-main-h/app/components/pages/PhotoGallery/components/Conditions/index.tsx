@@ -17,18 +17,14 @@ const getConditionData = (searchQueries: Props["searchQueries"]) => {
   const { date, location, tag } = searchQueries
   const baseArray: Child | string = []
 
-  if (location) {
-    baseArray.push([<LocationIcon />, location])
-  }
+  if (location) baseArray.push([<LocationIcon />, location])
 
   if (date) {
     const formatName = date.length === FullDigitDate ? "YYYY年M月D日" : "YYYY年M月"
     baseArray.push([<DateIcon />, format(date, TempoFormats[formatName])])
   }
 
-  if (tag?.length) {
-    baseArray.push([<TagIcon />, tag.join(", ")])
-  }
+  if (tag?.length) baseArray.push([<TagIcon />, tag.join(", ")])
 
   return baseArray.flat()
 }

@@ -2,7 +2,6 @@ import { describe, it, expect } from "bun:test"
 
 import { getHref } from "."
 
-/* eslint-disable sonarjs/no-duplicate-string */
 describe("shared/utils/getHref", () => {
   it.each<[Parameters<typeof getHref>[0], string]>([
     [{ id: "About" }, "/about"],

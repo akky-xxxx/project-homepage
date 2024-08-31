@@ -14,7 +14,10 @@ export default jsxRenderer((props) => {
         <meta charset="utf-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <meta content={description} name="description" />
-        <title>akky-xxxx | {title}</title>
+        <title>
+          akky-xxxx |
+          {title}
+        </title>
         <link
           href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css"
           rel="stylesheet"

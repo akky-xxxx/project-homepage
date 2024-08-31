@@ -6,7 +6,7 @@ import { itemStyle } from "../styles/itemStyle"
 import type { FC } from "hono/jsx"
 
 type Props = {
-  items: Record<"href" | "item", string>[]
+  items: Array<Record<"href" | "item", string>>
 }
 
 export const Items: FC<Props> = (props) => {

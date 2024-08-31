@@ -6,12 +6,9 @@
       "@atoms/*": ["./app/components/atoms/*"],
       "@icons/*": ["./app/components/icons/*"],
       "@islands/*": ["./app/islands/*"],
-      "@shared/*": ["./app/shared/*"],
+      "@shared/*": ["./app/shared/*"]
     },
-    "types": [
-      "@cloudflare/workers-types",
-      "bun-types"
-    ],
+    "types": ["@cloudflare/workers-types", "bun-types"],
     "jsxImportSource": "hono/jsx"
   }
 }
