@@ -14,7 +14,7 @@ export const Heading2Inner: FC = (props) => {
   return <div class={rootStyle}>{children}</div>
 }
 
-export const rootStyle = css`
+const rootStyle = css`
   align-items: center;
   column-gap: ${SPACE08}rem;
   display: flex;

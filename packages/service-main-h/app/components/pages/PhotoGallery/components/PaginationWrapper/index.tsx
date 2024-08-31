@@ -8,7 +8,7 @@ export const PaginationWrapper: FC = (props) => {
   return <div class={rootStyle}>{children}</div>
 }
 
-export const rootStyle = css`
+const rootStyle = css`
   display: flex;
   place-content: center;
 `
