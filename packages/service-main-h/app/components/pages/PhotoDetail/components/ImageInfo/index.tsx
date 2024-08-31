@@ -45,7 +45,7 @@ export const ImageInfo: FC<Props> = (props) => {
           {tags.map((tag) => {
             const tagHref = getHref({ id: "PhotoTagDetail", tag: [tag] })
             return (
-              <li>
+              <li key={tagHref}>
                 <a href={tagHref}>{tag}</a>
               </li>
             )

@@ -19,7 +19,7 @@ export const SkillList: FC<Props> = (props) => {
       {skills.map((skill) => {
         const { level, name } = skill
         return (
-          <li>
+          <li key={name}>
             <div class={divStyle}>
               <span>{name}</span>
               <meter

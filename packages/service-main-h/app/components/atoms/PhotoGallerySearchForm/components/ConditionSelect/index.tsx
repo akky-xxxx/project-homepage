@@ -15,7 +15,7 @@ export const ConditionSelect: FC<ConditionComponentProps> = (props) => {
       {items.map((item) => {
         const { checked, display, value } = item
         return (
-          <option selected={checked} value={value}>
+          <option key={value} selected={checked} value={value}>
             {display}
           </option>
         )

@@ -6,7 +6,9 @@ import type { ConditionComponentProps } from "../../types/ConditionComponentProp
 import type { FC } from "hono/jsx"
 
 type ListItemProps = ConditionComponentProps["items"][number] &
-  Pick<ConditionComponentProps, "isMultiple" | "name">
+  Pick<ConditionComponentProps, "isMultiple" | "name"> & {
+    key?: string
+  }
 
 const ListItem: FC<ListItemProps> = (props) => {
   const { checked, display, isMultiple = false, name, value } = props
@@ -31,6 +33,7 @@ export const ConditionList: FC<ConditionComponentProps> = (props) => {
         const { checked, display, value } = item
         return (
           <ListItem
+            key={value}
             checked={checked}
             display={display}
             isMultiple={isMultiple}

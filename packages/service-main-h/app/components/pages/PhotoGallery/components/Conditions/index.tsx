@@ -17,13 +17,19 @@ const getConditionData = (searchQueries: Props["searchQueries"]) => {
   const { date = "", location = "", tag = [] } = searchQueries
   const baseArray: Child | string = []
 
+  // key の指定は不要
+  // eslint-disable-next-line react/jsx-key
   if (location) baseArray.push([<LocationIcon />, location])
 
   if (date) {
     const formatName = date.length === FullDigitDate ? "YYYY年M月D日" : "YYYY年M月"
+    // key の指定は不要
+    // eslint-disable-next-line react/jsx-key
     baseArray.push([<DateIcon />, format(date, TempoFormats[formatName])])
   }
 
+  // key の指定は不要
+  // eslint-disable-next-line react/jsx-key
   if (tag.length) baseArray.push([<TagIcon />, tag.join(", ")])
 
   return baseArray.flat()

@@ -29,7 +29,11 @@ export const Pagination: FC<Props> = (props) => {
         const showClass = getShowClass(value)
         if (value === "ellipsis" || value === currentPage) {
           const displayText = value === "ellipsis" ? "..." : value
-          return <span className={cx(itemStyle, showClass)}>{displayText}</span>
+          return (
+            <span key={displayText} className={cx(itemStyle, showClass)}>
+              {displayText}
+            </span>
+          )
         }
 
         const page = getPageForAnchor({ currentPage, totalPages, value })
@@ -40,7 +44,7 @@ export const Pagination: FC<Props> = (props) => {
         })
 
         return (
-          <a className={cx(itemStyle, anchorStyle, showClass)} href={href}>
+          <a key={value} className={cx(itemStyle, anchorStyle, showClass)} href={href}>
             {getDisplayAnchorText(value)}
           </a>
         )

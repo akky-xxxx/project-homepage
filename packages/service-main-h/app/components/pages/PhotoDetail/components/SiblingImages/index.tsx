@@ -36,6 +36,8 @@ export const SiblingImages: FC<Props> = (props) => {
       <Block>
         <ul class={ulStyle}>
           {siblingImages.map((imageInfo) => {
+            // key の指定は不要
+            // eslint-disable-next-line react/jsx-key
             if (!imageInfo) return <li />
             const { imageId } = imageInfo
             const href = [getHref({ id: "PhotoDetail", imageId }), queries].join("?")
