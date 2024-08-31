@@ -2,6 +2,8 @@ import { describe, it, expect } from "bun:test"
 
 import { getHref } from "."
 
+// TODO: テスト用にルールを変えたら解消させる
+// eslint-disable-next-line max-lines-per-function
 describe("shared/utils/getHref", () => {
   it.each<[Parameters<typeof getHref>[0], string]>([
     [{ id: "About" }, "/about"],
