@@ -1,4 +1,4 @@
-const DeviceBreakpoint = 768
+const DeviceBreakpoint = "768"
 
 export const MediaQueries = {
   MEDIA_ONLY_HOVER: "@media (hover: hover) and (pointer: fine)",
