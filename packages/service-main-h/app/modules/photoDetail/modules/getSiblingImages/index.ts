@@ -1,6 +1,6 @@
-import { getSearchedImages } from "app/shared/utils/getSearchedImages"
+import { getSearchedImages } from "@shared/utils/getSearchedImages"
 
-import type { PhotoGallerySearchQueries } from "app/shared/types/PhotoGallerySearchQueries"
+import type { PhotoGallerySearchQueries } from "@shared/types/PhotoGallerySearchQueries"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
 const Sibling = 1

@@ -6,7 +6,7 @@ import { ImagesPerPage } from "@shared/const/ImagesPerPage"
 import { getSearchedImages } from "app/shared/utils/getSearchedImages"
 
 import { PhotoGallery } from "../../components/pages/PhotoGallery"
-import { getPageData } from "../../modules/photoGallery/getPageData"
+import { getPageData } from "../../modules/photoGallery/modules/getPageData"
 
 export default createRoute((c) => {
   const query = c.req.query()

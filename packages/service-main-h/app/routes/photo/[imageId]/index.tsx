@@ -5,7 +5,7 @@ import { pick } from "remeda"
 import { getPhotoText } from "@shared/utils/getPhotoText"
 
 import { PhotoDetail } from "../../../components/pages/PhotoDetail"
-import { getSiblingImages } from "../../../modules/photoDetail/getSiblingImages"
+import { getSiblingImages } from "../../../modules/photoDetail/modules/getSiblingImages"
 
 export default createRoute((c) => {
   const imageInfo = ImagesDataBase.find((record) => record.imageId === c.req.param("imageId"))
