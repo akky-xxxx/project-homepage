@@ -1,6 +1,6 @@
 module.exports = {
   version: "0.2",
-  language: "en",
+
   dictionaries: ["app", "colors", "packages", "web"],
   dictionaryDefinitions: [
     {
@@ -20,4 +20,5 @@ module.exports = {
       path: "./config/cspell/web.txt",
     },
   ],
+  language: "en",
 }
