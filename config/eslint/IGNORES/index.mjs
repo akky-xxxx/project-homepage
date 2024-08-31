@@ -1,3 +1,3 @@
 export const IGNORES = {
-  ignores: ["coverage", "out"],
+  ignores: ["coverage", "dist", "out"],
 }
