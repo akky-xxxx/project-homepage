@@ -7,23 +7,23 @@ module.exports = {
       Severity.ERROR,
       [
         {
-          module: "src/components/templates",
           allowReferenceFrom: ["src/app", "src/components/templates/**"],
           allowSameModule: false,
+          module: "src/components/templates",
         },
         {
-          module: "jotai",
           allowReferenceFrom: ["src/**/components/{organisms,templates}/**", "src/globalStates"],
           allowSameModule: false,
+          module: "jotai",
         },
         {
-          module: "react",
-          targetMembers: ["useState", "useReducer"],
           allowReferenceFrom: [
             "src/**/components/{molecules,organisms,templates}/**/index.tsx",
             "src/**/components/{molecules,organisms,templates}/**/modules/**/index.ts",
           ],
           allowSameModule: false,
+          module: "react",
+          targetMembers: ["useState", "useReducer"],
         },
       ],
       {

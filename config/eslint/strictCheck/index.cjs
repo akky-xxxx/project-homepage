@@ -9,6 +9,7 @@ module.exports = {
     "strict-check/forbidden-use-react-hooks": forbiddenUseReactHooks,
     "strict-check/match-names-of-file-and-export": matchNamesOfFileAndExport,
   },
+
   overrides: [
     {
       files: "{index,View}.stories.tsx",

@@ -12,7 +12,7 @@ const components = [...components1, ...components2, ...islands]
 
 const specialRouting = "_404|_error|_renderer"
 const page = new RegExp(`app(?:/[^/]+)*/(?:${specialRouting}).tsx`)
-const normalRouting = /app\/routes\/(?:(?:\[[A-Za-z]+]|[a-z\-]+)\/)*index.tsx/
+const normalRouting = /app\/routes\/(?:(?:\[[A-Za-z]+]|[a-z-]+)\/)*index.tsx/
 const pages = [page, normalRouting]
 
 const shared = [
