@@ -1,5 +1,3 @@
-import { unreachable } from "@shared/utils/unreachable"
-
 import { getPhotoGalleryHref } from "./modules/getPhotoGalleryHref"
 
 import type { GetHref } from "@shared/utils/getHref/types/GetHref"
@@ -39,7 +37,7 @@ export const getHref: GetHref = (props) => {
       return "/search"
     }
     default: {
-      return unreachable(id)
+      return id satisfies never
     }
   }
 }
