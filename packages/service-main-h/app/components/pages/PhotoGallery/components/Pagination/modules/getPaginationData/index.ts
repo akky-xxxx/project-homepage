@@ -17,6 +17,8 @@ const addEllipsis: ReduceCallback<PaginationData[], PaginationData> = (
   currentValue,
   currentIndex,
   originArray,
+  // reduce 用の callback のため
+  // eslint-disable-next-line @typescript-eslint/max-params
 ) => {
   if (typeof currentValue === "string") return [...previousValue, currentValue]
 
