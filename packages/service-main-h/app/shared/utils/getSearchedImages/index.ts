@@ -12,9 +12,9 @@ type GetSearchedImages = (
 export const getSearchedImages: GetSearchedImages = (photoGallerySearchQueries) => (images) => {
   const { date, location, tag } = photoGallerySearchQueries
 
-  const isSameLocationMain = isSameLocation(location || "")
-  const isStartsWithDateMain = isStartsWithDate(date || "")
-  const isIncludesTagMain = isIncludesTag(tag || [])
+  const isSameLocationMain = isSameLocation(location ?? "")
+  const isStartsWithDateMain = isStartsWithDate(date ?? "")
+  const isIncludesTagMain = isIncludesTag(tag ?? [])
 
   return images.filter(isSameLocationMain).filter(isStartsWithDateMain).filter(isIncludesTagMain)
 }
