@@ -12,10 +12,10 @@ export const getPhotoGalleryHref: GetPhotoGalleryHref = (props) => {
 
   // TODO: filter(Boolean) で型が変わるようになったらリファクタ
   const queries: Array<[string, string[] | number | string]> = []
-  if (location) queries.push(["location", location])
-  if (date) queries.push(["date", date])
+  if (location != null) queries.push(["location", location])
+  if (date != null) queries.push(["date", date])
   if (tag) queries.push(["tag", tag])
-  if (page) queries.push(["page", page])
+  if (page != null) queries.push(["page", page])
   const query = queries.map((keyValue) => keyValue.join("=")).join("&")
 
   return ["/photo-gallery", query].filter(Boolean).join("?")

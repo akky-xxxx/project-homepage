@@ -14,7 +14,7 @@ import type { FC, Child } from "hono/jsx"
 const FullDigitDate = 10
 
 const getConditionData = (searchQueries: Props["searchQueries"]) => {
-  const { date, location, tag } = searchQueries
+  const { date = "", location = "", tag = [] } = searchQueries
   const baseArray: Child | string = []
 
   if (location) baseArray.push([<LocationIcon />, location])
@@ -24,7 +24,7 @@ const getConditionData = (searchQueries: Props["searchQueries"]) => {
     baseArray.push([<DateIcon />, format(date, TempoFormats[formatName])])
   }
 
-  if (tag?.length) baseArray.push([<TagIcon />, tag.join(", ")])
+  if (tag.length) baseArray.push([<TagIcon />, tag.join(", ")])
 
   return baseArray.flat()
 }

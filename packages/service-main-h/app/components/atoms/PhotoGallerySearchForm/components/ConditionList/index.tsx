@@ -9,7 +9,7 @@ type ListItemProps = ConditionComponentProps["items"][number] &
   Pick<ConditionComponentProps, "isMultiple" | "name">
 
 const ListItem: FC<ListItemProps> = (props) => {
-  const { checked, display, isMultiple, name, value } = props
+  const { checked, display, isMultiple = false, name, value } = props
   const type = isMultiple ? "checkbox" : "radio"
 
   return (
@@ -23,7 +23,7 @@ const ListItem: FC<ListItemProps> = (props) => {
 }
 
 export const ConditionList: FC<ConditionComponentProps> = (props) => {
-  const { name, isMultiple, items } = props
+  const { name, isMultiple = false, items } = props
   return (
     <ul className={rootStyle}>
       {!isMultiple && <ListItem checked={false} display="選択してください" name={name} value="" />}

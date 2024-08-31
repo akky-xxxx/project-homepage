@@ -1,7 +1,7 @@
 import type { FC } from "hono/jsx"
 import type { ImagesDataBaseRecord } from "module-images-db/src/types/ImagesDataBaseRecord"
 
-const { VITE_IMAGE_HOST: IMAGE_HOST } = import.meta.env
+const { VITE_IMAGE_HOST: IMAGE_HOST = "" } = import.meta.env
 
 const Placeholder = "https://placehold.jp/1980x1320.png"
 
@@ -12,7 +12,7 @@ type Props = Pick<ImagesDataBaseRecord, "imageId"> & {
 }
 
 export const Image: FC<Props> = (props) => {
-  const { alt = "", className, imageId, isThumbnail } = props
+  const { alt = "", className, imageId, isThumbnail = false } = props
   const extension = isThumbnail ? ".thumb.avif" : ".avif"
   const source = IMAGE_HOST ? `${IMAGE_HOST}/${imageId}${extension}` : Placeholder
 

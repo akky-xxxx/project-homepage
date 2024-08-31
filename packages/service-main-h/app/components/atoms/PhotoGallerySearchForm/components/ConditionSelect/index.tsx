@@ -8,7 +8,7 @@ import type { FC } from "hono/jsx"
 const { SPACE12 } = Spaces
 
 export const ConditionSelect: FC<ConditionComponentProps> = (props) => {
-  const { name, isMultiple, items } = props
+  const { name, isMultiple = false, items } = props
   return (
     <select className={selectStyle} multiple={isMultiple} name={name}>
       {!isMultiple && <option value="">選択してください</option>}
