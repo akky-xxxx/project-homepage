@@ -1,4 +1,4 @@
-import {Severity} from "../const/Severity/index.cjs"
+import { Severity } from "../const/Severity/index.cjs"
 
 export const IMPORT = [
   {
