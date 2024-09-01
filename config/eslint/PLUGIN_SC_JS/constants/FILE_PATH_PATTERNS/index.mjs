@@ -4,6 +4,8 @@ const modules = [/modules\/[a-z][\dA-Za-z]+\/index.ts/]
 const styles = [/styles\/.+Style\/index.ts/]
 const constants = [/const\/[A-Z][\dA-Za-z]+\/index.ts/]
 const declarations = [/declarations\/[\d@-_a-z]+\/index(?:\.d)?.ts/]
+const regularExpressions = [/regularExpressions\/[a-z][\dA-Za-z]+RegularExpression\/index.ts/]
+const schemas = [/schemas\/[A-Z][\dA-Za-z]+Schema\/index.ts/]
 const types = [/types\/[A-Z][\dA-Za-z]+\/index.ts/]
 
 const components1 = [/components\/[A-Z][\dA-Za-z]+\/index\.tsx/]
@@ -31,6 +33,8 @@ const allowPatterns = [
   styles,
   constants,
   declarations,
+  regularExpressions,
+  schemas,
   types,
 
   components,
