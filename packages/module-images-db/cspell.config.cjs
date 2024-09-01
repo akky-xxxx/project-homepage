@@ -1,6 +1,6 @@
 module.exports = {
   version: "0.2",
-  language: "en",
+
   dictionaries: ["domain", "packages"],
   dictionaryDefinitions: [
     {
@@ -13,4 +13,5 @@ module.exports = {
     },
   ],
   ignorePaths: ["./packages/**"],
+  language: "en",
 }
