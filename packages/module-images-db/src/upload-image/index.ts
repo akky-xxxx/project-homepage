@@ -16,9 +16,7 @@ const RootDirectory = __dirname.slice(
 const ImageDirectory = path.resolve(RootDirectory, "origin-image")
 const TemporaryDirectory = path.resolve(RootDirectory, ".temporary-image")
 
-if (!fs.existsSync(TemporaryDirectory)) {
-  fs.mkdirSync(TemporaryDirectory)
-}
+if (!fs.existsSync(TemporaryDirectory)) fs.mkdirSync(TemporaryDirectory)
 
 const filePaths = getFilePaths(fs.readdirSync(ImageDirectory))
 

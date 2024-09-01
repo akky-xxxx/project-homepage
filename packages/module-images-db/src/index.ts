@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/no-duplicate-string, strict-check/forbidden-multiple-named-exports, max-lines */
+/* eslint-disable strict-check/forbidden-multiple-named-exports, max-lines */
 import { sortImageDataBase } from "./modules/sortImageDataBase"
 import { sortTags } from "./modules/sortTags"
 import { Prefectures } from "./shared/const/Prefectures"
@@ -1423,13 +1423,11 @@ const ImagesDataBaseOrigin = [
     imageId: "_DSC2108-0d45dbdb-a3d7-41af-b805-6ff115e406ec",
     tags: ["建物", "マリンタワー", "みなとみらい"],
   },
-] satisfies Readonly<ImagesDataBaseRecord[]>
+] satisfies readonly ImagesDataBaseRecord[]
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
 const uniqueRegisterPrefectures = new Set<string>(ImagesDataBase.map(({ area }) => area))
-export const Locations = Prefectures.filter((prefecture) =>
-  uniqueRegisterPrefectures.has(prefecture),
-)
+export const Locations = Prefectures.filter((prefecture) => uniqueRegisterPrefectures.has(prefecture))
 export const Tags = [...new Set(ImagesDataBase.flatMap(({ tags }) => tags))].sort()
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const Months = [...new Set(ImagesDataBase.map(({ date }) => date.slice(0, -3)))]

@@ -4,19 +4,18 @@ import { imageExtensionRegularExpression } from "../../regularExpressions/imageE
 
 import type { FilesRecord } from "../../../shared/types/FilesRecord"
 
-export const getFilePaths = (files: string[]): FilesRecord[] =>
-  files
-    .filter((fileName) => imageExtensionRegularExpression.test(fileName))
-    .map((originFileName) => {
-      const result = originFileName.match(/^(.+)\.(jpe?g|png|gif|webp)$/i)
+export const getFilePaths = (files: string[]): FilesRecord[] => files
+  .filter((fileName) => imageExtensionRegularExpression.test(fileName))
+  .map((originFileName) => {
+    const result = /^(.+)\.(jpe?g|png|gif|webp)$/i.exec(originFileName)
 
-      if (!result) throw new Error("Not found image file(extension).")
+    if (!result) throw new Error("Not found image file(extension).")
 
-      const [, fileName = "", extension = ""] = result
+    const [, fileName = "", extension = ""] = result
 
-      return {
-        extension,
-        fileName,
-        id: v4(),
-      }
-    })
+    return {
+      extension,
+      fileName,
+      id: v4(),
+    }
+  })
