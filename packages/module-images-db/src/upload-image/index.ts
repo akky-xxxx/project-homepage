@@ -26,6 +26,9 @@ if (filePaths.length === NOT_EXIST_ARRAY) throw new Error("Not exist image file 
 filePaths.forEach(moveToTemporary(IMAGE_DIRECTORY, TEMPORARY_DIRECTORY))
 
 const uploadImage = async () => {
+  /* eslint-disable sonarjs/todo-tag */
+  // TODO: allow function にして挙動が変わらないか確認する
+  // eslint-disable-next-line sonarjs/array-callback-without-return
   await Promise.all(filePaths.map(optimizeImage(TEMPORARY_DIRECTORY)))
   /* eslint-disable no-console */
   console.log("Optimized image files")
