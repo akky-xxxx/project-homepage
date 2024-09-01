@@ -1,10 +1,11 @@
-/* eslint-disable strict-check/forbidden-multiple-named-exports, max-lines */
+/* eslint-disable sc-js/forbidden-multiple-named-exports, max-lines, sc-js/file-path-patterns */
 import { sortImageDataBase } from "./modules/sortImageDataBase"
 import { sortTags } from "./modules/sortTags"
 import { Prefectures } from "./shared/const/Prefectures"
 
 import type { ImagesDataBaseRecord } from "./types/ImagesDataBaseRecord"
 
+/* eslint-disable @typescript-eslint/naming-convention, sonarjs/no-alphabetical-sort */
 const ImagesDataBaseOrigin = [
   {
     area: "秋田県",
@@ -1427,7 +1428,8 @@ const ImagesDataBaseOrigin = [
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
 const uniqueRegisterPrefectures = new Set<string>(ImagesDataBase.map(({ area }) => area))
-export const Locations = Prefectures.filter((prefecture) => uniqueRegisterPrefectures.has(prefecture))
+export const Locations = Prefectures
+  .filter((prefecture) => uniqueRegisterPrefectures.has(prefecture))
 export const Tags = [...new Set(ImagesDataBase.flatMap(({ tags }) => tags))].sort()
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const Months = [...new Set(ImagesDataBase.map(({ date }) => date.slice(0, -3)))]
