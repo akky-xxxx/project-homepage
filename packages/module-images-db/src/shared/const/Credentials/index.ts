@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 
-import { credentialSchema } from "../../schema/credentialSchema"
+import { CredentialSchema } from "../../schemas/CredentialSchema"
 
 const ProjectName = "project-homepage"
 const FirstCharacter = 0
@@ -17,4 +17,4 @@ const credentialsJson: unknown = JSON.parse(
     .toString(),
 )
 
-export const Credentials = credentialSchema.parse(credentialsJson)
+export const Credentials = CredentialSchema.parse(credentialsJson)

@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const credentialSchema = z.object({
+export const CredentialSchema = z.object({
   auth_provider_x509_cert_url: z.string(),
   auth_uri: z.string(),
   client_email: z.string(),

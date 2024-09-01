@@ -1,5 +1,5 @@
 import { env } from "bun"
 
-import { environmentSchema } from "../../schema/environmentSchema"
+import { EnvironmentSchema } from "../../schemas/EnvironmentSchema"
 
-export const Environment = environmentSchema.parse(env)
+export const Environment = EnvironmentSchema.parse(env)
