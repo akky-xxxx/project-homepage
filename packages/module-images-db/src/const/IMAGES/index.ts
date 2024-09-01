@@ -1,4 +1,4 @@
-export const Images = [
+export const IMAGES = [
   "DSC00282-746c619d-be23-4cfe-95b9-df20d84680de",
   "DSC00310-416a9746-1a7c-401f-9e3e-5e6f9c16771e",
   "DSC00366-fc860a01-1961-4657-b79d-3862a4f00fca",

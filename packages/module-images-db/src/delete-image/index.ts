@@ -1,10 +1,10 @@
 import { EXTENSIONS } from "../const/EXTENSIONS"
-import { Images } from "../const/Images"
+import { IMAGES } from "../const/IMAGES"
 import { getFileList } from "../shared/utils/getFileList"
 import { getIdList } from "../shared/utils/getIdList"
 import { storageBucket } from "../shared/utils/storageBucket"
 
-const ImageSet = new Set<string>(Images)
+const ImageSet = new Set<string>(IMAGES)
 
 const deleteImage = async () => {
   const idList = getIdList(await getFileList())

@@ -8,7 +8,7 @@ const SERVICE_NAME = "module-images-db"
 const FIRST_CHARACTER = 0
 const CONSTANT_DIRECTORY = path.resolve(
   __dirname.slice(FIRST_CHARACTER, __dirname.indexOf(SERVICE_NAME) + SERVICE_NAME.length),
-  "src/const/Images",
+  "src/const/IMAGES",
 )
 
 type CreateImageConstant = () => Promise<void>
@@ -16,6 +16,6 @@ type CreateImageConstant = () => Promise<void>
 export const createImageConstant: CreateImageConstant = async () => {
   const idList = getIdList(await getFileList()).map((id) => `"${id}"`)
 
-  const source = `export const Images = [${idList.join(",")}] as const`
+  const source = `export const IMAGES = [${idList.join(",")}] as const`
   fs.writeFileSync(`${CONSTANT_DIRECTORY}/index.ts`, source)
 }

@@ -1,9 +1,9 @@
-import type { Images } from "../../const/Images"
+import type { IMAGES } from "../../const/IMAGES"
 import type { Area } from "../Area"
 import type { DateString } from "../DateString"
 import type { Tag } from "../Tag"
 
-type ImagesTypes = typeof Images
+type ImagesTypes = typeof IMAGES
 
 export type ImagesDataBaseRecord = {
   area: Area
