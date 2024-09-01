@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { env } from "bun"
 
 import { EnvironmentSchema } from "../../schemas/EnvironmentSchema"
