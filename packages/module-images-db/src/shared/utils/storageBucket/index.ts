@@ -1,10 +1,10 @@
 import { Storage } from "@google-cloud/storage"
 
-import { Credentials } from "../../const/Credentials"
+import { CREDENTIALS } from "../../const/CREDENTIALS"
 import { Environment } from "../../const/Environment"
 
 const storage = new Storage({
-  credentials: Credentials,
+  credentials: CREDENTIALS,
 })
 
 export const storageBucket = storage.bucket(Environment.BUCKET)

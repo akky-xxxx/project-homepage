@@ -17,4 +17,4 @@ const credentialsJson: unknown = JSON.parse(
     .toString(),
 )
 
-export const Credentials = CredentialSchema.parse(credentialsJson)
+export const CREDENTIALS = CredentialSchema.parse(credentialsJson)
