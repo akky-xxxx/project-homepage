@@ -32,7 +32,16 @@
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/uuid": "9.0.8"
+    "@types/uuid": "9.0.8",
+    "eslint": "8.57.0",
+    "eslint-config-sc-all": "0.0.5",
+    "eslint-config-sc-jest": "0.0.5",
+    "eslint-config-sc-ts": "0.0.7",
+    "eslint-plugin-jsdoc": "50.2.2",
+    "eslint-plugin-sc-js": "0.0.5",
+    "eslint-plugin-sonarjs": "2.0.2",
+    "fixpack": "4.0.0",
+    "prettier": "3.3.3"
   },
   "peerDependencies": {
     "typescript": "5.4.4"
