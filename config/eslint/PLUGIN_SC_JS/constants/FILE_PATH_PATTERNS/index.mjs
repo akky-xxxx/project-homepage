@@ -1,3 +1,4 @@
+const npmScripts = [/src\/[a-z-]+\/index.ts/]
 const tests = [/\/index.test.ts/]
 const modules = [/modules\/[a-z][\dA-Za-z]+\/index.ts/]
 const styles = [/styles\/.+Style\/index.ts/]
@@ -23,6 +24,8 @@ const shared = [
 const specials = /app\/(?:client|server)\.ts/
 
 const allowPatterns = [
+  npmScripts,
+
   tests,
   modules,
   styles,
