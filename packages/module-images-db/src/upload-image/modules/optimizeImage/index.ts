@@ -1,7 +1,7 @@
 import sharp from "sharp"
 
 import { getRatio } from "./modules/getRatio"
-import { Extensions } from "../../../const/Extensions"
+import { EXTENSIONS } from "../../../const/EXTENSIONS"
 
 import type { FilesRecord } from "../../../shared/types/FilesRecord"
 
@@ -10,8 +10,8 @@ export const optimizeImage: OptimizeImage = (temporaryDirectory) => async (recor
   const { extension, fileName, id } = record
   const commonName = `${fileName}-${id}`
   const originFullPath = `${temporaryDirectory}/${commonName}.${extension}`
-  const temporaryFullPath = `${temporaryDirectory}/${commonName}${Extensions.MAIN}`
-  const temporaryThumbnailFullPath = `${temporaryDirectory}/${commonName}${Extensions.THUMBNAIL}`
+  const temporaryFullPath = `${temporaryDirectory}/${commonName}${EXTENSIONS.MAIN}`
+  const temporaryThumbnailFullPath = `${temporaryDirectory}/${commonName}${EXTENSIONS.THUMBNAIL}`
   const meta = await sharp(originFullPath).metadata()
 
   const { mainSize, thumbnailSize } = getRatio({

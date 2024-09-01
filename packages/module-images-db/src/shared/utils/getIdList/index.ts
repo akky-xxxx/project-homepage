@@ -1,5 +1,5 @@
-import { Extensions } from "../../../const/Extensions"
+import { EXTENSIONS } from "../../../const/EXTENSIONS"
 
 export const getIdList = (fileList: string[]) => fileList
-  .filter((fileName) => !fileName.endsWith(Extensions.THUMBNAIL))
+  .filter((fileName) => !fileName.endsWith(EXTENSIONS.THUMBNAIL))
   .map((fileName) => fileName.replace(/\.avif$/, ""))

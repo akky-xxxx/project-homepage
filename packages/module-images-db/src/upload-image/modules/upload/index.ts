@@ -1,4 +1,4 @@
-import { Extensions } from "../../../const/Extensions"
+import { EXTENSIONS } from "../../../const/EXTENSIONS"
 import { storageBucket } from "../../../shared/utils/storageBucket"
 
 import type { FilesRecord } from "../../../shared/types/FilesRecord"
@@ -9,8 +9,8 @@ export const upload: Upload = (temporaryDirectory) => async (record) => {
   const { fileName, id } = record
 
   const commonName = `${fileName}-${id}`
-  const mainName = `${commonName}${Extensions.MAIN}`
-  const thumbNailName = `${commonName}${Extensions.THUMBNAIL}`
+  const mainName = `${commonName}${EXTENSIONS.MAIN}`
+  const thumbNailName = `${commonName}${EXTENSIONS.THUMBNAIL}`
   const temporaryFullPath = `${temporaryDirectory}/${mainName}`
   const temporaryThumbnailFullPath = `${temporaryDirectory}/${thumbNailName}`
 

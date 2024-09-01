@@ -1,4 +1,4 @@
-export const Extensions = {
+export const EXTENSIONS = {
   MAIN: ".avif",
   THUMBNAIL: ".thumb.avif",
 } as const
