@@ -4,12 +4,12 @@ import { getFileList } from "../shared/utils/getFileList"
 import { getIdList } from "../shared/utils/getIdList"
 import { storageBucket } from "../shared/utils/storageBucket"
 
-const ImageSet = new Set<string>(IMAGES)
+const IMAGE_SET = new Set<string>(IMAGES)
 
 const deleteImage = async () => {
   const idList = getIdList(await getFileList())
   const deleteTargetList = idList
-    .filter((id) => !ImageSet.has(id))
+    .filter((id) => !IMAGE_SET.has(id))
     .flatMap((deleteId) => [`${deleteId}${EXTENSIONS.THUMBNAIL}`, `${deleteId}${EXTENSIONS.MAIN}`])
   await Promise.all(deleteTargetList.map((deleteId) => storageBucket.file(deleteId).delete()))
 }
