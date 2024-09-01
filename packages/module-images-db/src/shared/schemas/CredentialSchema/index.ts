@@ -1,5 +1,8 @@
 import { z } from "zod"
 
+/* eslint-disable sonarjs/todo-tag */
+// TODO: Upper camel を許容後にコメント消す
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export const CredentialSchema = z.object({
   // credential の都合のため
   /* eslint-disable @typescript-eslint/naming-convention */
