@@ -7,33 +7,33 @@ import { moveToTemporary } from "./modules/moveToTemporary"
 import { optimizeImage } from "./modules/optimizeImage"
 import { upload } from "./modules/upload"
 
-const ServiceName = "module-images-db"
-const FirstCharacter = 0
-const RootDirectory = __dirname.slice(
-  FirstCharacter,
-  __dirname.indexOf(ServiceName) + ServiceName.length,
+const SERVICE_NAME = "module-images-db"
+const FIRST_CHARACTER = 0
+const ROOT_DIRECTORY = __dirname.slice(
+  FIRST_CHARACTER,
+  __dirname.indexOf(SERVICE_NAME) + SERVICE_NAME.length,
 )
-const ImageDirectory = path.resolve(RootDirectory, "origin-image")
-const TemporaryDirectory = path.resolve(RootDirectory, ".temporary-image")
+const IMAGE_DIRECTORY = path.resolve(ROOT_DIRECTORY, "origin-image")
+const TEMPORARY_DIRECTORY = path.resolve(ROOT_DIRECTORY, ".temporary-image")
 
-if (!fs.existsSync(TemporaryDirectory)) fs.mkdirSync(TemporaryDirectory)
+if (!fs.existsSync(TEMPORARY_DIRECTORY)) fs.mkdirSync(TEMPORARY_DIRECTORY)
 
-const filePaths = getFilePaths(fs.readdirSync(ImageDirectory))
+const filePaths = getFilePaths(fs.readdirSync(IMAGE_DIRECTORY))
 
-const NotExistArray = 0
-if (filePaths.length === NotExistArray) throw new Error("Not exist image file in `image directory`")
+const NOT_EXIST_ARRAY = 0
+if (filePaths.length === NOT_EXIST_ARRAY) throw new Error("Not exist image file in `image directory`")
 
-filePaths.forEach(moveToTemporary(ImageDirectory, TemporaryDirectory))
+filePaths.forEach(moveToTemporary(IMAGE_DIRECTORY, TEMPORARY_DIRECTORY))
 
 const uploadImage = async () => {
-  await Promise.all(filePaths.map(optimizeImage(TemporaryDirectory)))
+  await Promise.all(filePaths.map(optimizeImage(TEMPORARY_DIRECTORY)))
   /* eslint-disable no-console */
   console.log("Optimized image files")
-  await Promise.all(filePaths.map(upload(TemporaryDirectory)))
+  await Promise.all(filePaths.map(upload(TEMPORARY_DIRECTORY)))
   console.log("Uploaded image files")
   await createImageConstant()
   console.log("Created constant file")
-  fs.rmSync(TemporaryDirectory, {
+  fs.rmSync(TEMPORARY_DIRECTORY, {
     force: true,
     recursive: true,
   })

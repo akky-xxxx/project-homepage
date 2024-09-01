@@ -1,5 +1,5 @@
-const MainMaxLength = 1920
-const ThumbnailMaxLength = 400
+const MAIN_MAX_LENGTH = 1920
+const THUMBNAIL_MAX_LENGTH = 400
 
 type GetRatioArguments = Record<"height" | "width", number | undefined>
 
@@ -13,8 +13,8 @@ export const getRatio: GetRatio = (getRatioArguments) => {
   if (!height || !width) throw new Error("Not has rectangle size")
 
   const isWidthLong = width > height
-  const mainRatio = MainMaxLength / (isWidthLong ? width : height)
-  const thumbnailRatio = ThumbnailMaxLength / (isWidthLong ? width : height)
+  const mainRatio = MAIN_MAX_LENGTH / (isWidthLong ? width : height)
+  const thumbnailRatio = THUMBNAIL_MAX_LENGTH / (isWidthLong ? width : height)
   const mainSize = {
     height: Math.floor(height * mainRatio),
     width: Math.floor(width * mainRatio),

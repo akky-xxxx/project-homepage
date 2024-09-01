@@ -1,6 +1,8 @@
 import { z } from "zod"
 
 export const CredentialSchema = z.object({
+  // credential の都合のため
+  /* eslint-disable @typescript-eslint/naming-convention */
   auth_provider_x509_cert_url: z.string(),
   auth_uri: z.string(),
   client_email: z.string(),
@@ -12,4 +14,5 @@ export const CredentialSchema = z.object({
   token_uri: z.string(),
   type: z.string(),
   universe_domain: z.string(),
+  /* eslint-enable @typescript-eslint/naming-convention */
 })
