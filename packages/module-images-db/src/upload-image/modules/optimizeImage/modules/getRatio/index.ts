@@ -7,8 +7,10 @@ type GetRatioReturn = Record<"mainSize" | "thumbnailSize", Record<"height" | "wi
 
 type GetRatio = (getRatioArguments: GetRatioArguments) => GetRatioReturn
 
+const INITIAL_SIZE = 0
+
 export const getRatio: GetRatio = (getRatioArguments) => {
-  const { height, width } = getRatioArguments
+  const { height = INITIAL_SIZE, width = INITIAL_SIZE } = getRatioArguments
 
   if (!height || !width) throw new Error("Not has rectangle size")
 
