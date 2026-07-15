@@ -1,6 +1,7 @@
 {
   "name": "project-homepage",
   "engines": {
+    "bun": "1.3.14",
     "npm": "⚠️️  【bun】 を使ってください",
     "pnpm": "⚠️️  【bun】 を使ってください",
     "yarn": "⚠️️  【bun】 を使ってください"
