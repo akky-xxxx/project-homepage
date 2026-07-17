@@ -19,6 +19,10 @@ export const Frameworks = [
   },
   {
     level: 3,
+    name: "Angular",
+  },
+  {
+    level: 3,
     name: "Express",
   },
   {

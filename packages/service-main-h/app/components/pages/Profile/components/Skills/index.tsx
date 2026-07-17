@@ -4,6 +4,7 @@ import { Heading4 } from "@atoms/Heading4"
 import { Section } from "@atoms/Section"
 
 import { SkillList } from "./components/SkillList"
+import { AI } from "../../const/AI"
 import { Frameworks } from "../../const/Frameworks"
 import { Infrastructures } from "../../const/Infrastructures"
 import { Languages } from "../../const/Languages"
@@ -40,6 +41,15 @@ export const Skills: FC = () => (
       </Block>
       <Block>
         <SkillList skills={Infrastructures} />
+      </Block>
+    </Section>
+
+    <Section>
+      <Block>
+        <Heading4>AI</Heading4>
+      </Block>
+      <Block>
+        <SkillList skills={AI} />
       </Block>
     </Section>
   </Section>
