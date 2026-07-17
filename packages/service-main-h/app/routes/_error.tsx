@@ -1,8 +1,8 @@
 import { Error404 } from "../components/pages/Error404"
 
-import type { NotFoundHandler } from "hono"
+import type { ErrorHandler } from "hono"
 
-const notFoundHandler: NotFoundHandler = (c) => c.render(<Error404 />)
+const errorHandler: ErrorHandler = (_err, c) => c.render(<Error404 />)
 
 // eslint-disable-next-line import/no-default-export
-export default notFoundHandler
+export default errorHandler
