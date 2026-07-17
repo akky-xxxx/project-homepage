@@ -28,10 +28,10 @@
     "@formkit/tempo": "0.1.1",
     "hono": "4.3.11",
     "honox": "0.1.18",
-    "js-cookie": "3.0.5",
+    "js-cookie": "3.0.8",
     "module-images-db": "workspace:*",
-    "remeda": "1.61.0",
-    "zod": "3.23.8"
+    "remeda": "2.39.0",
+    "zod": "4.4.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20240512.0",
@@ -51,8 +51,8 @@
     "eslint-plugin-sc-js": "0.0.5",
     "eslint-plugin-sonarjs": "1.0.4",
     "fixpack": "4.0.0",
-    "markuplint": "4.5.0",
-    "prettier": "3.3.3",
+    "markuplint": "4.18.3",
+    "prettier": "3.9.5",
     "vite": "5.2.11",
     "vite-tsconfig-paths": "4.3.2",
     "wrangler": "4.110.0"
