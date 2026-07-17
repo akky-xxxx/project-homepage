@@ -2,6 +2,7 @@ import { describe, it, expect } from "bun:test"
 
 import { getHref } from "."
 
+// eslint-disable-next-line sonarjs/todo-tag -- テスト用の max-lines-per-function 緩和は未着手の既知課題
 // TODO: テスト用にルールを変えたら解消させる
 // eslint-disable-next-line max-lines-per-function
 describe("shared/utils/getHref", () => {

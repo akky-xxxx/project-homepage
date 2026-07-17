@@ -23,26 +23,26 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@google-cloud/storage": "7.11.1",
-    "sharp": "0.33.4",
-    "uuid": "9.0.1",
-    "zod": "3.23.8"
+    "@google-cloud/storage": "7.21.0",
+    "sharp": "0.35.3",
+    "uuid": "14.0.1",
+    "zod": "4.4.3"
   },
   "devDependencies": {
-    "@types/bun": "latest",
-    "@types/uuid": "9.0.8",
+    "@types/bun": "1.3.14",
+    "@types/uuid": "11.0.0",
     "eslint": "8.57.0",
     "eslint-config-sc-all": "0.0.5",
     "eslint-config-sc-jest": "0.0.5",
     "eslint-config-sc-ts": "0.0.7",
-    "eslint-plugin-jsdoc": "50.2.2",
+    "eslint-plugin-jsdoc": "63.0.13",
     "eslint-plugin-sc-js": "0.0.5",
-    "eslint-plugin-sonarjs": "2.0.2",
+    "eslint-plugin-sonarjs": "4.1.0",
     "fixpack": "4.0.0",
-    "prettier": "3.3.3"
+    "prettier": "3.9.5"
   },
   "peerDependencies": {
-    "typescript": "5.4.4"
+    "typescript": "5.9.3"
   },
   "type": "module"
 }

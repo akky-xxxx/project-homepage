@@ -25,31 +25,40 @@
     "type-check": "tsc"
   },
   "dependencies": {
-    "@formkit/tempo": "0.1.1",
-    "hono": "4.3.11",
-    "honox": "0.1.18",
-    "js-cookie": "3.0.5",
-    "module-images-db": "workspace:*"
+    "@formkit/tempo": "1.1.0",
+    "hono": "4.12.29",
+    "honox": "0.1.58",
+    "js-cookie": "3.0.8",
+    "module-images-db": "workspace:*",
+    "remeda": "2.39.0",
+    "zod": "4.4.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20240512.0",
-    "@hono/vite-cloudflare-pages": "0.4.0",
+    "@cloudflare/workers-types": "5.20260710.1",
+    "@hono/vite-build": "1.11.1",
+    "@markuplint/jsx-parser": "4.18.3",
+    "@markuplint/ml-config": "4.18.1",
+    "@markuplint/react-spec": "4.18.0",
+    "@tsconfig/vite-react": "8.0.6",
+    "@types/bun": "1.3.14",
     "@types/js-cookie": "3.0.6",
     "eslint": "8.57.0",
     "eslint-config-sc-all": "0.0.5",
     "eslint-config-sc-jest": "0.0.5",
     "eslint-config-sc-react": "0.0.5",
     "eslint-config-sc-ts": "0.0.7",
-    "eslint-plugin-jsdoc": "50.2.2",
+    "eslint-plugin-jsdoc": "63.0.13",
     "eslint-plugin-sc-js": "0.0.5",
-    "eslint-plugin-sonarjs": "1.0.4",
+    "eslint-plugin-sonarjs": "4.1.0",
     "fixpack": "4.0.0",
-    "prettier": "3.3.3",
-    "remeda": "1.61.0",
-    "vite": "5.2.11",
-    "vite-tsconfig-paths": "4.3.2",
-    "wrangler": "3.47.0",
-    "zod": "3.23.8"
+    "markuplint": "4.18.3",
+    "prettier": "3.9.5",
+    "vite": "8.1.4",
+    "vite-tsconfig-paths": "6.1.1",
+    "wrangler": "4.110.0"
+  },
+  "peerDependencies": {
+    "typescript": "5.9.3"
   },
   "private": true,
   "type": "module"

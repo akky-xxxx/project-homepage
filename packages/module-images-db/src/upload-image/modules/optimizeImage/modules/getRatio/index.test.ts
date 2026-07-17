@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test"
+
 import { getRatio } from "./index"
 
 type GetRatio = typeof getRatio

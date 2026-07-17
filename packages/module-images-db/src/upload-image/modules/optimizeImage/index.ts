@@ -5,7 +5,7 @@ import { EXTENSIONS } from "../../../const/EXTENSIONS"
 
 import type { FilesRecord } from "../../../shared/types/FilesRecord"
 
-type OptimizeImage = (temporaryDirectory: string) => (record: FilesRecord) => void
+type OptimizeImage = (temporaryDirectory: string) => (record: FilesRecord) => Promise<void>
 export const optimizeImage: OptimizeImage = (temporaryDirectory) => async (record) => {
   const { extension, fileName, id } = record
   const commonName = `${fileName}-${id}`

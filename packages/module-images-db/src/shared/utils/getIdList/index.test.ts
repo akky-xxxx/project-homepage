@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test"
+
 import { getIdList } from "./index"
 
 describe("shared/utils/getIdList", () => {

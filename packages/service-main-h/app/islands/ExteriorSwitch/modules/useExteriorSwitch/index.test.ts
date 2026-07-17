@@ -22,6 +22,7 @@ describe("useExteriorSwitch", () => {
     })
   })
 
+  // eslint-disable-next-line sonarjs/todo-tag -- hooks テスト実行環境の調整は未着手の既知課題
   // TODO: hooks のテストを実行できるように調整
   describe.skip("handleChange 1回実行時の isChecked の値", () => {
     it.each([

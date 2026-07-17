@@ -18,7 +18,7 @@ export default createRoute((c) => {
   const searchedImages = getSearchedImages(searchQueries)(ImagesDataBase)
 
   const { page } = c.req.query()
-  const { currentPage, totalPages } = getPageData(page || "", searchedImages.length)
+  const { currentPage, totalPages } = getPageData(page ?? "", searchedImages.length)
 
   // eslint-disable-next-line @typescript-eslint/no-magic-numbers
   const sliceStart = (currentPage - 1) * ImagesPerPage

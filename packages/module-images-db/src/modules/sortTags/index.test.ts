@@ -1,3 +1,5 @@
+import { describe, expect, it } from "bun:test"
+
 import { sortTags } from "."
 
 const TEST_CASE = {
