@@ -7,7 +7,7 @@
     "yarn": "⚠️️  【bun】 を使ってください"
   },
   "scripts": {
-    "all-check": "run-s check-code ws:spell-check test",
+    "all-check": "run-s check-code ws:check-code test",
     "check-code": "run-p -c lint spell-check",
     "commitlint": "commitlint --edit",
     "fix": "run-p fix:* -c",
