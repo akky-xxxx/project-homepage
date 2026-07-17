@@ -35,7 +35,7 @@
     "@tsconfig/bun": "1.0.5",
     "@types/bun": "1.3.14",
     "@typescript-eslint/eslint-plugin": "7.10.0",
-    "cspell": "8.8.3",
+    "cspell": "10.0.1",
     "editorconfig-checker": "5.1.5",
     "eslint": "8.57.0",
     "eslint-config-sc-all": "0.0.5",
