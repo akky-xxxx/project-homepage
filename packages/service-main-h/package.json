@@ -26,8 +26,8 @@
   },
   "dependencies": {
     "@formkit/tempo": "1.1.0",
-    "hono": "4.3.11",
-    "honox": "0.1.18",
+    "hono": "4.12.29",
+    "honox": "0.1.58",
     "js-cookie": "3.0.8",
     "module-images-db": "workspace:*",
     "remeda": "2.39.0",
