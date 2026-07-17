@@ -10,6 +10,7 @@ export const getPhotoGalleryHref: GetPhotoGalleryHref = (props) => {
 
   const { date, location, page, tag } = props
 
+  // eslint-disable-next-line sonarjs/todo-tag -- filter(Boolean) の型推論改善待ちの既知課題
   // TODO: filter(Boolean) で型が変わるようになったらリファクタ
   const queries: Array<[string, string[] | number | string]> = []
   if (location != null) queries.push(["location", location])

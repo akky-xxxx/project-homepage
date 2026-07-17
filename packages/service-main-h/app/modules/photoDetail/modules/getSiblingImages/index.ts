@@ -19,5 +19,5 @@ export const getSiblingImages: GetSiblingImages = (imageId, images, searchQuerie
   return [
     filteredImages[currentIndex - Sibling],
     filteredImages[currentIndex + Sibling],
-  ] satisfies [ImagesDataBaseRecord, ImagesDataBaseRecord]
+  ] satisfies [OptionalImageInfo, OptionalImageInfo]
 }

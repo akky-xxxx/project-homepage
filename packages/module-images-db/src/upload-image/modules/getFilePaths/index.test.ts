@@ -49,7 +49,6 @@ describe("getFilePaths", () => {
       WEBP,
     ] as const)("input が %s の時、 %o を返す", (input, output) => {
       const spy = jest.spyOn(uuid, "v4")
-      // @ts-expect-error uuid の v4 はオーバーロードされた型のため、単純な string 返却の mock 実装とは型が一致しない
       spy.mockImplementation(() => "uuid")
       expect(getFilePaths([input])).toStrictEqual([{
         ...output,

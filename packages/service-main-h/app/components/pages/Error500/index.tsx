@@ -7,7 +7,7 @@ import { Sitemap } from "@atoms/Sitemap"
 
 import type { FC } from "hono/jsx"
 
-export const Error: FC = () => (
+export const Error500: FC = () => (
   <section>
     <Heading2>500 - Internal Server Error</Heading2>
 

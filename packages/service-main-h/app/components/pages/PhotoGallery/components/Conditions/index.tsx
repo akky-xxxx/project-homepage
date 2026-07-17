@@ -42,6 +42,7 @@ type Props = {
 export const Conditions: FC<Props> = (props) => {
   const { searchQueries } = props
   const conditionData = getConditionData(searchQueries)
+  // eslint-disable-next-line sonarjs/todo-tag -- 型上 early return に適した値がないための既知の回避策
   // TODO: early return に適した値が型上ないための回避策
   // eslint-disable-next-line react/jsx-fragments, react/jsx-no-useless-fragment
   if (!conditionData.length) return <></>

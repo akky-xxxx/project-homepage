@@ -11,7 +11,7 @@ const baseArray = [
   { area: "location-a", date: "2024-01-01", imageId: "image-1", tags: ["tag-a", "tag-b"] },
   { area: "location-a", date: "2024-02-01", imageId: "image-2", tags: ["tag-a"] },
   { area: "location-b", date: "2024-01-15", imageId: "image-3", tags: ["tag-b"] },
-] as ImagesDataBaseRecord[]
+] as [ImagesDataBaseRecord, ImagesDataBaseRecord, ImagesDataBaseRecord]
 
 describe("getSearchedImages", () => {
   it("検索条件が空の場合、全件を返す", () => {

@@ -16,6 +16,7 @@ const { ICONS, ICON_DAY, ICON_NIGHT } = ClassNames
 export const View: FC<Props> = (props) => {
   const { isChecked, handleChange } = props
   return (
+    // eslint-disable-next-line sonarjs/todo-tag -- ルール上書き未解決の既知課題
     // TODO: jsx-a11y/label-has-associated-control の上書きがうまくいってない？
     //  https://zenn.dev/krntmm/articles/756fdf2f8fcdff
     // eslint-disable-next-line jsx-a11y/label-has-associated-control

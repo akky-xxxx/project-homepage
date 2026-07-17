@@ -43,8 +43,7 @@ export const PhotoGallery: FC<Props> = (props) => {
 
       <Conditions searchQueries={searchQueries} />
 
-      {/* TODO: ルールの調整必須 */}
-      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- react/jsx-no-leaked-render 対策のため Boolean() が必要 */}
+      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- react/jsx-no-leaked-render 対策のため Boolean() が必要（表示条件のルール調整は未着手の既知課題） */}
       {Boolean(hasPages) && (
         <Block>
           <ContentsWidthBlock>
@@ -62,8 +61,7 @@ export const PhotoGallery: FC<Props> = (props) => {
         <Images images={images} searchQueries={searchQueries} />
       </Block>
 
-      {/* TODO: ルールの調整必須 */}
-      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- react/jsx-no-leaked-render 対策のため Boolean() が必要 */}
+      {/* eslint-disable-next-line @typescript-eslint/no-unnecessary-type-conversion -- react/jsx-no-leaked-render 対策のため Boolean() が必要（表示条件のルール調整は未着手の既知課題） */}
       {Boolean(hasPages) && (
         <Block>
           <PaginationWrapper>
