@@ -58,7 +58,7 @@
     "wrangler": "4.110.0"
   },
   "peerDependencies": {
-    "typescript": "5.4.4"
+    "typescript": "5.9.3"
   },
   "private": true,
   "type": "module"
