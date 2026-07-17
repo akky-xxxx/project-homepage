@@ -8,6 +8,7 @@
       "@islands/*": ["./app/islands/*"],
       "@shared/*": ["./app/shared/*"]
     },
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": ["@cloudflare/workers-types", "bun-types"],
     "jsxImportSource": "hono/jsx"
   }

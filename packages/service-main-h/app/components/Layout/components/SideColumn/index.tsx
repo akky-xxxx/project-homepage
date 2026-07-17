@@ -22,7 +22,6 @@ export const SideColumn: FC = (props: Props) => (
         </a>
       </h1>
     </header>
-    {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
     <label class={labelStyle}>
       <input type="checkbox" />
       <Hamburger />
