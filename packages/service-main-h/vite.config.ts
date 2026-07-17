@@ -1,4 +1,4 @@
-import pages from "@hono/vite-cloudflare-pages"
+import build from "@hono/vite-build/cloudflare-pages"
 import honox from "honox/vite"
 import client from "honox/vite/client"
 import { defineConfig, type UserConfig } from "vite"
@@ -12,7 +12,7 @@ const userConfig: UserConfig = {
 
 // eslint-disable-next-line import/no-default-export
 export default defineConfig(({ mode }) => {
-  const pluginsBase = mode === "client" ? [client()] : [honox(), pages()]
+  const pluginsBase = mode === "client" ? [client()] : [honox(), build()]
   const plugins = [...pluginsBase, tsconfigPaths()]
 
   return {
