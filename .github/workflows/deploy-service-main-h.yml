@@ -1,0 +1,74 @@
+name: Deploy service-main-h
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+concurrency:
+  group: deploy-service-main-h-${{ github.ref }}
+  cancel-in-progress: true
+
+# 以下の各ジョブは `uses: ./.github/actions/setup-bun` より前に `actions/checkout@v4` を実行している。
+# ローカル action (uses: ./...) は runner 上のファイルから読み込まれるため、
+# 事前にリポジトリが checkout されている必要がある(詳細は .github/actions/setup-bun/action.yml を参照)。
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - working-directory: packages/service-main-h
+        run: bun run lint
+
+  spell-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - working-directory: packages/service-main-h
+        run: bun run spell-check
+
+  type-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - working-directory: packages/service-main-h
+        run: bun run type-check
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - working-directory: packages/service-main-h
+        run: bun run test
+
+  deploy:
+    needs:
+      - lint
+      - spell-check
+      - type-check
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - name: Deploy (preview)
+        if: github.ref == 'refs/heads/develop'
+        working-directory: packages/service-main-h
+        run: bun run deploy -- --branch=develop
+        env:
+          VITE_IMAGE_HOST: ${{ vars.VITE_IMAGE_HOST }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Deploy (production)
+        if: github.ref == 'refs/heads/main'
+        working-directory: packages/service-main-h
+        run: bun run deploy -- --branch=main
+        env:
+          VITE_IMAGE_HOST: ${{ vars.VITE_IMAGE_HOST }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
