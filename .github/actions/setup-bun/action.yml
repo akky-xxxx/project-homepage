@@ -1,0 +1,24 @@
+# 注意: この action は意図的に actions/checkout を含めていない。
+# ローカル action (uses: ./...) は runner 上に既に存在するファイルから解決されるため、
+# この action が読み込まれる前に呼び出し元のジョブがリポジトリを checkout している必要がある。
+# checkout をこの action の中に入れると「checkout を実行する action を読み込むために
+# checkout が必要」という循環参照になってしまう。
+# この action を使うジョブでは、必ず最初のステップとして `- uses: actions/checkout@v4` を追加すること。
+name: Setup bun
+description: Install bun and install workspace dependencies (requires actions/checkout to have run already)
+
+inputs:
+  bun-version-file:
+    description: File to read the bun version from (reads engines.bun for package.json)
+    required: false
+    default: package.json
+
+runs:
+  using: composite
+  steps:
+    - uses: oven-sh/setup-bun@v2
+      with:
+        bun-version-file: ${{ inputs.bun-version-file }}
+
+    - shell: bash
+      run: bun install --frozen-lockfile
