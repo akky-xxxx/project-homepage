@@ -1,4 +1,4 @@
-# service-main-h
+# main
 
 `akky-xxxx` の個人ホームページ / フォトギャラリーサイト本体。[HonoX](https://github.com/honojs/honox)（Hono + ファイルベースルーティング + アイランドアーキテクチャ）で構築し、Vite でビルドして Wrangler 経由で Cloudflare Pages にデプロイする。
 
@@ -20,7 +20,7 @@ cp .env.example .env
 
 ## よく使うコマンド
 
-このディレクトリ（`packages/service-main-h`）内、または `bun --cwd packages/service-main-h` で実行する。
+このディレクトリ（`packages/main`）内、または `bun --cwd packages/main` で実行する。
 
 ```bash
 bun dev                          # vite の開発サーバーを起動

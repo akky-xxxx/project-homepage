@@ -1,4 +1,4 @@
-name: Deploy service-main-h
+name: Deploy main
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
       - main
 
 concurrency:
-  group: deploy-service-main-h-${{ github.ref }}
+  group: deploy-main-${{ github.ref }}
   cancel-in-progress: true
 
 # 以下の各ジョブは `uses: ./.github/actions/setup-bun` より前に `actions/checkout@v4` を実行している。
@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
-      - working-directory: packages/service-main-h
+      - working-directory: packages/main
         run: bun run lint
 
   spell-check:
@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
-      - working-directory: packages/service-main-h
+      - working-directory: packages/main
         run: bun run spell-check
 
   type-check:
@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
-      - working-directory: packages/service-main-h
+      - working-directory: packages/main
         run: bun run type-check
 
   test:
@@ -43,7 +43,7 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
-      - working-directory: packages/service-main-h
+      - working-directory: packages/main
         run: bun run test
 
   deploy:
@@ -58,7 +58,7 @@ jobs:
       - uses: ./.github/actions/setup-bun
       - name: Deploy (preview)
         if: github.ref == 'refs/heads/develop'
-        working-directory: packages/service-main-h
+        working-directory: packages/main
         run: bun run deploy -- --branch=develop
         env:
           VITE_IMAGE_HOST: ${{ vars.VITE_IMAGE_HOST }}
@@ -66,7 +66,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Deploy (production)
         if: github.ref == 'refs/heads/main'
-        working-directory: packages/service-main-h
+        working-directory: packages/main
         run: bun run deploy -- --branch=main
         env:
           VITE_IMAGE_HOST: ${{ vars.VITE_IMAGE_HOST }}

@@ -1,5 +1,5 @@
 {
-  "name": "service-main-h",
+  "name": "main",
   "version": "0.0.0",
   "scripts": {
     "build": "vite build --mode client && vite build",
