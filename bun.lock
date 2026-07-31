@@ -32,34 +32,8 @@
         "typescript": "5.9.3",
       },
     },
-    "packages/module-images-db": {
-      "name": "module-images-db",
-      "version": "0.0.0",
-      "dependencies": {
-        "@google-cloud/storage": "7.21.0",
-        "sharp": "0.35.3",
-        "uuid": "14.0.1",
-        "zod": "4.4.3",
-      },
-      "devDependencies": {
-        "@types/bun": "1.3.14",
-        "@types/uuid": "11.0.0",
-        "eslint": "8.57.0",
-        "eslint-config-sc-all": "0.0.5",
-        "eslint-config-sc-jest": "0.0.5",
-        "eslint-config-sc-ts": "0.0.7",
-        "eslint-plugin-jsdoc": "63.0.13",
-        "eslint-plugin-sc-js": "0.0.5",
-        "eslint-plugin-sonarjs": "4.1.0",
-        "fixpack": "4.0.0",
-        "prettier": "3.9.5",
-      },
-      "peerDependencies": {
-        "typescript": "5.9.3",
-      },
-    },
-    "packages/service-main-h": {
-      "name": "service-main-h",
+    "packages/main": {
+      "name": "main",
       "version": "0.0.0",
       "dependencies": {
         "@formkit/tempo": "1.1.0",
@@ -93,6 +67,32 @@
         "vite": "8.1.4",
         "vite-tsconfig-paths": "6.1.1",
         "wrangler": "4.110.0",
+      },
+      "peerDependencies": {
+        "typescript": "5.9.3",
+      },
+    },
+    "packages/module-images-db": {
+      "name": "module-images-db",
+      "version": "0.0.0",
+      "dependencies": {
+        "@google-cloud/storage": "7.21.0",
+        "sharp": "0.35.3",
+        "uuid": "14.0.1",
+        "zod": "4.4.3",
+      },
+      "devDependencies": {
+        "@types/bun": "1.3.14",
+        "@types/uuid": "11.0.0",
+        "eslint": "8.57.0",
+        "eslint-config-sc-all": "0.0.5",
+        "eslint-config-sc-jest": "0.0.5",
+        "eslint-config-sc-ts": "0.0.7",
+        "eslint-plugin-jsdoc": "63.0.13",
+        "eslint-plugin-sc-js": "0.0.5",
+        "eslint-plugin-sonarjs": "4.1.0",
+        "fixpack": "4.0.0",
+        "prettier": "3.9.5",
       },
       "peerDependencies": {
         "typescript": "5.9.3",
@@ -1654,6 +1654,8 @@
 
     "magic-string": ["magic-string@0.30.21", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.5" } }, "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ=="],
 
+    "main": ["main@workspace:packages/main"],
+
     "make-dir": ["make-dir@4.0.0", "", { "dependencies": { "semver": "^7.5.3" } }, "sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw=="],
 
     "makeerror": ["makeerror@1.0.12", "", { "dependencies": { "tmpl": "1.0.5" } }, "sha512-JmqCvUhmt43madlpFzG4BQzG2Z3m6tvQDNKdClZnO3VbIudJYmxsT0FNJMeiB2+JTSlTQTSbU8QdesVmwJcmLg=="],
@@ -1913,8 +1915,6 @@
     "sembear": ["sembear@0.7.0", "", { "dependencies": { "semver": "^7.3.5" } }, "sha512-XyLTEich2D02FODCkfdto3mB9DetWPLuTzr4tvoofe9SvyM27h4nQSbV3+iVcYQz94AFyKtqBv5pcZbj3k2hdA=="],
 
     "semver": ["semver@7.8.5", "", { "bin": { "semver": "bin/semver.js" } }, "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA=="],
-
-    "service-main-h": ["service-main-h@workspace:packages/service-main-h"],
 
     "set-function-length": ["set-function-length@1.2.2", "", { "dependencies": { "define-data-property": "^1.1.4", "es-errors": "^1.3.0", "function-bind": "^1.1.2", "get-intrinsic": "^1.2.4", "gopd": "^1.0.1", "has-property-descriptors": "^1.0.2" } }, "sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg=="],
 

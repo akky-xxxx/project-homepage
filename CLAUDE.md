@@ -6,8 +6,8 @@
 
 これは `akky-xxxx` の個人ホームページ/フォトギャラリーサイトです。Bun で管理されたモノレポで、`packages/` 配下に2つのワークスペースパッケージがあります。
 
-- **`service-main-h`** — 公開サイト本体。[HonoX](https://github.com/honojs/honox)（Hono + ファイルベースルーティング、アイランドアーキテクチャ）で構築され、Vite でビルドし、Wrangler 経由で Cloudflare Pages にデプロイされる。
-- **`module-images-db`** — 写真のメタデータ（`ImagesDataBase`）を保持し、新しい写真を最適化して Google Cloud Storage にアップロード・メタデータを再生成する CLI スクリプトを提供する、独立したデータ/ビルド用パッケージ。`service-main-h` はこれを `module-images-db: "workspace:*"` として依存に持ち、`ImagesDataBase`、`Locations`、`Tags`、`Months` を静的データとしてインポートしている（実行時DBは無し）。
+- **`main`** — 公開サイト本体。[HonoX](https://github.com/honojs/honox)（Hono + ファイルベースルーティング、アイランドアーキテクチャ）で構築され、Vite でビルドし、Wrangler 経由で Cloudflare Pages にデプロイされる。
+- **`module-images-db`** — 写真のメタデータ（`ImagesDataBase`）を保持し、新しい写真を最適化して Google Cloud Storage にアップロード・メタデータを再生成する CLI スクリプトを提供する、独立したデータ/ビルド用パッケージ。`main` はこれを `module-images-db: "workspace:*"` として依存に持ち、`ImagesDataBase`、`Locations`、`Tags`、`Months` を静的データとしてインポートしている（実行時DBは無し）。
 
 パッケージマネージャーは **Bun のみ** — `npm`/`yarn`/`pnpm` は意図的に無効化されている（ルート `package.json` の `engines` を参照。Bun を使うよう日本語で警告が表示される）。
 
@@ -27,14 +27,14 @@ bun ws:fix                  # 各パッケージで同上
 bun all-check                # check-code + ws:spell-check + test
 ```
 
-パッケージ単位（`packages/service-main-h` または `packages/module-images-db` 内で実行、あるいは `bun --cwd` 経由）:
+パッケージ単位（`packages/main` または `packages/module-images-db` 内で実行、あるいは `bun --cwd` 経由）:
 
 ```bash
-bun dev                     # service-main-h: vite の開発サーバー
-bun build                   # service-main-h: vite build --mode client && vite build
-bun preview                 # service-main-h: wrangler pages dev ./dist
-bun deploy                  # service-main-h: ビルド後に `wrangler pages deploy ./dist`
-bun log                     # service-main-h: wrangler pages deployment tail
+bun dev                     # main: vite の開発サーバー
+bun build                   # main: vite build --mode client && vite build
+bun preview                 # main: wrangler pages dev ./dist
+bun deploy                  # main: ビルド後に `wrangler pages deploy ./dist`
+bun log                     # main: wrangler pages deployment tail
 
 bun type-check              # tsc（型チェックのみ、出力なし）
 bun lint:product-code       # app/ または src/ のみを対象にした eslint、--max-warnings 0
@@ -50,11 +50,11 @@ bun image-add               # origin-image/ 内のファイルを最適化・ア
 bun image-delete            # src/const/IMAGES に存在しなくなった画像の GCS オブジェクトを削除し、fix を実行
 ```
 
-トップレベルで一括の「ビルド」というものは無く、各パッケージが個別にビルドされる。デプロイ対象の成果物は `service-main-h`。
+トップレベルで一括の「ビルド」というものは無く、各パッケージが個別にビルドされる。デプロイ対象の成果物は `main`。
 
 ## 必須の環境変数
 
-- `service-main-h`: `VITE_IMAGE_HOST`（`packages/service-main-h/.env.example` を参照）。
+- `main`: `VITE_IMAGE_HOST`（`packages/main/.env.example` を参照）。
 - `module-images-db`: `BUCKET`（GCS バケット名、`EnvironmentSchema` でバリデーション）に加え、GCP サービスアカウントの JSON（`src/shared/schemas/CredentialSchema` の `CredentialSchema` でバリデーション）。これは `src/shared/utils/storageBucket` が `@google-cloud/storage` と通信する際に使われる。`packages/module-images-db/.env.example` を参照。
 
 ## アーキテクチャ
@@ -65,9 +65,9 @@ bun image-delete            # src/const/IMAGES に存在しなくなった画像
 - `src/upload-image/index.ts` は CLI エントリポイント: `origin-image/` からファイルを読み込み、`.temporary-image/` の一時ディレクトリへ移動し、最適化（`sharp` を用いた `optimizeImage`）、GCS へのアップロード（`upload`）、定数ファイルの再生成（`createImageConstant`）を行った後にクリーンアップする。`bun image-add` から呼ばれる。
 - `src/delete-image/index.ts` はその逆の処理: GCS 上のオブジェクトと `src/const/IMAGES` を突き合わせ、不要になったファイル（`EXTENSIONS` に従いサムネイルとメイン画像の両方）を削除する。`bun image-delete` から呼ばれる。
 - 各写真は `EXTENSIONS` に従い、`imageId` をキーとした2種類の保存バリアント（サムネイル + メイン）を持つ。
-- このパッケージに HTTP サーバーは無く、純粋にデータモジュール + 2つの CLI スクリプトであり、`service-main-h` からビルド時/実行時にインメモリのデータセットとして利用される。
+- このパッケージに HTTP サーバーは無く、純粋にデータモジュール + 2つの CLI スクリプトであり、`main` からビルド時/実行時にインメモリのデータセットとして利用される。
 
-### `service-main-h` — サイト本体
+### `main` — サイト本体
 
 - **ルーティング**: `app/routes/` 配下で HonoX によるファイルベースルーティング。各ルートファイルは `createRoute((c) => ...)` をデフォルトエクスポートする。`app/routes/_renderer.tsx` が共通の HTML シェル（`<html>`/`<head>`/`<Layout>`）を定義し、`_404.tsx`/`_error.tsx` がエラーページを扱う。
 - **エントリポイント**: `app/server.ts`（`honox/server` の `createApp()`、Cloudflare Pages Function としてデプロイされる）と `app/client.ts`（`honox/client` の `createClient()`、ブラウザでアイランドをハイドレートする）。
@@ -82,7 +82,7 @@ bun image-delete            # src/const/IMAGES に存在しなくなった画像
 
 - **1フォルダにつき1エクスポート、常に `index.ts`/`index.tsx`**: コンポーネント、util、const、type、style、hook などほぼすべての単位が、エクスポート対象の名前を持つ専用ディレクトリに配置され、中身は `index.ts(x)` のみとなっている。これはルートの `eslint.config.mjs` にある `sc-js/file-path-patterns` ESLint ルールで強制されており、設定ファイルなど一部のみが許可リストの例外となっている。新規ファイルを追加する際もこのパターンに従うこと。単独のファイルを並べて置かない。
 - **テストのコロケーション**: `index.test.ts` はテスト対象の `index.ts` の隣に置かれ、`bun:test`（`describe`/`it`/`expect`、しばしば `it.each` を使用）で書かれる。
-- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名（現状 `module-images-db`、`service-main-h`）のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。
+- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名（現状 `module-images-db`、`main`）のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。
 - **pre-push フック**（`.husky/pre-push`）は `bun install --frozen-lockfile && bun check-code && bun ws:check-code && bun test` を実行する — push 前にこれが走ることを前提とすること。
 - Lint は階層化されている: ルートの ESLint 設定はトップレベル/設定ファイルのみを対象とする（`eslint.config.mjs`、`ignores: ["packages"]`）。各パッケージは自身の `app/`/`src/` 用に独自の `eslint.config.js.mjs` を持ち、そのパッケージの `lint:product-code`/`lint:config` スクリプト経由で実行される。
 - リポジトリには `bun.lockb` と `yarn.lock` の両方が存在する。`bunfig.toml` で `install.lockfile.print = "yarn"` が設定されており（Bun のバイナリロックファイルと並行して yarn 形式のロックファイルも同期して保持されている）、理由を確認せずにどちらか一方を削除しないこと。
