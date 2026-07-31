@@ -1,6 +1,8 @@
 import { betterAuthStrategy } from '@delmaredigital/payload-better-auth'
 import type { CollectionConfig } from 'payload'
 
+import { isAdmin } from '../shared/utilities/isAdmin'
+
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
@@ -16,7 +18,7 @@ export const Users: CollectionConfig = {
       if (req.user.role === 'admin') return true
       return { id: { equals: req.user.id } }
     },
-    admin: ({ req }) => req.user?.role === 'admin',
+    admin: isAdmin,
   },
   fields: [
     { name: 'email', type: 'email', required: true, unique: true },

@@ -1,12 +1,18 @@
 import type { CollectionConfig } from 'payload'
 
+import { isAdmin } from '../shared/utilities/isAdmin'
+
 export const Photos: CollectionConfig = {
   slug: 'photos',
   admin: {
     useAsTitle: 'date',
   },
   access: {
+    admin: isAdmin,
+    create: isAdmin,
+    delete: isAdmin,
     read: () => true,
+    update: isAdmin,
   },
   upload: {
     adminThumbnail: 'thumbnail',
