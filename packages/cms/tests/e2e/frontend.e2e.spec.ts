@@ -3,12 +3,14 @@ import { test, expect, Page } from '@playwright/test'
 test.describe('Frontend', () => {
   let page: Page
 
-  test.beforeAll(async ({ browser }, testInfo) => {
+  test.beforeAll(async (fixtures, testInfo) => {
+    const { browser } = fixtures
     const context = await browser.newContext()
     page = await context.newPage()
   })
 
-  test('can go on homepage', async ({ page }) => {
+  test('can go on homepage', async (fixtures) => {
+    const { page } = fixtures
     await page.goto('http://localhost:3000')
 
     await expect(page).toHaveTitle(/Payload Blank Template/)

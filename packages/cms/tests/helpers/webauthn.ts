@@ -23,9 +23,9 @@ export const addVirtualAuthenticator = async (page: Page) => {
   return { client, authenticatorId }
 }
 
-export const removeVirtualAuthenticator = async ({
-  client,
-  authenticatorId,
-}: Awaited<ReturnType<typeof addVirtualAuthenticator>>): Promise<void> => {
+export const removeVirtualAuthenticator = async (
+  authenticator: Awaited<ReturnType<typeof addVirtualAuthenticator>>,
+): Promise<void> => {
+  const { client, authenticatorId } = authenticator
   await client.send('WebAuthn.removeVirtualAuthenticator', { authenticatorId })
 }

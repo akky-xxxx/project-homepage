@@ -13,7 +13,8 @@ export const Users: CollectionConfig = {
     strategies: [betterAuthStrategy()],
   },
   access: {
-    read: ({ req }) => {
+    read: (args) => {
+      const { req } = args
       if (!req.user) return false
       if (req.user.role === 'admin') return true
       return { id: { equals: req.user.id } }

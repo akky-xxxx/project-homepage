@@ -8,7 +8,8 @@ test.describe('Admin Panel', () => {
   let page: Page
   let authenticator: Awaited<ReturnType<typeof addVirtualAuthenticator>>
 
-  test.beforeAll(async ({ browser }) => {
+  test.beforeAll(async (fixtures) => {
+    const { browser } = fixtures
     const { id: userId } = await seedTestUser()
 
     const context = await browser.newContext()

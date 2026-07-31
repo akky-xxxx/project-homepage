@@ -11,7 +11,8 @@ export interface LoginOptions {
  * 事前に virtual authenticator へ passkey が登録されている必要がある
  * (registerTestPasskey 参照)。
  */
-export const login = async ({ page, serverURL = 'http://localhost:3000' }: LoginOptions): Promise<void> => {
+export const login = async (options: LoginOptions): Promise<void> => {
+  const { page, serverURL = 'http://localhost:3000' } = options
   await page.goto(`${serverURL}/login`)
 
   await page.getByRole('button', { name: 'Sign in with Passkey' }).click()
