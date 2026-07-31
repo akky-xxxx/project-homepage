@@ -1,7 +1,7 @@
 import { passkey } from '@better-auth/passkey'
 import type { BetterAuthOptions } from 'better-auth'
 
-import { getBaseUrl } from './getBaseUrl'
+import { getBaseUrl } from '../getBaseUrl'
 
 const rpID = new URL(getBaseUrl()).hostname
 

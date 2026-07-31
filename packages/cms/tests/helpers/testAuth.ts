@@ -4,8 +4,8 @@ import { testUtils } from 'better-auth/plugins'
 import { getPayload } from 'payload'
 
 import config from '../../src/payload.config.js'
-import { betterAuthOptions } from '../../src/lib/auth/config'
-import { getBaseUrl } from '../../src/lib/auth/getBaseUrl'
+import { betterAuthOptions } from '@/shared/utilities/betterAuthOptions'
+import { getBaseUrl } from '@/shared/utilities/getBaseUrl'
 
 /**
  * テストコードから直接セッション/クッキーを発行するための、

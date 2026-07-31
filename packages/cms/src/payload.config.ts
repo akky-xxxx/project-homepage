@@ -11,8 +11,8 @@ import { Users } from './collections/Users'
 import { Areas } from './collections/Areas'
 import { Photos } from './collections/Photos'
 import { Tags } from './collections/Tags'
-import { betterAuthOptions } from './lib/auth/config'
-import { getBaseUrl } from './lib/auth/getBaseUrl'
+import { betterAuthOptions } from './shared/utilities/betterAuthOptions'
+import { getBaseUrl } from './shared/utilities/getBaseUrl'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
