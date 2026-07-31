@@ -20,6 +20,9 @@ export default buildConfig({
   },
   collections: [Users, Media],
   editor: lexicalEditor(),
+  routes: {
+    admin: '/',
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
