@@ -17,12 +17,12 @@ export interface RegisterTestPasskeyOptions {
  * 登録後はクッキーをクリアし、以降のログインテストが実際の passkey サインインを
  * 経由するようにする。
  */
-export async function registerTestPasskey({
+export const registerTestPasskey = async ({
   context,
   page,
   userId,
   serverURL = 'http://localhost:3000',
-}: RegisterTestPasskeyOptions): Promise<void> {
+}: RegisterTestPasskeyOptions): Promise<void> => {
   const cookies = await getTestUserCookies(userId)
   await context.addCookies(cookies)
 
@@ -36,7 +36,7 @@ export async function registerTestPasskey({
   await context.clearCookies()
 }
 
-async function waitForPasskeyRegistered(userId: string, timeoutMs = 10_000): Promise<void> {
+const waitForPasskeyRegistered = async (userId: string, timeoutMs = 10_000): Promise<void> => {
   const payload = await getPayload({ config })
   const start = Date.now()
 

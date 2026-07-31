@@ -5,7 +5,7 @@ import type { Page } from '@playwright/test'
  * automaticPresenceSimulation により、実機の生体認証なしで
  * passkey の登録/認証セレモニーが自動完了する。
  */
-export async function addVirtualAuthenticator(page: Page) {
+export const addVirtualAuthenticator = async (page: Page) => {
   const client = await page.context().newCDPSession(page)
   await client.send('WebAuthn.enable', { enableUI: false })
 
@@ -23,9 +23,9 @@ export async function addVirtualAuthenticator(page: Page) {
   return { client, authenticatorId }
 }
 
-export async function removeVirtualAuthenticator({
+export const removeVirtualAuthenticator = async ({
   client,
   authenticatorId,
-}: Awaited<ReturnType<typeof addVirtualAuthenticator>>): Promise<void> {
+}: Awaited<ReturnType<typeof addVirtualAuthenticator>>): Promise<void> => {
   await client.send('WebAuthn.removeVirtualAuthenticator', { authenticatorId })
 }

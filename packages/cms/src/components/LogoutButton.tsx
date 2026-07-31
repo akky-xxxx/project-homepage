@@ -9,11 +9,11 @@ import { useState } from 'react'
  * routes.admin: '/' のため '//login' という不正な URL になってしまう。
  * そのため '/login' 固定でリダイレクトする版を用意している。
  */
-export function LogoutButton() {
+export const LogoutButton = () => {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
 
-  async function handleLogout() {
+  const handleLogout = async () => {
     if (isLoading) return
     setIsLoading(true)
 

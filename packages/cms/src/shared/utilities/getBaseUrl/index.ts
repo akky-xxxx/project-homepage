@@ -1,4 +1,4 @@
-export function getBaseUrl(): string {
+export const getBaseUrl = (): string => {
   if (process.env.BETTER_AUTH_URL) {
     return process.env.BETTER_AUTH_URL
   }

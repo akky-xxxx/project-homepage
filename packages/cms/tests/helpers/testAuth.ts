@@ -12,7 +12,7 @@ import { getBaseUrl } from '@/shared/utilities/getBaseUrl'
  * testUtils() 付き Better Auth インスタンス。
  * 本番の payload.config.ts には登録しない(テスト専用)。
  */
-export async function createTestAuth() {
+export const createTestAuth = async () => {
   const payload = await getPayload({ config })
   const baseUrl = getBaseUrl()
 

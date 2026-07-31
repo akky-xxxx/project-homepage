@@ -15,7 +15,7 @@ const relatedAuthCollections = ['sessions', 'accounts', 'passkeys'] as const
  * passkey ログインの e2e テスト用ユーザーを作成する。
  * パスワードは扱わない(passkey-only 認証のため)。
  */
-export async function seedTestUser(): Promise<{ id: string }> {
+export const seedTestUser = async (): Promise<{ id: string }> => {
   const payload = await getPayload({ config })
 
   const { docs: existingUsers } = await payload.find({
@@ -42,7 +42,7 @@ export async function seedTestUser(): Promise<{ id: string }> {
   return { id: String(user.id) }
 }
 
-export async function cleanupTestUser(): Promise<void> {
+export const cleanupTestUser = async (): Promise<void> => {
   const payload = await getPayload({ config })
 
   const { docs } = await payload.find({
@@ -59,7 +59,7 @@ export async function cleanupTestUser(): Promise<void> {
   })
 }
 
-async function deleteRelatedAuthRows(userId: string): Promise<void> {
+const deleteRelatedAuthRows = async (userId: string): Promise<void> => {
   const payload = await getPayload({ config })
 
   for (const collection of relatedAuthCollections) {
@@ -74,7 +74,7 @@ async function deleteRelatedAuthRows(userId: string): Promise<void> {
  * passkey 登録(セッション必須)をブラウザ側で行うための、
  * テストユーザーとしてログイン済みのクッキーを取得する。
  */
-export async function getTestUserCookies(userId: string): Promise<TestCookie[]> {
+export const getTestUserCookies = async (userId: string): Promise<TestCookie[]> => {
   const auth = await createTestAuth()
   const ctx = await auth.$context
 
