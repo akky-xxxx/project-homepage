@@ -9,6 +9,9 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Areas } from './collections/Areas'
+import { Photos } from './collections/Photos'
+import { Tags } from './collections/Tags'
 import { betterAuthOptions } from './lib/auth/config'
 import { getBaseUrl } from './lib/auth/getBaseUrl'
 
@@ -24,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Areas, Photos, Tags],
   editor: lexicalEditor(),
   routes: {
     admin: '/',
