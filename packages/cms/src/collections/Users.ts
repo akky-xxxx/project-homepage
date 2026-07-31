@@ -1,3 +1,4 @@
+import { betterAuthStrategy } from '@delmaredigital/payload-better-auth'
 import type { CollectionConfig } from 'payload'
 
 export const Users: CollectionConfig = {
@@ -5,9 +6,31 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'email',
   },
-  auth: true,
+  auth: {
+    disableLocalStrategy: true,
+    strategies: [betterAuthStrategy()],
+  },
+  access: {
+    read: ({ req }) => {
+      if (!req.user) return false
+      if (req.user.role === 'admin') return true
+      return { id: { equals: req.user.id } }
+    },
+    admin: ({ req }) => req.user?.role === 'admin',
+  },
   fields: [
-    // Email added by default
-    // Add more fields as needed
+    { name: 'email', type: 'email', required: true, unique: true },
+    { name: 'emailVerified', type: 'checkbox', defaultValue: false },
+    { name: 'name', type: 'text' },
+    { name: 'image', type: 'text' },
+    {
+      name: 'role',
+      type: 'select',
+      defaultValue: 'user',
+      options: [
+        { label: 'User', value: 'user' },
+        { label: 'Admin', value: 'admin' },
+      ],
+    },
   ],
 }
