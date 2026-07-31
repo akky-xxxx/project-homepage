@@ -8,7 +8,6 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import { Users } from './collections/Users'
-import { Media } from './collections/Media'
 import { Areas } from './collections/Areas'
 import { Photos } from './collections/Photos'
 import { Tags } from './collections/Tags'
@@ -27,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Areas, Photos, Tags],
+  collections: [Users, Areas, Photos, Tags],
   editor: lexicalEditor(),
   routes: {
     admin: '/',
