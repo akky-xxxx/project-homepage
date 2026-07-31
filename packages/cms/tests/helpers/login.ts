@@ -4,25 +4,17 @@ import { expect } from '@playwright/test'
 export interface LoginOptions {
   page: Page
   serverURL?: string
-  user: {
-    email: string
-    password: string
-  }
 }
 
 /**
- * Logs the user into the admin panel via the login page.
+ * 管理画面ログインページから passkey でログインする。
+ * 事前に virtual authenticator へ passkey が登録されている必要がある
+ * (registerTestPasskey 参照)。
  */
-export async function login({
-  page,
-  serverURL = 'http://localhost:3000',
-  user,
-}: LoginOptions): Promise<void> {
+export async function login({ page, serverURL = 'http://localhost:3000' }: LoginOptions): Promise<void> {
   await page.goto(`${serverURL}/login`)
 
-  await page.fill('#field-email', user.email)
-  await page.fill('#field-password', user.password)
-  await page.click('button[type="submit"]')
+  await page.getByRole('button', { name: 'Sign in with Passkey' }).click()
 
   await page.waitForURL(`${serverURL}/`)
 

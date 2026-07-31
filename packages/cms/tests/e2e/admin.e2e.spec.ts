@@ -1,20 +1,26 @@
 import { test, expect, Page } from '@playwright/test'
 import { login } from '../helpers/login'
-import { seedTestUser, cleanupTestUser, testUser } from '../helpers/seedUser'
+import { registerTestPasskey } from '../helpers/registerTestPasskey'
+import { seedTestUser, cleanupTestUser } from '../helpers/seedUser'
+import { addVirtualAuthenticator, removeVirtualAuthenticator } from '../helpers/webauthn'
 
 test.describe('Admin Panel', () => {
   let page: Page
+  let authenticator: Awaited<ReturnType<typeof addVirtualAuthenticator>>
 
-  test.beforeAll(async ({ browser }, testInfo) => {
-    await seedTestUser()
+  test.beforeAll(async ({ browser }) => {
+    const { id: userId } = await seedTestUser()
 
     const context = await browser.newContext()
     page = await context.newPage()
+    authenticator = await addVirtualAuthenticator(page)
 
-    await login({ page, user: testUser })
+    await registerTestPasskey({ context, page, userId })
+    await login({ page })
   })
 
   test.afterAll(async () => {
+    await removeVirtualAuthenticator(authenticator)
     await cleanupTestUser()
   })
 
