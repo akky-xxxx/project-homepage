@@ -654,20 +654,20 @@ access: {
 
 1. **Local API Default**: Access control is **skipped by default** in Local API (`overrideAccess: true`). When passing a `user` parameter, you almost always want to set `overrideAccess: false` to respect that user's permissions:
 
-   ```ts
-   // ❌ WRONG: Passes user but bypasses access control (default behavior)
-   await payload.find({
-     collection: 'posts',
-     user: someUser, // User is ignored for access control!
-   })
+  ```ts
+  // ❌ WRONG: Passes user but bypasses access control (default behavior)
+  await payload.find({
+    collection: 'posts',
+    user: someUser, // User is ignored for access control!
+  })
 
-   // ✅ CORRECT: Respects the user's permissions
-   await payload.find({
-     collection: 'posts',
-     user: someUser,
-     overrideAccess: false, // Required to enforce access control
-   })
-   ```
+  // ✅ CORRECT: Respects the user's permissions
+  await payload.find({
+    collection: 'posts',
+    user: someUser,
+    overrideAccess: false, // Required to enforce access control
+  })
+  ```
 
    **Why this matters**: If you pass `user` without `overrideAccess: false`, the operation runs with admin privileges regardless of the user's actual permissions. This is a common security mistake.
 
