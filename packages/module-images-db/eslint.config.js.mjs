@@ -2,10 +2,13 @@
 import eslintConfigSCAll from "eslint-config-sc-all"
 import eslintPluginSCJs from "eslint-plugin-sc-js"
 
+import { COMMON_JS } from "../../config/eslint/COMMON_JS/index.mjs"
+import { ESLINT_CONFIG_FILE } from "../../config/eslint/ESLINT_CONFIG_FILE/index.mjs"
 import { IGNORES } from "../../config/eslint/IGNORES/index.mjs"
 
 const config = [
   IGNORES,
+  COMMON_JS,
   {
     files: [
       "**/*.{,m}js",
@@ -47,6 +50,7 @@ const config = [
       "import/no-default-export": 0,
     },
   },
+  ESLINT_CONFIG_FILE,
 ].flat()
 
 export default config

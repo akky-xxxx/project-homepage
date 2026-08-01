@@ -1,10 +1,12 @@
 import eslintConfigSCAll from "eslint-config-sc-all"
 import eslintPluginSCJs from "eslint-plugin-sc-js"
 
+import { COMMON_JS } from "./config/eslint/COMMON_JS/index.mjs"
 import { IGNORES } from "./config/eslint/IGNORES/index.mjs"
 
 const config = [
   IGNORES,
+  COMMON_JS,
   {
     ignores: ["packages"],
   },
