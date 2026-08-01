@@ -5,7 +5,8 @@ type Props = Parameters<GetHref>[0]
 type GetPhotoGalleryHref = (props: Props) => string
 
 export const getPhotoGalleryHref: GetPhotoGalleryHref = (props) => {
-  if (props.id !== "PhotoGallery") throw new Error("Do not use this function when id is not PhotoGallery.")
+  if (props.id !== "PhotoGallery")
+    throw new Error("Do not use this function when id is not PhotoGallery.")
 
   const { date, location, page, tag } = props
 
