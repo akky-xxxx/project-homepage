@@ -1,5 +1,4 @@
 // prettier-ignore
-/* eslint-disable unicorn/no-abusive-eslint-disable */
 /* eslint-disable */
 import {} from 'hono'
 

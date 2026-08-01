@@ -24,7 +24,7 @@ export const SiblingImages: FC<Props> = (props) => {
 
   // eslint-disable-next-line sonarjs/todo-tag -- 型上 early return に適した値がないための既知の回避策
   // TODO: early return に適した値が型上ないための回避策
-  // eslint-disable-next-line react/jsx-fragments, react/jsx-no-useless-fragment
+  // eslint-disable-next-line react/jsx-fragments
   if (!siblingImages.filter(Boolean).length) return <></>
   const queries = getQueries(searchQueries)
   const heading3Text = queries ? "Related" : "Others"

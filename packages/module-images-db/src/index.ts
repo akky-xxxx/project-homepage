@@ -5,7 +5,7 @@ import { PREFECTURES } from "./shared/const/PREFECTURES"
 
 import type { ImagesDataBaseRecord } from "./types/ImagesDataBaseRecord"
 
-/* eslint-disable @typescript-eslint/naming-convention, sonarjs/no-alphabetical-sort */
+/* eslint-disable sonarjs/no-alphabetical-sort */
 const ImagesDataBaseOrigin = [
   {
     area: "秋田県",
