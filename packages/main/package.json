@@ -6,7 +6,7 @@
     "check-code": "npm-run-all -p lint spell-check type-check -c",
     "deploy": "$npm_execpath run build && wrangler pages deploy ./dist",
     "dev": "vite",
-    "fix": "run-p -c \"fix:*\"",
+    "fix": "run-s fix:config fix:pack fix:product-code fix:prettier",
     "fix:config": "eslint -c eslint.config.js.mjs \"./\" --max-warnings 0 --fix",
     "fix:pack": "fixpack",
     "fix:prettier": "prettier \".\" --ignore-path ../../.prettierignore -w -u",

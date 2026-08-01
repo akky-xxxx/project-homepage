@@ -10,7 +10,7 @@
     "all-check": "run-s check-code ws:check-code test",
     "check-code": "run-p -c lint spell-check",
     "commitlint": "commitlint --edit",
-    "fix": "run-p fix:* -c",
+    "fix": "run-s fix:config fix:pack fix:prettier",
     "fix:config": "eslint -c eslint.config.mjs \"./\" --max-warnings 0 --fix",
     "fix:pack": "fixpack",
     "fix:prettier": "prettier \".\" \"!packages/**\" -w -u",
