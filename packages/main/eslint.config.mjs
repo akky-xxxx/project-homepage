@@ -1,4 +1,5 @@
 /* eslint-disable import/no-relative-packages */
+import eslintConfigPrettier from "eslint-config-prettier/flat"
 import eslintConfigSCAll from "eslint-config-sc-all"
 import eslintPluginJsdoc from "eslint-plugin-jsdoc"
 import eslintPluginSonarjs from "eslint-plugin-sonarjs"
@@ -36,6 +37,7 @@ const config = [
       ],
     },
   },
+  eslintConfigPrettier,
 ].flat()
 
 export default config

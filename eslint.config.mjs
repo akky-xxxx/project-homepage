@@ -1,3 +1,4 @@
+import eslintConfigPrettier from "eslint-config-prettier/flat"
 import eslintConfigSCAll from "eslint-config-sc-all"
 import eslintPluginSCJs from "eslint-plugin-sc-js"
 
@@ -11,10 +12,7 @@ const config = [
     ignores: ["packages"],
   },
   {
-    files: [
-      "**/*.{,m}js",
-      "config/**/*.{,m}js",
-    ],
+    files: ["**/*.{,m}js", "config/**/*.{,m}js"],
   },
   {
     plugins: {
@@ -51,6 +49,7 @@ const config = [
       "import/no-default-export": 0,
     },
   },
+  eslintConfigPrettier,
 ].flat()
 
 export default config
