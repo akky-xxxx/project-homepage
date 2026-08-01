@@ -4,7 +4,6 @@ import type { GetHref } from "@shared/utils/getHref/types/GetHref"
 type Props = Parameters<GetHref>[0]
 type GetPhotoGalleryHref = (props: Props) => string
 
-// eslint-disable-next-line complexity
 export const getPhotoGalleryHref: GetPhotoGalleryHref = (props) => {
   if (props.id !== "PhotoGallery") throw new Error("Do not use this function when id is not PhotoGallery.")
 
