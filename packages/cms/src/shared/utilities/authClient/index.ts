@@ -1,10 +1,8 @@
-'use client'
+"use client"
 
-import { passkeyClient } from '@better-auth/passkey/client'
-import { createAuthClient } from '@delmaredigital/payload-better-auth/client'
+import { passkeyClient } from "@better-auth/passkey/client"
+import { createAuthClient } from "@delmaredigital/payload-better-auth/client"
 
 export const authClient = createAuthClient({
   plugins: [passkeyClient()],
 })
-
-export const { useSession, signIn, signOut, passkey } = authClient

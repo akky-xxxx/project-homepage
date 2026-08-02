@@ -7,7 +7,7 @@
     "fix": "run-s fix:config fix:pack fix:product-code fix:prettier",
     "fix:config": "eslint -c eslint.config.js.mjs \"./\" --max-warnings 0 --fix",
     "fix:pack": "fixpack",
-    "fix:prettier": "prettier \".\" --ignore-path ../../.prettierignore -w -u",
+    "fix:prettier": "prettier \".\" -w -u",
     "fix:product-code": "eslint \"src/*/*.ts{,x}\" \"src/**/*.ts{,x}\" --max-warnings 0 --fix",
     "image-add": "run-s imageAdd fix",
     "image-delete": "run-s imageDelete fix",
@@ -17,7 +17,7 @@
     "lint:config": "eslint -c eslint.config.js.mjs \"./\" --max-warnings 0",
     "lint:editorconfig": "editorconfig-checker",
     "lint:pack": "fixpack --dryRun",
-    "lint:prettier": "prettier \".\" --ignore-path ../../.prettierignore -c -u",
+    "lint:prettier": "prettier \".\" -c -u",
     "lint:product-code": "eslint \"src/*/*.ts{,x}\" \"src/**/*.ts{,x}\" --max-warnings 0",
     "spell-check": "cspell \"./{src,config}/**\" --no-progress",
     "type-check": "tsc"
