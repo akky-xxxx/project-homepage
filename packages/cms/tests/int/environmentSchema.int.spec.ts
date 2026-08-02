@@ -41,6 +41,24 @@ describe("EnvironmentSchema", () => {
     ])
   })
 
+  it.each([validEnvironment.POSTGRES_URL, REMOTE_POSTGRES_URL])(
+    "BLOB_READ_WRITE_TOKEN が空文字なら弾く(POSTGRES_URL: %s)",
+    (postgresUrl) => {
+      const environment = {
+        ...validEnvironment,
+        BLOB_READ_WRITE_TOKEN: "",
+        POSTGRES_URL: postgresUrl,
+      }
+
+      const result = EnvironmentSchema.safeParse(environment)
+
+      expect(result.success).toBe(false)
+      expect(result.error?.issues).toStrictEqual([
+        expect.objectContaining({ path: ["BLOB_READ_WRITE_TOKEN"] }),
+      ])
+    },
+  )
+
   it("BLOB_READ_WRITE_TOKEN は本番 DB に接続していてもトークンがあれば通る", () => {
     const environment = {
       ...validEnvironment,

@@ -15,8 +15,9 @@ export const EnvironmentSchema = z
     BETTER_AUTH_URL: z.url(),
 
     // 未設定ならローカルディスク保存にフォールバックする(ローカル開発・CI 用)。
-    // 本番 DB に接続している場合は下の refine で必須になる
-    BLOB_READ_WRITE_TOKEN: z.string().optional(),
+    // 本番 DB に接続している場合は下の refine で必須になる。
+    // 空文字はアダプタが「トークン無し」として扱い黙って無効化されるため、ここで弾く
+    BLOB_READ_WRITE_TOKEN: z.string().min(NON_EMPTY).optional(),
 
     // "true" のときだけ password サインインの passkey チェックを外す。
     // 本番 DB へローカルから繋いで写真を投入する作業でのみ使う(README 参照)
