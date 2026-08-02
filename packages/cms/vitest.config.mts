@@ -9,5 +9,8 @@ export default defineConfig({
     setupFiles: ["./vitest.setup.ts"],
 
     include: ["tests/int/**/*.int.spec.ts"],
+
+    // 全ファイルが同じ Postgres を共有し、users の件数に依存するテストもあるため直列実行する
+    fileParallelism: false,
   },
 })

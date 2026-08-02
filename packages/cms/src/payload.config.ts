@@ -17,12 +17,11 @@ import { GalleryTags } from "./collections/GalleryTags"
 import { Users } from "./collections/Users"
 import { ENVIRONMENT } from "./shared/const/ENVIRONMENT"
 import { betterAuthOptions } from "./shared/utilities/betterAuthOptions"
-import { getBaseUrl } from "./shared/utilities/getBaseUrl"
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const baseUrl = getBaseUrl()
+const baseUrl = ENVIRONMENT.BETTER_AUTH_URL
 
 export default buildConfig({
   admin: {
@@ -80,8 +79,10 @@ export default buildConfig({
         login: {
           afterLoginPath: "/",
           enablePasskey: true,
-          enablePassword: false,
-          enableSignUp: false,
+          // password / サインアップは最初の 1 アカウントを作るためだけに開いている。
+          // 作成後の password ログインと 2 回目以降のサインアップは authBeforeHook が拒否する。
+          enablePassword: true,
+          enableSignUp: true,
 
           enableForgotPassword: false,
           enableMagicLink: false,

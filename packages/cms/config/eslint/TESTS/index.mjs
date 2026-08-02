@@ -14,6 +14,14 @@ export const TESTS = [
 
       // 準備・実行・検証を 1 つのテストに素直に並べると超えるため
       "max-statements": Severity.OFF,
+
+      // describe / it のコールバックも関数として数えられるため、
+      // テストケースを増やすだけで頭打ちになる
+      "max-lines": Severity.OFF,
+      "max-lines-per-function": Severity.OFF,
+
+      // テストユーザーの認証情報はフィクスチャとして直接書く必要があるため
+      "sonarjs/no-hardcoded-passwords": Severity.OFF,
     },
   },
 ]
