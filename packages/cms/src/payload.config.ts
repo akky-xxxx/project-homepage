@@ -70,7 +70,8 @@ export default buildConfig({
   },
 
   plugins: [
-    // トークンが無いローカル開発・CI ではローカルディスク保存のまま動かす
+    // トークンが無いローカル開発・CI ではローカルディスク保存のまま動かす。
+    // 本番 DB に接続している場合はトークンを EnvironmentSchema が必須にしている
     vercelBlobStorage({
       enabled: ENVIRONMENT.BLOB_READ_WRITE_TOKEN != null,
       token: ENVIRONMENT.BLOB_READ_WRITE_TOKEN,

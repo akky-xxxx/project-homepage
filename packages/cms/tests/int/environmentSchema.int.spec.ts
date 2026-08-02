@@ -5,6 +5,8 @@ import { EnvironmentSchema } from "@/shared/schemas/EnvironmentSchema"
 const SECRET_LENGTH = 32
 const TOO_SHORT_SECRET_LENGTH = 31
 
+const REMOTE_POSTGRES_URL = "postgres://user:pass@db.example.com:5432/cms"
+
 const validEnvironment = {
   BETTER_AUTH_SECRET: "a".repeat(SECRET_LENGTH),
   BETTER_AUTH_URL: "https://cms.example.com",
@@ -20,6 +22,31 @@ describe("EnvironmentSchema", () => {
 
   it("SIGN_UP_ALLOWED_EMAIL は未設定でも通る(サインアップを閉じた状態)", () => {
     const { SIGN_UP_ALLOWED_EMAIL, ...environment } = validEnvironment
+
+    expect(EnvironmentSchema.safeParse(environment).success).toBe(true)
+  })
+
+  it("BLOB_READ_WRITE_TOKEN はローカル DB なら未設定でも通る", () => {
+    expect(EnvironmentSchema.safeParse(validEnvironment).success).toBe(true)
+  })
+
+  it("BLOB_READ_WRITE_TOKEN は本番 DB に接続していて未設定なら弾く", () => {
+    const environment = { ...validEnvironment, POSTGRES_URL: REMOTE_POSTGRES_URL }
+
+    const result = EnvironmentSchema.safeParse(environment)
+
+    expect(result.success).toBe(false)
+    expect(result.error?.issues).toStrictEqual([
+      expect.objectContaining({ path: ["BLOB_READ_WRITE_TOKEN"] }),
+    ])
+  })
+
+  it("BLOB_READ_WRITE_TOKEN は本番 DB に接続していてもトークンがあれば通る", () => {
+    const environment = {
+      ...validEnvironment,
+      BLOB_READ_WRITE_TOKEN: "vercel_blob_rw_example_token",
+      POSTGRES_URL: REMOTE_POSTGRES_URL,
+    }
 
     expect(EnvironmentSchema.safeParse(environment).success).toBe(true)
   })

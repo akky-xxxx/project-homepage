@@ -8,15 +8,15 @@ Payload CMS + Better Auth(passkey)で構築した、フォトギャラリーの�
 
 `ENVIRONMENT`(`src/shared/const/ENVIRONMENT`)が起動時に検証する。条件を満たさないと起動・ビルドが失敗する。
 
-| 変数                       | 必須 | ローカル `.env`           | Vercel Production      | 説明                                                    |
-| -------------------------- | ---- | ------------------------- | ---------------------- | ------------------------------------------------------- |
-| `POSTGRES_URL`             | 必須 | docker の接続文字列       | Postgres の接続文字列  | 空文字不可                                              |
-| `PAYLOAD_SECRET`           | 必須 | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                             |
-| `BETTER_AUTH_SECRET`       | 必須 | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                             |
-| `BETTER_AUTH_URL`          | 必須 | `http://localhost:3000`   | 固定のカスタムドメイン | passkey の rpID になる。デプロイごとに変わる URL は不可 |
-| `SIGN_UP_ALLOWED_EMAIL`    | 任意 | `dev@payloadcms.com`      | 初回登録時のみ設定     | 未設定ならサインアップは常に拒否                        |
-| `BLOB_READ_WRITE_TOKEN`    | 任意 | 設定しない                | 設定する               | 未設定なら画像はローカルディスク保存になる              |
-| `PASSWORD_SIGN_IN_ENABLED` | 任意 | 設定しない                | **設定しない**         | 写真投入作業のときだけコマンドラインで渡す              |
+| 変数                       | 必須   | ローカル `.env`           | Vercel Production      | 説明                                                                             |
+| -------------------------- | ------ | ------------------------- | ---------------------- | -------------------------------------------------------------------------------- |
+| `POSTGRES_URL`             | 必須   | docker の接続文字列       | Postgres の接続文字列  | 空文字不可                                                                       |
+| `PAYLOAD_SECRET`           | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
+| `BETTER_AUTH_SECRET`       | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
+| `BETTER_AUTH_URL`          | 必須   | `http://localhost:3000`   | 固定のカスタムドメイン | passkey の rpID になる。デプロイごとに変わる URL は不可                          |
+| `SIGN_UP_ALLOWED_EMAIL`    | 任意   | `dev@payloadcms.com`      | 初回登録時のみ設定     | 未設定ならサインアップは常に拒否                                                 |
+| `BLOB_READ_WRITE_TOKEN`    | 条件付 | 設定しない                | 設定する               | ローカル DB なら省略可(画像はローカルディスク保存)。本番 DB に接続していると必須 |
+| `PASSWORD_SIGN_IN_ENABLED` | 任意   | 設定しない                | **設定しない**         | 写真投入作業のときだけコマンドラインで渡す                                       |
 
 Preview 環境を使う場合、`PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` は Production と別の値にし、`POSTGRES_URL` は本番 DB を指さないこと。
 
@@ -114,7 +114,7 @@ password を忘れている場合は、`users` / `accounts` / `sessions` / `pass
 - `BETTER_AUTH_URL` は利用する全環境(Production / Preview)に設定する。未設定だとビルドが失敗する。本番では**固定のカスタムドメイン**を指定する(passkey の rpID になるため、デプロイごとに変わる URL を掴むと登録済みの passkey が使えなくなる)。
 - `PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` は Production と Preview で別の値にする。
 - Preview を本番 DB に接続しない。
-- `BLOB_READ_WRITE_TOKEN` を Production に設定する。未設定だと画像がローカルディスクに書かれ、アップロードが失敗する。
+- `BLOB_READ_WRITE_TOKEN` を Production に設定する。未設定だとビルドが失敗する(本番 DB に接続している場合は `EnvironmentSchema` が必須にしている)。
 - Preview は Vercel Authentication で保護する。保護しない場合、Preview デプロイも管理画面と認証 API への入口になる。なお Hobby プランで使える Standard Protection は Preview と生成 URL のみが対象で、**Production のカスタムドメインは保護されない**(Production も保護するには Pro 以上の All Deployments が必要)。
 
 ## テスト
