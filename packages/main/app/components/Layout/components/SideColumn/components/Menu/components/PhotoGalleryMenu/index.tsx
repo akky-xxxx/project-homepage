@@ -28,7 +28,7 @@ const IconProps = {
 type Props = PhotoGallerySearchQueries
 
 // これ以上分割すると分かりづらくなる
-// eslint-disable-next-line max-lines-per-function
+
 export const PhotoGalleryMenu: FC<Props> = (props) => {
   const { date, location, tag } = props
   const locationItems = Locations.map((item) => ({
@@ -68,11 +68,7 @@ export const PhotoGalleryMenu: FC<Props> = (props) => {
         </li>
 
         <li>
-          <Accordion
-            icon={<TagIcon {...IconProps} />}
-            isOpen={Boolean(tag?.length)}
-            title="Tags"
-          >
+          <Accordion icon={<TagIcon {...IconProps} />} isOpen={Boolean(tag?.length)} title="Tags">
             <Items items={tagItems} />
           </Accordion>
         </li>

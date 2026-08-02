@@ -32,9 +32,8 @@ const KEYS: Array<keyof typeof VALID_CREDENTIAL> = [
   "universe_domain",
 ]
 
-const omit = (key: keyof typeof VALID_CREDENTIAL) => Object.fromEntries(
-  Object.entries(VALID_CREDENTIAL).filter(([entryKey]) => entryKey !== key),
-)
+const omit = (key: keyof typeof VALID_CREDENTIAL) =>
+  Object.fromEntries(Object.entries(VALID_CREDENTIAL).filter(([entryKey]) => entryKey !== key))
 
 describe("CredentialSchema", () => {
   describe("success", () => {

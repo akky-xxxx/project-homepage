@@ -1428,8 +1428,9 @@ const ImagesDataBaseOrigin = [
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
 const uniqueRegisterPrefectures = new Set<string>(ImagesDataBase.map(({ area }) => area))
-export const Locations = PREFECTURES
-  .filter((prefecture) => uniqueRegisterPrefectures.has(prefecture))
+export const Locations = PREFECTURES.filter((prefecture) =>
+  uniqueRegisterPrefectures.has(prefecture),
+)
 export const Tags = [...new Set(ImagesDataBase.flatMap(({ tags }) => tags))].sort()
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const Months = [...new Set(ImagesDataBase.map(({ date }) => date.slice(0, -3)))]

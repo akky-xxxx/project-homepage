@@ -1,4 +1,5 @@
 /* eslint-disable import/no-relative-packages */
+import eslintConfigPrettier from "eslint-config-prettier/flat"
 import eslintConfigSCAll from "eslint-config-sc-all"
 import eslintPluginSCJs from "eslint-plugin-sc-js"
 
@@ -10,11 +11,7 @@ const config = [
   IGNORES,
   COMMON_JS,
   {
-    files: [
-      "panda.config.ts",
-      "**/*.{,m}js",
-      "config/**/*.{,m}js",
-    ],
+    files: ["panda.config.ts", "**/*.{,m}js", "config/**/*.{,m}js"],
   },
   {
     plugins: {
@@ -52,6 +49,7 @@ const config = [
     },
   },
   ESLINT_CONFIG_FILE,
+  eslintConfigPrettier,
 ].flat()
 
 export default config

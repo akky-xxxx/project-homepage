@@ -5,14 +5,12 @@ export const NO_RESTRICTED_IMPORTS_PATHS = [
       {
         name: "react-syntax-highlighter",
 
-        message:
-          "Use `src/components/atoms/SyntaxHighlighter` instead.`",
+        message: "Use `src/components/atoms/SyntaxHighlighter` instead.`",
       },
       {
         name: "next/link",
 
-        message:
-          "Use `src/components/atoms/Link` instead.`",
+        message: "Use `src/components/atoms/Link` instead.`",
       },
     ],
   },

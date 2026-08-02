@@ -15,10 +15,7 @@ describe("isStartsWithDate", () => {
   it("対象配列内の date と前方一致する引数を含んだものだけ抽出する（月単位）", () => {
     const result = baseArray.filter(isStartsWithDate("2024-01"))
     // @ts-expect-error
-    expect(result).toStrictEqual([
-      { date: "2024-01-01" },
-      { date: "2024-01-12" },
-    ])
+    expect(result).toStrictEqual([{ date: "2024-01-01" }, { date: "2024-01-12" }])
   })
 
   it("対象配列内の date と前方一致する引数を含んだものだけ抽出する（日単位）", () => {

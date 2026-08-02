@@ -12,7 +12,7 @@
     "check-code": "run-p -c lint spell-check type-check",
     "dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
     "devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
-    "fix": "run-p -c \"fix:*\"",
+    "fix": "run-s fix:pack fix:product-code fix:prettier",
     "fix:pack": "fixpack",
     "fix:prettier": "prettier \"./*.{json,toml,yaml,yml}\" \"./**/*.{json,toml,yaml,yml}\" -w -u",
     "fix:product-code": "cross-env NODE_OPTIONS=--no-deprecation eslint . --max-warnings 0 --fix",

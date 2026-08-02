@@ -8,16 +8,16 @@ describe("moveToTemporary", () => {
     const spy = jest.spyOn(fs, "renameSync")
     spy.mockImplementation(() => undefined)
 
-    moveToTemporary("origin-image", ".temporary-image")({
+    moveToTemporary(
+      "origin-image",
+      ".temporary-image",
+    )({
       extension: "jpg",
       fileName: "test",
       id: "uuid",
     })
 
-    expect(spy).toHaveBeenCalledWith(
-      "origin-image/test.jpg",
-      ".temporary-image/test-uuid.jpg",
-    )
+    expect(spy).toHaveBeenCalledWith("origin-image/test.jpg", ".temporary-image/test-uuid.jpg")
 
     spy.mockRestore()
   })

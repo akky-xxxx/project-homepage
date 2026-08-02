@@ -5,10 +5,8 @@ import { Severity } from "../const/Severity/index.mjs"
 export const ESLINT_CONFIG_FILE = {
   files: ["**/eslint.config.mjs"],
   rules: Object.fromEntries(
-    [
-      "import/no-deprecated",
-      "import/no-named-as-default",
-      "import/no-named-as-default-member",
-    ].map((ruleName) => [ruleName, Severity.OFF]),
+    ["import/no-deprecated", "import/no-named-as-default", "import/no-named-as-default-member"].map(
+      (ruleName) => [ruleName, Severity.OFF],
+    ),
   ),
 }

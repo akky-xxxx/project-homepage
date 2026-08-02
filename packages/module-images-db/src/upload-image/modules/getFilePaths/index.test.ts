@@ -41,19 +41,18 @@ const WEBP = [
 
 describe("getFilePaths", () => {
   describe("success", () => {
-    it.each([
-      JPG,
-      JPEG,
-      PNG,
-      GIF,
-      WEBP,
-    ] as const)("input が %s の時、 %o を返す", (input, output) => {
-      const spy = jest.spyOn(uuid, "v4")
-      spy.mockImplementation(() => "uuid")
-      expect(getFilePaths([input])).toStrictEqual([{
-        ...output,
-        id: "uuid",
-      }])
-    })
+    it.each([JPG, JPEG, PNG, GIF, WEBP] as const)(
+      "input が %s の時、 %o を返す",
+      (input, output) => {
+        const spy = jest.spyOn(uuid, "v4")
+        spy.mockImplementation(() => "uuid")
+        expect(getFilePaths([input])).toStrictEqual([
+          {
+            ...output,
+            id: "uuid",
+          },
+        ])
+      },
+    )
   })
 })

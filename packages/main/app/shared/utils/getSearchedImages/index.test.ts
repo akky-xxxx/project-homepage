@@ -38,7 +38,11 @@ describe("getSearchedImages", () => {
   })
 
   it("複数条件を組み合わせた場合、AND 条件で抽出する", () => {
-    const searchQueries: PhotoGallerySearchQueries = { date: "2024-01", location: "location-a", tag: ["tag-a"] }
+    const searchQueries: PhotoGallerySearchQueries = {
+      date: "2024-01",
+      location: "location-a",
+      tag: ["tag-a"],
+    }
     const result = getSearchedImages(searchQueries)(baseArray)
     expect(result).toStrictEqual([baseArray[0]])
   })

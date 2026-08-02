@@ -1,0 +1,5 @@
+**/coverage/**
+**/dist/**
+.claude/**
+bun.lock
+packages/main/app/global.d.ts
