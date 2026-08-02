@@ -6,7 +6,6 @@ import { getPayload } from "payload"
 import config from "@/payload.config"
 import { ENVIRONMENT } from "@/shared/const/ENVIRONMENT"
 import { betterAuthOptions } from "@/shared/utilities/betterAuthOptions"
-import { getBaseUrl } from "@/shared/utilities/getBaseUrl"
 
 /**
  * テストコードから直接セッション/クッキーを発行するための、
@@ -16,7 +15,7 @@ import { getBaseUrl } from "@/shared/utilities/getBaseUrl"
  */
 export const createTestAuth = async () => {
   const payload = await getPayload({ config })
-  const baseUrl = getBaseUrl()
+  const baseUrl = ENVIRONMENT.BETTER_AUTH_URL
 
   return betterAuth({
     ...betterAuthOptions,

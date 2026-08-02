@@ -31,7 +31,8 @@
     "test": "bun run test:int && bun run test:e2e",
     "test:e2e": "cross-env NODE_OPTIONS=\"--no-deprecation --import=tsx/esm\" playwright test --config=playwright.config.ts",
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts",
-    "type-check": "tsc"
+    "type-check": "tsc",
+    "vercel-build": "cross-env NODE_OPTIONS=--no-deprecation payload migrate && bun run build"
   },
   "dependencies": {
     "@better-auth/passkey": "1.6.25",
@@ -39,6 +40,7 @@
     "@payloadcms/db-vercel-postgres": "3.86.0",
     "@payloadcms/next": "3.86.0",
     "@payloadcms/richtext-lexical": "3.86.0",
+    "@payloadcms/storage-vercel-blob": "3.86.0",
     "@payloadcms/ui": "3.86.0",
     "better-auth": "1.6.25",
     "cross-env": "^7.0.3",

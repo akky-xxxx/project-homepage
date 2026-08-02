@@ -5,7 +5,7 @@ import eslintPluginJsdoc from "eslint-plugin-jsdoc"
 import eslintPluginSonarjs from "eslint-plugin-sonarjs"
 
 import { IGNORES as CMS_IGNORES } from "./config/eslint/IGNORES/index.mjs"
-import { IMPORT } from "./config/eslint/IMPORT/index.mjs"
+import { PAYLOAD_CONFIG } from "./config/eslint/PAYLOAD_CONFIG/index.mjs"
 import { PLUGIN_SC_JS } from "./config/eslint/PLUGIN_SC_JS/index.mjs"
 import { TESTS } from "./config/eslint/TESTS/index.mjs"
 import { ESLINT } from "../../config/eslint/ESLINT/index.mjs"
@@ -26,7 +26,7 @@ const config = [
   ESLINT,
   PLUGIN_SC_JS,
   TYPESCRIPT_ESLINT,
-  IMPORT,
+  PAYLOAD_CONFIG,
   SONARJS,
   JSDOC,
   TESTS,

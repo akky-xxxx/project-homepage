@@ -9,6 +9,8 @@ import { seedTestUser } from "../helpers/seedTestUser"
 
 import type { Page } from "@playwright/test"
 
+const FORBIDDEN_STATUS = 403
+
 test.describe("Admin Panel", () => {
   let page: Page
   let authenticator: Awaited<ReturnType<typeof addVirtualAuthenticator>>
@@ -51,5 +53,29 @@ test.describe("Admin Panel", () => {
     await expect(page).toHaveURL(/\/collections\/users\/[a-zA-Z0-9-_]+/)
     const editViewArtifact = page.locator('input[name="email"]')
     await expect(editViewArtifact).toBeVisible()
+  })
+
+  // 以降はセッションを破棄するため、必ず末尾に置く
+  // ログアウトボタンは nav の最下部にあり、dev サーバーの <nextjs-portal>(開発用
+  // インジケータ)が実際のクリックを奪うため、DOM へ直接 click を dispatch する
+  test("ログアウトに失敗した場合はログイン画面へ遷移しない", async () => {
+    await page.goto("http://localhost:3000/")
+    await page.route("**/api/auth/sign-out", (route) => route.abort())
+
+    await page.getByRole("button", { name: "Log out" }).dispatchEvent("click")
+
+    await expect(page.getByRole("alert")).toBeVisible()
+    await expect(page).toHaveURL("http://localhost:3000/")
+
+    await page.unroute("**/api/auth/sign-out")
+  })
+
+  test("ログアウト後は認証必須の API が 403 になる", async () => {
+    await page.getByRole("button", { name: "Log out" }).dispatchEvent("click")
+    await page.waitForURL("http://localhost:3000/login")
+
+    const response = await page.request.get("http://localhost:3000/api/users")
+
+    expect(response.status()).toBe(FORBIDDEN_STATUS)
   })
 })
