@@ -1,10 +1,15 @@
-import { test, expect, Page } from '@playwright/test'
-import { login } from '../helpers/login'
-import { registerTestPasskey } from '../helpers/registerTestPasskey'
-import { seedTestUser, cleanupTestUser } from '../helpers/seedUser'
-import { addVirtualAuthenticator, removeVirtualAuthenticator } from '../helpers/webauthn'
+import { test, expect } from "@playwright/test"
 
-test.describe('Admin Panel', () => {
+import { addVirtualAuthenticator } from "../helpers/addVirtualAuthenticator"
+import { cleanupTestUser } from "../helpers/cleanupTestUser"
+import { login } from "../helpers/login"
+import { registerTestPasskey } from "../helpers/registerTestPasskey"
+import { removeVirtualAuthenticator } from "../helpers/removeVirtualAuthenticator"
+import { seedTestUser } from "../helpers/seedTestUser"
+
+import type { Page } from "@playwright/test"
+
+test.describe("Admin Panel", () => {
   let page: Page
   let authenticator: Awaited<ReturnType<typeof addVirtualAuthenticator>>
 
@@ -25,22 +30,22 @@ test.describe('Admin Panel', () => {
     await cleanupTestUser()
   })
 
-  test('can navigate to dashboard', async () => {
-    await page.goto('http://localhost:3000/')
-    await expect(page).toHaveURL('http://localhost:3000/')
+  test("can navigate to dashboard", async () => {
+    await page.goto("http://localhost:3000/")
+    await expect(page).toHaveURL("http://localhost:3000/")
     const dashboardArtifact = page.locator('span[title="Dashboard"]').first()
     await expect(dashboardArtifact).toBeVisible()
   })
 
-  test('can navigate to list view', async () => {
-    await page.goto('http://localhost:3000/collections/users')
-    await expect(page).toHaveURL('http://localhost:3000/collections/users')
-    const listViewArtifact = page.locator('h1', { hasText: 'Users' }).first()
+  test("can navigate to list view", async () => {
+    await page.goto("http://localhost:3000/collections/users")
+    await expect(page).toHaveURL("http://localhost:3000/collections/users")
+    const listViewArtifact = page.locator("h1", { hasText: "Users" }).first()
     await expect(listViewArtifact).toBeVisible()
   })
 
-  test('can navigate to edit view', async () => {
-    await page.goto('http://localhost:3000/collections/users/create')
+  test("can navigate to edit view", async () => {
+    await page.goto("http://localhost:3000/collections/users/create")
     await expect(page).toHaveURL(/\/collections\/users\/[a-zA-Z0-9-_]+/)
     const editViewArtifact = page.locator('input[name="email"]')
     await expect(editViewArtifact).toBeVisible()
