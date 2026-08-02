@@ -11,9 +11,9 @@ import { buildConfig } from "payload"
 import sharp from "sharp"
 import { fileURLToPath } from "url"
 
-import { Areas } from "./collections/Areas"
-import { Photos } from "./collections/Photos"
-import { Tags } from "./collections/Tags"
+import { GalleryAreas } from "./collections/GalleryAreas"
+import { GalleryPhotos } from "./collections/GalleryPhotos"
+import { GalleryTags } from "./collections/GalleryTags"
 import { Users } from "./collections/Users"
 import { ENVIRONMENT } from "./shared/const/ENVIRONMENT"
 import { betterAuthOptions } from "./shared/utilities/betterAuthOptions"
@@ -33,7 +33,7 @@ export default buildConfig({
     },
   },
 
-  collections: [Users, Areas, Photos, Tags],
+  collections: [GalleryAreas, GalleryPhotos, GalleryTags, Users],
   editor: lexicalEditor(),
 
   routes: {

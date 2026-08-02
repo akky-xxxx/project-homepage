@@ -67,10 +67,10 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    'gallery-areas': GalleryArea;
+    'gallery-photos': GalleryPhoto;
+    'gallery-tags': GalleryTag;
     users: User;
-    areas: Area;
-    photos: Photo;
-    tags: Tag;
     sessions: Session;
     accounts: Account;
     verifications: Verification;
@@ -82,10 +82,10 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    'gallery-areas': GalleryAreasSelect<false> | GalleryAreasSelect<true>;
+    'gallery-photos': GalleryPhotosSelect<false> | GalleryPhotosSelect<true>;
+    'gallery-tags': GalleryTagsSelect<false> | GalleryTagsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    areas: AreasSelect<false> | AreasSelect<true>;
-    photos: PhotosSelect<false> | PhotosSelect<true>;
-    tags: TagsSelect<false> | TagsSelect<true>;
     sessions: SessionsSelect<false> | SessionsSelect<true>;
     accounts: AccountsSelect<false> | AccountsSelect<true>;
     verifications: VerificationsSelect<false> | VerificationsSelect<true>;
@@ -131,24 +131,9 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "gallery-areas".
  */
-export interface User {
-  id: number;
-  email: string;
-  emailVerified?: boolean | null;
-  name?: string | null;
-  image?: string | null;
-  role?: ('user' | 'admin') | null;
-  updatedAt: string;
-  createdAt: string;
-  collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "areas".
- */
-export interface Area {
+export interface GalleryArea {
   id: number;
   name: string;
   updatedAt: string;
@@ -156,13 +141,13 @@ export interface Area {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "photos".
+ * via the `definition` "gallery-photos".
  */
-export interface Photo {
+export interface GalleryPhoto {
   id: number;
   date: string;
-  area: number | Area;
-  tags?: (number | Tag)[] | null;
+  area: number | GalleryArea;
+  tags?: (number | GalleryTag)[] | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -187,13 +172,28 @@ export interface Photo {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags".
+ * via the `definition` "gallery-tags".
  */
-export interface Tag {
+export interface GalleryTag {
   id: number;
   name: string;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users".
+ */
+export interface User {
+  id: number;
+  email: string;
+  emailVerified?: boolean | null;
+  name?: string | null;
+  image?: string | null;
+  role?: ('user' | 'admin') | null;
+  updatedAt: string;
+  createdAt: string;
+  collection: 'users';
 }
 /**
  * Auto-generated from Better Auth schema (session)
@@ -291,20 +291,20 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
+        relationTo: 'gallery-areas';
+        value: number | GalleryArea;
+      } | null)
+    | ({
+        relationTo: 'gallery-photos';
+        value: number | GalleryPhoto;
+      } | null)
+    | ({
+        relationTo: 'gallery-tags';
+        value: number | GalleryTag;
+      } | null)
+    | ({
         relationTo: 'users';
         value: number | User;
-      } | null)
-    | ({
-        relationTo: 'areas';
-        value: number | Area;
-      } | null)
-    | ({
-        relationTo: 'photos';
-        value: number | Photo;
-      } | null)
-    | ({
-        relationTo: 'tags';
-        value: number | Tag;
       } | null)
     | ({
         relationTo: 'sessions';
@@ -366,31 +366,18 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "gallery-areas_select".
  */
-export interface UsersSelect<T extends boolean = true> {
-  email?: T;
-  emailVerified?: T;
-  name?: T;
-  image?: T;
-  role?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "areas_select".
- */
-export interface AreasSelect<T extends boolean = true> {
+export interface GalleryAreasSelect<T extends boolean = true> {
   name?: T;
   updatedAt?: T;
   createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "photos_select".
+ * via the `definition` "gallery-photos_select".
  */
-export interface PhotosSelect<T extends boolean = true> {
+export interface GalleryPhotosSelect<T extends boolean = true> {
   date?: T;
   area?: T;
   tags?: T;
@@ -422,10 +409,23 @@ export interface PhotosSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "tags_select".
+ * via the `definition` "gallery-tags_select".
  */
-export interface TagsSelect<T extends boolean = true> {
+export interface GalleryTagsSelect<T extends boolean = true> {
   name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  email?: T;
+  emailVerified?: T;
+  name?: T;
+  image?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
 }

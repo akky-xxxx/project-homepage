@@ -19,17 +19,17 @@ const createTestPhotoFile = async () => {
   return { data, mimetype: "image/png", name: "test-photo.png", size: data.length }
 }
 
-describe("photos collection", () => {
+describe("gallery-photos collection", () => {
   beforeAll(async () => {
     const payloadConfig = await config
     payload = await getPayload({ config: payloadConfig })
   })
 
   it("画像をアップロードして AVIF 変換・サムネイル生成・area/tags のリレーション解決までできる", async () => {
-    const area = await payload.create({ collection: "areas", data: { name: "東京都" } })
-    const tag = await payload.create({ collection: "tags", data: { name: "桜" } })
+    const area = await payload.create({ collection: "gallery-areas", data: { name: "東京都" } })
+    const tag = await payload.create({ collection: "gallery-tags", data: { name: "桜" } })
     const photo = await payload.create({
-      collection: "photos",
+      collection: "gallery-photos",
       data: {
         area: area.id,
         date: "2024-03-30",
@@ -42,22 +42,22 @@ describe("photos collection", () => {
     expect(photo.sizes?.thumbnail?.filename).toBeTruthy()
     expect(photo.sizes?.thumbnail?.mimeType).toBe("image/avif")
 
-    const found = await payload.findByID({ collection: "photos", depth: 1, id: photo.id })
+    const found = await payload.findByID({ collection: "gallery-photos", depth: 1, id: photo.id })
 
     expect(found.area).toMatchObject({ id: area.id, name: "東京都" })
     const [firstTag] = found.tags ?? []
     expect(firstTag).toMatchObject({ id: tag.id, name: "桜" })
 
-    await payload.delete({ collection: "photos", id: photo.id })
-    await payload.delete({ collection: "areas", id: area.id })
-    await payload.delete({ collection: "tags", id: tag.id })
+    await payload.delete({ collection: "gallery-photos", id: photo.id })
+    await payload.delete({ collection: "gallery-areas", id: area.id })
+    await payload.delete({ collection: "gallery-tags", id: tag.id })
   })
 
-  it("未認証でも photos/areas/tags を read できる", async () => {
+  it("未認証でも gallery-photos/gallery-areas/gallery-tags を read できる", async () => {
     const [photos, areas, tags] = await Promise.all([
-      payload.find({ collection: "photos", overrideAccess: false }),
-      payload.find({ collection: "areas", overrideAccess: false }),
-      payload.find({ collection: "tags", overrideAccess: false }),
+      payload.find({ collection: "gallery-photos", overrideAccess: false }),
+      payload.find({ collection: "gallery-areas", overrideAccess: false }),
+      payload.find({ collection: "gallery-tags", overrideAccess: false }),
     ])
 
     expect(photos).toBeDefined()

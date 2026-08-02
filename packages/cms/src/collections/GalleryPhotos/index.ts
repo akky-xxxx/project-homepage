@@ -2,8 +2,8 @@ import { isAdmin } from "@/shared/utilities/isAdmin"
 
 import type { CollectionConfig } from "payload"
 
-export const Photos: CollectionConfig = {
-  slug: "photos",
+export const GalleryPhotos: CollectionConfig = {
+  slug: "gallery-photos",
 
   admin: {
     useAsTitle: "date",
@@ -43,7 +43,7 @@ export const Photos: CollectionConfig = {
 
   fields: [
     { name: "date", required: true, type: "date" },
-    { name: "area", relationTo: "areas", required: true, type: "relationship" },
-    { hasMany: true, name: "tags", relationTo: "tags", type: "relationship" },
+    { name: "area", relationTo: "gallery-areas", required: true, type: "relationship" },
+    { hasMany: true, name: "tags", relationTo: "gallery-tags", type: "relationship" },
   ],
 }

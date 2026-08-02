@@ -13,8 +13,10 @@ test.describe("Admin Panel", () => {
   let page: Page
   let authenticator: Awaited<ReturnType<typeof addVirtualAuthenticator>>
 
-  test.beforeAll(async (fixtures) => {
-    const { browser } = fixtures
+  // Playwright は callback のソースを正規表現で解析し、第一引数の分割代入パターンから
+  // 注入する fixture を決めるため、ここは仮引数で分割代入する必要がある
+  // (playwright/lib/common/fixtures.js の innerFixtureParameterNames)
+  test.beforeAll(async ({ browser }) => {
     const { id: userId } = await seedTestUser()
 
     const context = await browser.newContext()

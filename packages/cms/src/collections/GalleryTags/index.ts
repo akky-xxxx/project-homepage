@@ -2,8 +2,8 @@ import { isAdmin } from "@/shared/utilities/isAdmin"
 
 import type { CollectionConfig } from "payload"
 
-export const Tags: CollectionConfig = {
-  slug: "tags",
+export const GalleryTags: CollectionConfig = {
+  slug: "gallery-tags",
 
   admin: {
     useAsTitle: "name",
