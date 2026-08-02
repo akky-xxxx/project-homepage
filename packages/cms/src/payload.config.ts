@@ -5,6 +5,7 @@ import {
 } from "@delmaredigital/payload-better-auth"
 import { vercelPostgresAdapter } from "@payloadcms/db-vercel-postgres"
 import { lexicalEditor } from "@payloadcms/richtext-lexical"
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob"
 import { betterAuth } from "better-auth"
 import path from "path"
 import { buildConfig } from "payload"
@@ -23,9 +24,16 @@ const dirname = path.dirname(filename)
 
 const baseUrl = ENVIRONMENT.BETTER_AUTH_URL
 
+const MEGA_BYTE = 1_048_576
+const MAXIMUM_UPLOAD_MEGA_BYTES = 30
+
 export default buildConfig({
   admin: {
     user: Users.slug,
+
+    components: {
+      beforeNavLinks: ["@/components/ProductionDatabaseBanner#ProductionDatabaseBanner"],
+    },
 
     importMap: {
       baseDir: path.resolve(dirname),
@@ -53,7 +61,25 @@ export default buildConfig({
 
   sharp,
 
+  // multipart の解析は access 判定より前に走る(payload の wrapInternalEndpoints)ため、
+  // ここでの上限は未認証リクエストに対する防御にもなる。
+  // なお Vercel Function 経由のアップロードはプラットフォーム側の 4.5MB が先に効く
+  upload: {
+    abortOnLimit: true,
+    limits: { fileSize: MAXIMUM_UPLOAD_MEGA_BYTES * MEGA_BYTE },
+  },
+
   plugins: [
+    // トークンが無いローカル開発・CI ではローカルディスク保存のまま動かす
+    vercelBlobStorage({
+      enabled: ENVIRONMENT.BLOB_READ_WRITE_TOKEN != null,
+      token: ENVIRONMENT.BLOB_READ_WRITE_TOKEN,
+
+      collections: {
+        [GalleryPhotos.slug]: true,
+      },
+    }),
+
     betterAuthCollections({
       betterAuthOptions,
       skipCollections: ["user"],

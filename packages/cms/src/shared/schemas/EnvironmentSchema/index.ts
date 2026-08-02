@@ -11,6 +11,9 @@ export const EnvironmentSchema = z.object({
   // passkey の rpID になるため、デプロイごとに変わる URL を掴まないよう明示指定を必須にする
   BETTER_AUTH_URL: z.url(),
 
+  // 未設定ならローカルディスク保存にフォールバックする(ローカル開発・CI 用)
+  BLOB_READ_WRITE_TOKEN: z.string().optional(),
+
   // "true" のときだけ password サインインの passkey チェックを外す。
   // 本番 DB へローカルから繋いで写真を投入する作業でのみ使う(README 参照)
   PASSWORD_SIGN_IN_ENABLED: z.string().optional(),
