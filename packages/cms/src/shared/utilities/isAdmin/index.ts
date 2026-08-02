@@ -1,3 +1,4 @@
-import type { PayloadRequest } from 'payload'
+import type { PayloadRequest } from "payload"
 
-export const isAdmin = (args: { req: PayloadRequest }): boolean => args.req.user?.role === 'admin'
+export const isAdmin = (arguments_: { req: PayloadRequest }): boolean =>
+  arguments_.req.user?.role === "admin"

@@ -1,7 +1,8 @@
-import { passkey } from '@better-auth/passkey'
-import type { BetterAuthOptions } from 'better-auth'
+import { passkey } from "@better-auth/passkey"
 
-import { getBaseUrl } from '../getBaseUrl'
+import { getBaseUrl } from "@/shared/utilities/getBaseUrl"
+
+import type { BetterAuthOptions } from "better-auth"
 
 const rpID = new URL(getBaseUrl()).hostname
 
@@ -10,14 +11,16 @@ export const betterAuthOptions: Partial<BetterAuthOptions> = {
     additionalFields: {
       // input: false により role はサーバー側専用となり、サインアップ時にクライアントから
       // 指定できなくなる(権限昇格対策)。値は firstUserAdminHooks が付与する。
-      role: { type: 'string', defaultValue: 'user', input: false },
+      role: { defaultValue: "user", input: false, type: "string" },
     },
   },
+
   emailAndPassword: { enabled: false },
+
   plugins: [
     passkey({
       rpID,
-      rpName: 'project-homepage CMS',
+      rpName: "project-homepage CMS",
     }),
   ],
 }
