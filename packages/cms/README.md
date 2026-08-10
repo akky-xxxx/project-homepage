@@ -46,6 +46,13 @@ bun run seed:gallery-areas
 POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-areas
 ```
 
+`gallery-tags` も同様に一括投入できる。こちらは可変(今後タグが増える)だが、既存レコードは削除しない・スキップするだけなので、一度投入したタグを消してしまう心配なく何度でも実行できる。将来的には本番 DB のダンプを正とする運用に切り替える想定で、それまでの暫定手段。
+
+```bash
+bun run seed:gallery-tags
+POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-tags
+```
+
 ## 手順 2: 本番の初回セットアップ
 
 **この手順を完了するまで、サインアップ API は誰でも叩ける状態にある。** 守りになっているのは `SIGN_UP_ALLOWED_EMAIL` の値を知らないと登録できないことだけなので、推測されにくいエイリアスを使い、デプロイから登録までを続けて行うこと。
