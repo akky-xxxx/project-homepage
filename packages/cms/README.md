@@ -34,6 +34,25 @@ bun dev
 
 ローカルの DB スキーマは Payload の dev push が自動で作る。マイグレーションの実行は不要。
 
+`gallery-areas`(都道府県)は他のデータと relational だが値そのものは不変な固定リストなので、以下で一括投入する(既存レコードはスキップされるため何度実行しても安全)。
+
+```bash
+bun run seed:gallery-areas
+```
+
+本番 DB に対して実行する場合は、手順 3 の写真投入と同様に `POSTGRES_URL` をコマンドラインで渡す。
+
+```bash
+POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-areas
+```
+
+`gallery-tags` も同様に一括投入できる。こちらは可変(今後タグが増える)だが、既存レコードは削除しない・スキップするだけなので、一度投入したタグを消してしまう心配なく何度でも実行できる。将来的には本番 DB のダンプを正とする運用に切り替える想定で、それまでの暫定手段。
+
+```bash
+bun run seed:gallery-tags
+POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-tags
+```
+
 ## 手順 2: 本番の初回セットアップ
 
 **この手順を完了するまで、サインアップ API は誰でも叩ける状態にある。** 守りになっているのは `SIGN_UP_ALLOWED_EMAIL` の値を知らないと登録できないことだけなので、推測されにくいエイリアスを使い、デプロイから登録までを続けて行うこと。
@@ -92,6 +111,10 @@ bun payload migrate:create <name>
 `src/migrations/` に生成される 2 ファイル(`.ts` と `.json`)をコミットする。Vercel では `vercel-build` が `payload migrate` を実行して適用する。本番は `NODE_ENV=production` のため dev push が走らず、マイグレーションが無いとスキーマが更新されない。
 
 生成物のためリンタ・フォーマッタの対象外にしてある。手で編集しないこと。
+
+Vercel への適用は `vercel-build`(`cross-env NODE_OPTIONS=--no-deprecation payload migrate && bun run build`)に乗っかる形で、デプロイのたびに自動実行される。個別に「このマイグレーションを使う」と指定する操作は無く、`src/migrations/index.ts` の配列を先頭から見て、本番 DB 側の管理テーブル(`payload_migrations`)と突き合わせ、未適用のものだけを順に自動適用する。新しいマイグレーションはこの配列の末尾に追加される。
+
+過去の(すでに適用済みの)マイグレーションファイルは、原則として削除しないこと。`payload_migrations` テーブルには適用済みの記録が残るので既存の本番環境がすぐ壊れることはないが、`payload migrate` は「まっさらな DB」に対して配列を先頭から全部再生してスキーマを組み立てる前提のコマンドであるため、途中のファイルを消すと DB を作り直す(新しい環境を立てる・災害復旧でリストアする等)ときにスキーマが欠落し、今の本番と一致しなくなる。整理したい場合は個別に `rm` するのではなく、複数のマイグレーションを1つに統合(スカッシュ)し、統合後のマイグレーションが同じ最終スキーマを作ることを検証してから古いファイルを消すこと。
 
 ## 手順 5: passkey を全て失ったとき
 

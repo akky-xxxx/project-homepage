@@ -26,6 +26,8 @@
     "lint:prettier": "prettier \".\" -c -u",
     "lint:product-code": "cross-env NODE_OPTIONS=--no-deprecation eslint \"src/**/*.ts{,x}\" \"tests/**/*.ts\" --max-warnings 0",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "seed:gallery-areas": "cross-env NODE_OPTIONS=--no-deprecation payload run src/scripts/seedGalleryAreas/index.ts",
+    "seed:gallery-tags": "cross-env NODE_OPTIONS=--no-deprecation payload run src/scripts/seedGalleryTags/index.ts",
     "spell-check": "cspell \"./{config,src,tests}/**\" --no-progress",
     "start": "cross-env NODE_OPTIONS=--no-deprecation next start",
     "test": "bun run test:int && bun run test:e2e",
