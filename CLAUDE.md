@@ -69,7 +69,7 @@ bun payload migrate:create <name>   # コレクション/フィールド変更�
 
 - `main`: `VITE_IMAGE_HOST`（`packages/main/.env.example` を参照）。
 - `module-images-db`: `BUCKET`（GCS バケット名、`EnvironmentSchema` でバリデーション）に加え、GCP サービスアカウントの JSON（`src/shared/schemas/CredentialSchema` の `CredentialSchema` でバリデーション）。これは `src/shared/utils/storageBucket` が `@google-cloud/storage` と通信する際に使われる。`packages/module-images-db/.env.example` を参照。
-- `cms`: `ENVIRONMENT`（`src/shared/const/ENVIRONMENT`、`EnvironmentSchema` でバリデーション）が起動時に検証する。主な変数は `POSTGRES_URL`(必須)、`PAYLOAD_SECRET`/`BETTER_AUTH_SECRET`(必須、32文字以上)、`BETTER_AUTH_URL`(必須、passkey の rpID になるため本番では固定ドメインが必要)、`SIGN_UP_ALLOWED_EMAIL`(任意、初回サインアップ許可用)、`BLOB_READ_WRITE_TOKEN`(本番 DB 接続時は必須。ローカル DB なら省略可で画像はローカルディスクに保存される)。初回セットアップ手順・写真投入手順・マイグレーション運用の詳細は `packages/cms/README.md` を参照。
+- `cms`: `ENVIRONMENT`（`src/shared/const/ENVIRONMENT`、`EnvironmentSchema` でバリデーション）が起動時に検証する。主な変数は `DB_POSTGRES_URL`(必須。Vercel の Neon 連携が付与する `DB_` 接頭辞付きの命名に合わせている)、`PAYLOAD_SECRET`/`BETTER_AUTH_SECRET`(必須、32文字以上)、`BETTER_AUTH_URL`(必須、passkey の rpID になるため本番では固定ドメインが必要)、`SIGN_UP_ALLOWED_EMAIL`(任意、初回サインアップ許可用)、`BLOB_READ_WRITE_TOKEN`(本番 DB 接続時は必須。ローカル DB なら省略可で画像はローカルディスクに保存される)。初回セットアップ手順・写真投入手順・マイグレーション運用の詳細は `packages/cms/README.md` を参照。
 
 ## アーキテクチャ
 
