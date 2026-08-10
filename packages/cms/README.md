@@ -34,6 +34,18 @@ bun dev
 
 ローカルの DB スキーマは Payload の dev push が自動で作る。マイグレーションの実行は不要。
 
+`gallery-areas`(都道府県)は他のデータと relational だが値そのものは不変な固定リストなので、以下で一括投入する(既存レコードはスキップされるため何度実行しても安全)。
+
+```bash
+bun run seed:gallery-areas
+```
+
+本番 DB に対して実行する場合は、手順 3 の写真投入と同様に `POSTGRES_URL` をコマンドラインで渡す。
+
+```bash
+POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-areas
+```
+
 ## 手順 2: 本番の初回セットアップ
 
 **この手順を完了するまで、サインアップ API は誰でも叩ける状態にある。** 守りになっているのは `SIGN_UP_ALLOWED_EMAIL` の値を知らないと登録できないことだけなので、推測されにくいエイリアスを使い、デプロイから登録までを続けて行うこと。
