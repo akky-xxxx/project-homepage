@@ -7,7 +7,7 @@ import { isProductionDatabase } from "@/shared/utilities/isProductionDatabase"
  * @returns 本番 DB 接続中の警告バナー(ローカル DB 接続時は何も描画しない)
  */
 export const ProductionDatabaseBanner = () => {
-  if (!isProductionDatabase(ENVIRONMENT.POSTGRES_URL)) return null
+  if (!isProductionDatabase(ENVIRONMENT.DB_POSTGRES_URL)) return null
 
   return (
     <div
