@@ -36,9 +36,6 @@ describe("upload-image/upload", () => {
       ".temporary-image/test-uuid.avif",
       ".temporary-image/test-uuid.thumb.avif",
     ])
-    expect(addAllUsersCalls).toStrictEqual([
-      "test-uuid.avif",
-      "test-uuid.thumb.avif",
-    ])
+    expect(addAllUsersCalls).toStrictEqual(["test-uuid.avif", "test-uuid.thumb.avif"])
   })
 })

@@ -1,0 +1,3 @@
+delmaredigital
+payloadcms
+sonarjs

@@ -1,0 +1,15 @@
+{
+  "extends": ["@tsconfig/bun", "@tsconfig/vite-react"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@atoms/*": ["./app/components/atoms/*"],
+      "@icons/*": ["./app/components/icons/*"],
+      "@islands/*": ["./app/islands/*"],
+      "@shared/*": ["./app/shared/*"]
+    },
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "types": ["@cloudflare/workers-types", "bun"],
+    "jsxImportSource": "hono/jsx"
+  }
+}

@@ -5,7 +5,7 @@ import { PREFECTURES } from "./shared/const/PREFECTURES"
 
 import type { ImagesDataBaseRecord } from "./types/ImagesDataBaseRecord"
 
-/* eslint-disable @typescript-eslint/naming-convention, sonarjs/no-alphabetical-sort */
+/* eslint-disable sonarjs/no-alphabetical-sort */
 const ImagesDataBaseOrigin = [
   {
     area: "秋田県",
@@ -1428,8 +1428,9 @@ const ImagesDataBaseOrigin = [
 
 export const ImagesDataBase = [...ImagesDataBaseOrigin].sort(sortImageDataBase).map(sortTags)
 const uniqueRegisterPrefectures = new Set<string>(ImagesDataBase.map(({ area }) => area))
-export const Locations = PREFECTURES
-  .filter((prefecture) => uniqueRegisterPrefectures.has(prefecture))
+export const Locations = PREFECTURES.filter((prefecture) =>
+  uniqueRegisterPrefectures.has(prefecture),
+)
 export const Tags = [...new Set(ImagesDataBase.flatMap(({ tags }) => tags))].sort()
 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
 export const Months = [...new Set(ImagesDataBase.map(({ date }) => date.slice(0, -3)))]

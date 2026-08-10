@@ -53,8 +53,14 @@ describe("sortImageDataBase", () => {
 
   describe("date が同じで imageId が欠落している場合", () => {
     it.each([
-      [{ ...BASE, imageId: "" }, { ...BASE, imageId: "image-a" }],
-      [{ ...BASE, imageId: "image-a" }, { ...BASE, imageId: "" }],
+      [
+        { ...BASE, imageId: "" },
+        { ...BASE, imageId: "image-a" },
+      ],
+      [
+        { ...BASE, imageId: "image-a" },
+        { ...BASE, imageId: "" },
+      ],
     ])("エラーを投げる", (a, b) => {
       expect(() => sortImageDataBase(a, b)).toThrow("Not captured")
     })

@@ -21,7 +21,8 @@ if (!fs.existsSync(TEMPORARY_DIRECTORY)) fs.mkdirSync(TEMPORARY_DIRECTORY)
 const filePaths = getFilePaths(fs.readdirSync(IMAGE_DIRECTORY))
 
 const NOT_EXIST_ARRAY = 0
-if (filePaths.length === NOT_EXIST_ARRAY) throw new Error("Not exist image file in `image directory`")
+if (filePaths.length === NOT_EXIST_ARRAY)
+  throw new Error("Not exist image file in `image directory`")
 
 filePaths.forEach(moveToTemporary(IMAGE_DIRECTORY, TEMPORARY_DIRECTORY))
 

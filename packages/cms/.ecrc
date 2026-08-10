@@ -1,0 +1,3 @@
+{
+    "Exclude": ["^\\.claude/", "^src/migrations/", "^src/payload-types\\.ts$"]
+}

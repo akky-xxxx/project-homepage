@@ -1,0 +1,3 @@
+app/global.d.ts
+coverage/**
+dist/**

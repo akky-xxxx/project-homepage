@@ -10,22 +10,26 @@ const execSchema = z.object({
   fileName: z.string(),
 })
 
-export const getFilePaths = (files: string[]): FilesRecord[] => files
-  .filter((fileName) => EXTENSIONS.some((extension) => fileName.toLowerCase().endsWith(extension)))
-  .map((originFileName) => {
-    const result = execSchema.safeParse(
-      /^(?<fileName>.+)\.(?<extension>jpe?g|png|gif|webp)$/.exec(originFileName.toLowerCase())?.groups,
+export const getFilePaths = (files: string[]): FilesRecord[] =>
+  files
+    .filter((fileName) =>
+      EXTENSIONS.some((extension) => fileName.toLowerCase().endsWith(extension)),
     )
+    .map((originFileName) => {
+      const result = execSchema.safeParse(
+        /^(?<fileName>.+)\.(?<extension>jpe?g|png|gif|webp)$/.exec(originFileName.toLowerCase())
+          ?.groups,
+      )
 
-    if (!result.success) throw new Error("Not found image file(extension).")
+      if (!result.success) throw new Error("Not found image file(extension).")
 
-    const {
-      data: { extension, fileName },
-    } = result
+      const {
+        data: { extension, fileName },
+      } = result
 
-    return {
-      extension,
-      fileName,
-      id: v4(),
-    }
-  })
+      return {
+        extension,
+        fileName,
+        id: v4(),
+      }
+    })

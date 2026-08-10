@@ -21,22 +21,28 @@
       "Bash(bun test:*)",
       "Bash(bun fix)",
       "Bash(bun ws:fix)",
-      "Bash(bun --cwd packages/service-main-h dev)",
-      "Bash(bun --cwd packages/service-main-h build)",
-      "Bash(bun --cwd packages/service-main-h preview)",
-      "Bash(bun --cwd packages/service-main-h log)",
-      "Bash(bun --cwd packages/service-main-h type-check)",
-      "Bash(bun --cwd packages/service-main-h lint:product-code)",
-      "Bash(bun --cwd packages/service-main-h check-code)",
-      "Bash(bun --cwd packages/service-main-h test)",
-      "Bash(bun --cwd packages/service-main-h test:*)",
-      "Bash(bun --cwd packages/service-main-h fix)",
+      "Bash(bun --cwd packages/main dev)",
+      "Bash(bun --cwd packages/main build)",
+      "Bash(bun --cwd packages/main preview)",
+      "Bash(bun --cwd packages/main log)",
+      "Bash(bun --cwd packages/main type-check)",
+      "Bash(bun --cwd packages/main lint:product-code)",
+      "Bash(bun --cwd packages/main check-code)",
+      "Bash(bun --cwd packages/main test)",
+      "Bash(bun --cwd packages/main test:*)",
+      "Bash(bun --cwd packages/main fix)",
       "Bash(bun --cwd packages/module-images-db type-check)",
       "Bash(bun --cwd packages/module-images-db lint:product-code)",
       "Bash(bun --cwd packages/module-images-db check-code)",
       "Bash(bun --cwd packages/module-images-db test)",
       "Bash(bun --cwd packages/module-images-db test:*)",
-      "Bash(bun --cwd packages/module-images-db fix)"
+      "Bash(bun --cwd packages/module-images-db fix)",
+      "Bash(bun --cwd packages/cms type-check)",
+      "Bash(bun --cwd packages/cms lint:product-code)",
+      "Bash(bun --cwd packages/cms check-code)",
+      "Bash(bun --cwd packages/cms test)",
+      "Bash(bun --cwd packages/cms test:*)",
+      "Bash(bun --cwd packages/cms fix)"
     ],
     "ask": [],
     "deny": [
@@ -51,11 +57,10 @@
       "Bash(python3:*)",
       "Bash(python:*)",
       "Bash(wget:*)",
-      "Bash(bun --cwd packages/service-main-h deploy)",
+      "Bash(bun --cwd packages/main deploy)",
       "Bash(bun --cwd packages/module-images-db image-add)",
       "Bash(bun --cwd packages/module-images-db image-delete)",
-      "Edit(.claude/settings.local.json)",
-      "Write(.claude/settings.local.json)"
+      "Edit(.claude/settings.local.json)"
     ]
   }
 }

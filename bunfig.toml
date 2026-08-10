@@ -1,7 +1,7 @@
 [install]
 exact = true
 frozenLockfile = false
-linker = "hoisted"
+linker = "isolated"
 minimumReleaseAge = 604800
 
 [test]
@@ -10,3 +10,4 @@ coverage = true
 preload = "./config/test/happyDom/index.ts"
 coverageIgnoreSourcemaps = true
 coverageThreshold = 0
+pathIgnorePatterns = ["**/packages/cms/**"]

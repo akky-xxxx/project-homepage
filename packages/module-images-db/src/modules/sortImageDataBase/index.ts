@@ -5,7 +5,6 @@ type SortTarget = {
 }
 
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-// eslint-disable-next-line complexity
 export const sortImageDataBase = (a: SortTarget, b: SortTarget) => {
   const aDate = new Date(a.date)
   const bDate = new Date(b.date)
