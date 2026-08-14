@@ -10,6 +10,7 @@
   - chore: (updating grunt tasks etc; no production code change)
 - cherry-pick や drop 等、コミット単位の操作をしやすい粒度
   - 実装における1機能以下
+  - 直前のコミットに対する追加修正(lint/format 対応など)をコミットする前に、そのコミットだけを切り出した状態で品質ゲート相当のチェック(`bun check-code` 等)が独立して通るか自己点検する。通らない場合は、コミットを分けずに直前のコミットへ含めるか、通る形に構造を作り直してからコミットする。
 - commit を実行する前に、staged される内容(diff)と commit message を提示し、ユーザーから明示的な承認を得てから `git commit` を実行する
   - 提示する diff は「自分が `git add` した分」ではなく、`git status --short` と `git diff --cached` の全体で確認する。`git rm` / `git mv` はファイル操作と同時に index を変更するため、意識していないと承認対象外の変更が同じコミットに入る
   - 自分(agent)だけで内容を確認して進めるのは不可。必ずユーザーの承認を待つ
@@ -19,3 +20,4 @@
   - ブランチ名は `<commit type>/<kebab-case の要約>`(例: `docs/ai-communication-flow-followup`)
   - 切るタイミングは実装着手前。コミット直前まで待たない
   - 既に `develop` 上でコミットしてしまった場合は、その commit から作業ブランチを作り、`develop` を作業開始時点の commit(ローカル `develop` が `origin/develop` と一致していたなら `origin/develop`)に戻す
+- 一時的な確認(整形結果のプレビュー等)の目的で `git stash` を使わない。`git stash pop` は直前に自分が stash したとは限らず、リポジトリに残っている無関係な stash(他ブランチ・他セッションのもの)を誤って適用する恐れがある。一時退避が必要な場合は `git diff` の出力確認や、リポジトリ外(スクラッチディレクトリ等)へのファイル書き出しで代替する。
