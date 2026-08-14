@@ -1,3 +1,3 @@
 {
-    "Exclude": ["bun.lockb", "packages"]
+    "Exclude": ["ai-communication", "bun.lockb", "packages"]
 }
