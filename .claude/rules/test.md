@@ -18,4 +18,7 @@
   - 実例: `upload-image/modules/createImageConstant/index.test.ts` が `shared/utils/getFileList` を差し替え、そのモジュールをテスト対象にしている `shared/utils/getFileList/index.test.ts` が CI で落ちた
 - 現状は各パッケージの `test` script に `--isolate` を付け、テストファイルごとに独立したモジュールレジストリで実行することで分離している。ただし分離に頼り切らず、以下を優先する
   - 依存を引数で受け取れる(testable な)設計にして、そもそも `mock.module` を使わずに済ませられないか先に検討する
-  - 差し替えるのは、テスト対象が直接依存する外部モジュール(`sharp`、`@google-cloud/storage` 等)に留める
+  - 他のテストファイルがテスト対象にしているモジュールは差し替えない。差し替えたくなったら、その手前にある副作用の境界を差し替えられないか検討する
+    - 例: `createImageConstant` のテストでは、それ自体がテスト対象である `getFileList` ではなく、その先の `storageBucket` を差し替える
+  - 差し替えるのは副作用の境界となるモジュール(外部 I/O、またはその初期化を閉じ込めた薄いラッパー)に限る。npm パッケージかリポジトリ内のモジュールかは問わない
+    - 例: `sharp` / `shared/utils/storageBucket`(`@google-cloud/storage` の初期化を閉じ込めている)。`storageBucket` を飛ばして `@google-cloud/storage` を直接差し替えると、認証情報や環境変数の初期化までテストに持ち込むことになるため避ける
