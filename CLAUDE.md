@@ -131,10 +131,11 @@ Claude Code 視点の権限は以下の通り。**読み取り専用のファイ
 
 1. `ai-communication/task.md` を読んでタスクを把握する。ユーザーからの直接指示がある場合はそちらを優先する。`task.md` が無ければ従来通りユーザーの指示のみで進める
 2. 設計・実装を行う。`.claude/rules/` の実装前確認ルール・コミットルール(ユーザー承認)はこれまで通り適用する
-3. 完了時に `ai-communication/result_{timestamp}.md` を**新規作成**し、結果と申し送り事項を書く。codex CLI の起動はユーザーが行う
+3. **タスクが完了した時点で** `ai-communication/result_{timestamp}.md` を**新規作成**し、結果と申し送り事項を書く。作業途中の状態では作成しない(未レビューの result が複数並び、codex 側がレビュー対象を選べなくなるため)。途中経過の共有はチャットで行う。codex CLI の起動はユーザーが行う
 4. ユーザーからレビュー到着を知らされたら、`ai-communication/review_*.md` のうち未対応で最新のものを読む
 5. 各指摘の妥当性を自分で確認し、対応要否を判断する。修正が必要なものは実装前確認ルールに従って承認を得てから実装する
 6. 対応後に新しい `ai-communication/result_{timestamp}.md` を作成し、対応した指摘・見送った指摘とその理由・元になった review のファイル名を書く。以降 4〜6 を必要な回数だけ繰り返す
+7. レビューの指摘が無くなってから push / PR 作成に進む。push はユーザーが実行する
 
 ### `result_{timestamp}.md` の書式
 
@@ -168,4 +169,6 @@ codex が機械的に読み取れるよう、以下の形式に統一する。�
 
 - `ai-communication/task.md` および `ai-communication/review_*.md` への書き込み・編集・削除
 - 既存の `ai-communication/result_*.md` の編集・追記(常に新規ファイルを作成する)
+- 作業途中の状態で `ai-communication/result_*.md` を作成すること
 - レビュー指摘を検証せずそのまま実装に反映すること(妥当性を自分で確認してから対応する)
+- レビューの指摘が解消しないまま push / PR 作成に進むこと

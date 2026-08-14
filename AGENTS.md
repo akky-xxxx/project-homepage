@@ -116,7 +116,9 @@ bun --cwd packages/module-images-db test
 - 問題が見つからなかった観点についても、確認した旨を明記する
 - 推測に基づく指摘はしない。該当コードを実際に確認できたことが分かる形で指摘する
 
-レビュー結果は `ai-communication/review_{timestamp}.md` に新規ファイルとして書き出す。ターミナルへの出力だけで済ませない。Claude Code がこのファイルを読んで消化する運用のため、機械的に拾いやすい形式に統一する。
+レビュー結果は `ai-communication/review_{timestamp}.md` に新規ファイルとして書き出す。ターミナルへの出力だけで済ませない。指摘が1件も無い場合もファイルを作成する(件数サマリを `Blocker: 0 / Major: 0 / Minor: 0 / Nit: 0` とし、確認済みの観点を列挙する)。push / PR 作成に進んでよいかの判断がこのファイルに依存するため、「指摘なし」も明示的に受け渡す必要がある。
+
+Claude Code がこのファイルを読んで消化する運用のため、機械的に拾いやすい形式に統一する。
 
 - 冒頭にレビュー対象を1行で置く(例: `- reviewed_file: result_20260814-203015.md`)。対象の result が存在しない場合は `- reviewed_file: -` とする
 - 続けて severity 別件数のサマリを1行で置く(例: `Blocker: 1 / Major: 2 / Minor: 0 / Nit: 1`)
