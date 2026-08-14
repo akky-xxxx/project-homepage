@@ -1,0 +1,24 @@
+# test
+
+- `describe` / `it` のメッセージは日本語で記述する
+- カバレッジ75%を目指す
+- 対象に応じてブラックボックステストとホワイトボックステストを使い分ける
+  - 公開された interface(props / DOM / 公開 API 等)を通して振る舞いを検証する対象: ブラックボックステスト。内部実装(state 変数名や内部関数など)には依存しない
+  - 内部状態やロジックの分岐を直接検証してカバレッジを担保すべき対象(hook、utility、内部モジュール等): ホワイトボックステスト
+
+## テストファイルの配置
+
+- `main` / `module-images-db`: テスト対象の `index.ts` の隣に `index.test.ts` を置く(co-location)。`bun:test` で書く
+- `cms`: 結合テストは `tests/int/**/*.int.spec.ts`(Vitest)、E2E は `tests/e2e/**/*.e2e.spec.ts`(Playwright)に置く
+
+## bun:test のモジュールモック(`main` / `module-images-db`)
+
+- `mock.module` の差し替えはファイル単位ではなくプロセス全体のモジュールレジストリに効く。あるテストファイルでの差し替えは、同じプロセスで実行される他のテストファイルにも残る
+- 特に「別のテストファイルがテスト対象にしているモジュール」を `mock.module` で差し替えると、実行順によって結果が変わる。ローカルでは通るのに CI で落ちる(あるいはその逆)という形で表面化し、再現が難しい
+  - 実例: `upload-image/modules/createImageConstant/index.test.ts` が `shared/utils/getFileList` を差し替え、そのモジュールをテスト対象にしている `shared/utils/getFileList/index.test.ts` が CI で落ちた
+- 現状は各パッケージの `test` script に `--isolate` を付け、テストファイルごとに独立したモジュールレジストリで実行することで分離している。ただし分離に頼り切らず、以下を優先する
+  - 依存を引数で受け取れる(testable な)設計にして、そもそも `mock.module` を使わずに済ませられないか先に検討する
+  - 他のテストファイルがテスト対象にしているモジュールは差し替えない。差し替えたくなったら、その手前にある副作用の境界を差し替えられないか検討する
+    - 例: `createImageConstant` のテストでは、それ自体がテスト対象である `getFileList` ではなく、その先の `storageBucket` を差し替える
+  - 差し替えるのは副作用の境界となるモジュール(外部 I/O、またはその初期化を閉じ込めた薄いラッパー)に限る。npm パッケージかリポジトリ内のモジュールかは問わない
+    - 例: `sharp` / `shared/utils/storageBucket`(`@google-cloud/storage` の初期化を閉じ込めている)。`storageBucket` を飛ばして `@google-cloud/storage` を直接差し替えると、認証情報や環境変数の初期化までテストに持ち込むことになるため避ける
