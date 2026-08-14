@@ -1,6 +1,7 @@
 # common
 
 - yagni を意識する
+  - ただし、ツールの暗黙の既定挙動に依存して設定を省かない。重複に見えても意図が読み取れるよう明示する(例: gitignore 済みのパスは prettier / editorconfig-checker も自動で除外されるが、`.prettierignore` / `.ecrc` にも明示する)
 - dry を意識する
 - early return を意識する
 - 型安全を意識する
