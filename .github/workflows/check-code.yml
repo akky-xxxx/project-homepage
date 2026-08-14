@@ -38,6 +38,11 @@ jobs:
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
         id: filter
         with:
+          # push では同じブランチの push 前 commit と比較する。未指定だと既定ブランチ(main)
+          # との merge-base 比較になり、develop に溜まった過去の差分まで毎回対象になる。
+          # pull_request では token 併用時にこの入力が無視され警告が出るため空にし、
+          # PR base との差分を API 経由で取得させる
+          base: ${{ github.event_name == 'push' && github.ref || '' }}
           # shared は全パッケージに影響する資材。各パッケージのフィルタへ展開する
           filters: |
             shared: &shared
