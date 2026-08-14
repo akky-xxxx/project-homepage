@@ -20,6 +20,7 @@
     "lint:prettier": "prettier \".\" -c -u",
     "lint:product-code": "eslint \"src/*/*.ts{,x}\" \"src/**/*.ts{,x}\" --max-warnings 0",
     "spell-check": "cspell \"./{src,config}/**\" --no-progress",
+    "test": "bun test",
     "type-check": "tsc"
   },
   "dependencies": {
