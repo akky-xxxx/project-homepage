@@ -180,3 +180,6 @@ dist
 
 # secreats
 .credentials/
+
+# ai communication
+ai-communication/
