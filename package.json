@@ -21,7 +21,7 @@
     "lint:prettier": "prettier \".\" -c -u",
     "prepare": "husky",
     "spell-check": "cspell \"./config/**\" --no-progress",
-    "test": "bun test",
+    "test": "bun test --isolate",
     "ws:check-code": "manypkg exec bun check-code",
     "ws:fix": "manypkg exec bun fix",
     "ws:lint": "manypkg exec bun lint",
