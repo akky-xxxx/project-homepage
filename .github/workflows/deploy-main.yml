@@ -10,48 +10,24 @@ concurrency:
   group: deploy-main-${{ github.ref }}
   cancel-in-progress: true
 
-# 以下の各ジョブは `uses: ./.github/actions/setup-bun` より前に `actions/checkout@v4` を実行している。
-# ローカル action (uses: ./...) は runner 上のファイルから読み込まれるため、
-# 事前にリポジトリが checkout されている必要がある(詳細は .github/actions/setup-bun/action.yml を参照)。
+permissions:
+  contents: read
+
 jobs:
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - uses: ./.github/actions/setup-bun
-      - working-directory: packages/main
-        run: bun run lint
+  # 静的解析とテストの実体は check-code.yml 側に持つ。
+  # 再利用ワークフローの GITHUB_TOKEN は呼び出し元の付与範囲を超えられず、
+  # 超える宣言があると run ごと失敗するため、呼び出し側でも権限を明示する。
+  check-code:
+    permissions:
+      contents: read
+      pull-requests: read
+    uses: ./.github/workflows/check-code.yml
 
-  spell-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - uses: ./.github/actions/setup-bun
-      - working-directory: packages/main
-        run: bun run spell-check
-
-  type-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - uses: ./.github/actions/setup-bun
-      - working-directory: packages/main
-        run: bun run type-check
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - uses: ./.github/actions/setup-bun
-      - working-directory: packages/main
-        run: bun run test
-
+  # このジョブは `uses: ./.github/actions/setup-bun` より前に `actions/checkout` を実行している。
+  # ローカル action (uses: ./...) は runner 上のファイルから読み込まれるため、
+  # 事前にリポジトリが checkout されている必要がある(詳細は .github/actions/setup-bun/action.yml を参照)。
   deploy:
-    needs:
-      - lint
-      - spell-check
-      - type-check
-      - test
+    needs: check-code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1

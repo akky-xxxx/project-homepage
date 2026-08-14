@@ -1,0 +1,167 @@
+name: Check code
+
+# 静的解析とテストの実体。pull request では単独で走り、
+# deploy 用のワークフローからは workflow_call で呼ばれる(deploy のゲートを兼ねる)。
+on:
+  pull_request:
+  workflow_call:
+
+concurrency:
+  group: check-code-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+# 以下の各ジョブは `uses: ./.github/actions/setup-bun` より前に `actions/checkout` を実行している。
+# ローカル action (uses: ./...) は runner 上のファイルから読み込まれるため、
+# 事前にリポジトリが checkout されている必要がある(詳細は .github/actions/setup-bun/action.yml を参照)。
+jobs:
+  # 変更されたパスから、どのパッケージのチェックを走らせるかを判定する
+  changes:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # pull request では paths-filter が GitHub API で changed files を取得する
+      pull-requests: read
+    outputs:
+      cms: ${{ steps.filter.outputs.cms }}
+      main: ${{ steps.filter.outputs.main }}
+      module-images-db: ${{ steps.filter.outputs.module-images-db }}
+      root: ${{ steps.filter.outputs.root }}
+    steps:
+      # push 経由の呼び出しでは git の差分比較になるため、
+      # before SHA を確実に辿れるよう全履歴を取得する
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          # push では同じブランチの push 前 commit と比較する。未指定だと既定ブランチ(main)
+          # との merge-base 比較になり、develop に溜まった過去の差分まで毎回対象になる。
+          # pull_request では token 併用時にこの入力が無視され警告が出るため空にし、
+          # PR base との差分を API 経由で取得させる
+          base: ${{ github.event_name == 'push' && github.ref || '' }}
+          # shared は全パッケージに影響する資材。各パッケージのフィルタへ展開する
+          filters: |
+            shared: &shared
+              - ".github/actions/**"
+              - ".github/workflows/check-code.yml"
+              - "bun.lock"
+              - "bunfig.toml"
+              - "config/**"
+              - "package.json"
+              - "tsconfig.json"
+            cms:
+              - *shared
+              - "packages/cms/**"
+            main:
+              - *shared
+              - ".github/workflows/deploy-main.yml"
+              - "packages/main/**"
+              - "packages/module-images-db/**"
+            module-images-db:
+              - *shared
+              - "packages/module-images-db/**"
+            root:
+              - "!packages/**"
+
+  root:
+    needs: changes
+    if: ${{ needs.changes.outputs.root == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - run: bun run check-code
+
+  main:
+    needs: changes
+    if: ${{ needs.changes.outputs.main == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - working-directory: packages/main
+        run: bun run check-code
+      - working-directory: packages/main
+        run: bun run test
+
+  module-images-db:
+    needs: changes
+    if: ${{ needs.changes.outputs.module-images-db == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - working-directory: packages/module-images-db
+        run: bun run check-code
+      - working-directory: packages/module-images-db
+        run: bun run test
+
+  cms-check-code:
+    needs: changes
+    if: ${{ needs.changes.outputs.cms == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      - working-directory: packages/cms
+        run: bun run check-code
+
+  # cms のテストは DB とブラウザが要るため check-code とジョブを分ける
+  cms-test:
+    needs: changes
+    if: ${{ needs.changes.outputs.cms == 'true' }}
+    runs-on: ubuntu-latest
+    services:
+      # packages/cms/docker-compose.yml と同じイメージ・同じ接続情報
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: cms
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      # CI 専用の捨て値。ローカル DB に繋ぐため BLOB_READ_WRITE_TOKEN は設定しない
+      # (未設定なら画像はローカルディスクに保存される)
+      BETTER_AUTH_SECRET: ci-better-auth-secret-0000000000000000
+      BETTER_AUTH_URL: http://localhost:3000
+      DB_POSTGRES_URL: postgres://postgres:postgres@127.0.0.1:5432/cms
+      PAYLOAD_SECRET: ci-payload-secret-00000000000000000000
+      # int テストのテストユーザー(packages/cms/tests/helpers/testUser)に合わせる
+      SIGN_UP_ALLOWED_EMAIL: dev@payloadcms.com
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      # playwright.config.ts が channel: "chromium" を要求するため、
+      # lockfile の playwright に対応するブラウザと OS 依存を入れる
+      - working-directory: packages/cms
+        run: bunx playwright install --with-deps chromium
+      - working-directory: packages/cms
+        run: bun run test
+
+  # 変更差分によって上記ジョブはスキップされるため、branch protection の
+  # required status check はこのジョブ1つに集約する。
+  # always() が無いと、スキップされたジョブがあるだけでこのジョブ自体もスキップされる。
+  checked:
+    if: ${{ always() }}
+    needs:
+      - changes
+      - cms-check-code
+      - cms-test
+      - main
+      - module-images-db
+      - root
+    runs-on: ubuntu-latest
+    steps:
+      - if: ${{ contains(needs.*.result, 'cancelled') || contains(needs.*.result, 'failure') }}
+        run: exit 1
