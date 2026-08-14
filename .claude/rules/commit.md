@@ -20,3 +20,4 @@
   - ブランチ名は `<commit type>/<kebab-case の要約>`(例: `docs/ai-communication-flow-followup`)
   - 切るタイミングは実装着手前。コミット直前まで待たない
   - 既に `develop` 上でコミットしてしまった場合は、その commit から作業ブランチを作り、`develop` を作業開始時点の commit(ローカル `develop` が `origin/develop` と一致していたなら `origin/develop`)に戻す
+- 一時的な確認(整形結果のプレビュー等)の目的で `git stash` を使わない。`git stash pop` は直前に自分が stash したとは限らず、リポジトリに残っている無関係な stash(他ブランチ・他セッションのもの)を誤って適用する恐れがある。一時退避が必要な場合は `git diff` の出力確認や、リポジトリ外(スクラッチディレクトリ等)へのファイル書き出しで代替する。
