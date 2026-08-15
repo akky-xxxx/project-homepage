@@ -74,7 +74,10 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
+      # editorconfig-checker のバイナリ取得が GitHub API の未認証レート制限に当たるのを避けるため認証する
       - run: bun run check-code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   main:
     needs: changes
@@ -83,8 +86,11 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
+      # editorconfig-checker のバイナリ取得が GitHub API の未認証レート制限に当たるのを避けるため認証する
       - working-directory: packages/main
         run: bun run check-code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - working-directory: packages/main
         run: bun run test
 
@@ -95,8 +101,11 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
+      # editorconfig-checker のバイナリ取得が GitHub API の未認証レート制限に当たるのを避けるため認証する
       - working-directory: packages/module-images-db
         run: bun run check-code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - working-directory: packages/module-images-db
         run: bun run test
 
@@ -107,8 +116,11 @@ jobs:
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - uses: ./.github/actions/setup-bun
+      # editorconfig-checker のバイナリ取得が GitHub API の未認証レート制限に当たるのを避けるため認証する
       - working-directory: packages/cms
         run: bun run check-code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   # cms のテストは DB とブラウザが要るため check-code とジョブを分ける
   cms-test:
