@@ -8,6 +8,7 @@
   - refactor: (refactoring production code, eg. renaming a variable)
   - test: (adding missing tests, refactoring tests; no production code change)
   - chore: (updating grunt tasks etc; no production code change)
+  - revert: (reverts a previous commit)
 - cherry-pick や drop 等、コミット単位の操作をしやすい粒度
   - 実装における1機能以下
   - 直前のコミットに対する追加修正(lint/format 対応など)をコミットする前に、そのコミットだけを切り出した状態で品質ゲート相当のチェック(`bun check-code` 等)が独立して通るか自己点検する。通らない場合は、コミットを分けずに直前のコミットへ含めるか、通る形に構造を作り直してからコミットする。
