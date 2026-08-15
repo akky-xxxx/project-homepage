@@ -25,7 +25,7 @@ bun ws:check-code           # 各パッケージで lint + spell-check + type-ch
 bun test                    # ルートでの bun:test
 bun fix                     # eslint --fix + fixpack + prettier --write（ルート）
 bun ws:fix                  # 各パッケージで同上
-bun all-check                # check-code + ws:spell-check + test
+bun all-check                # check-code + ws:check-code + test
 ```
 
 パッケージ単位（`packages/main` または `packages/module-images-db` 内で実行、あるいは `bun --cwd` 経由）:
@@ -47,7 +47,7 @@ bun test -t "test name"          # テスト名でフィルタして実行
 `module-images-db` の画像パイプライン（`packages/module-images-db` 内で実行、GCS の認証情報が必要 — 下記参照）:
 
 ```bash
-bun image-add               # origin-image/ 内のファイルを最適化・アップロードし、src/index.ts の定数を再生成
+bun image-add               # origin-image/ 内のファイルを最適化・アップロードし、src/const/IMAGES の定数を再生成
 bun image-delete            # src/const/IMAGES に存在しなくなった画像の GCS オブジェクトを削除し、fix を実行
 ```
 
