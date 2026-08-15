@@ -105,7 +105,7 @@ bun payload migrate:create <name>   # コレクション/フィールド変更�
 
 - **1フォルダにつき1エクスポート、常に `index.ts`/`index.tsx`**: コンポーネント、util、const、type、style、hook などほぼすべての単位が、エクスポート対象の名前を持つ専用ディレクトリに配置され、中身は `index.ts(x)` のみとなっている。これはルートの `eslint.config.mjs` にある `sc-js/file-path-patterns` ESLint ルールで強制されており、設定ファイルなど一部のみが許可リストの例外となっている。新規ファイルを追加する際もこのパターンに従うこと。単独のファイルを並べて置かない。
 - **テストのコロケーション(`main`/`module-images-db`)**: `index.test.ts` はテスト対象の `index.ts` の隣に置かれ、`bun:test`（`describe`/`it`/`expect`、しばしば `it.each` を使用）で書かれる。`cms` はこの規約の対象外で、結合テストは `tests/int/**/*.int.spec.ts`(Vitest)、E2E は `tests/e2e/**/*.e2e.spec.ts`(Playwright)に配置する(詳細は `packages/cms/README.md` の「テスト」節を参照)。
-- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名（現状 `module-images-db`、`main`、`cms`)のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。
+- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名（現状 `module-images-db`、`main`、`cms`)のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。type/scope 以外の説明文(subject/body)は英語で書く(チャットでの応答等における日本語既定の例外。commitlint による機械的な強制は無いが、コミット履歴はこれまで英語で統一されている)。
 - **品質ゲートは GitHub Actions**（`.github/workflows/check-code.yml`）: pull request と、`deploy-main.yml` からの `workflow_call`（`develop`/`main` への push）で走る。`dorny/paths-filter` で変更パスを判定し、影響のあるパッケージのジョブだけを実行する（共有資材 — `bun.lock`、ルート `package.json`、`bunfig.toml`、`tsconfig.json`、`config/**`、`.github/actions/**` — の変更時は全パッケージ）。`main` は `module-images-db` の変更でも走る（workspace 依存のため）。ジョブは変更差分によってスキップされるため、branch protection の required status check には集約ジョブ `checked` を登録する。husky に残っているのは `commit-msg`（commitlint）のみで、push 時のローカルチェックは無い。
 - **GitHub Actions の action はコミットハッシュで固定する**: tag ではなく SHA で指定し、行末コメントに `# v4.3.1` の形式でバージョンを添える。更新は手動。
 - Lint は階層化されている: ルートの ESLint 設定はトップレベル/設定ファイルのみを対象とする（`eslint.config.mjs`、`ignores: ["packages"]`）。各パッケージは自身の `app/`/`src/` 用に独自の `eslint.config.js.mjs` を持ち、そのパッケージの `lint:product-code`/`lint:config` スクリプト経由で実行される。
@@ -164,6 +164,8 @@ codex には issue の id・本文のどちらも渡さない(`AGENTS.md` を参
 設計だけを書いた result は手順3 が禁じる「作業途中の result」には当たらない。`## 変更ファイル` には変更予定のファイルと適用後の文言を書く。Plan Mode のプランには、そのターンで実行する範囲(設計 result の作成までか、実装まで進むか)を明記する。
 
 設計 result に対象ファイルの確定文言(markdown 等)を含める場合、リポジトリのファイルには触れずに、対象ファイルに実際に適用される整形ツールを ignore 設定(`.prettierignore`、`.ecrc`/`.editorconfig-checker.json` の `Exclude` 等)から先に判定する。適用されると判定したツールについてのみ、確定文言をスクラッチファイルへ書き出し、対象ファイルに適用されるのと同じ設定(`.editorconfig` 等)が有効になる状態で実行し、意図した構造(見出し階層、リストのネストなど)で解釈されることを確認してから result を提出する。`## 確認済みのこと` には、スクラッチファイルの配置場所・適用した設定・実行したツールとコマンドを書く。
+
+設計 result にたたき台や過去の指示に含まれる文言(コマンド例、手順、事実主張)を採用する場合、内容の技術的な正しさの検証を省略しない。特にコマンドの既定挙動など、自分が同じセッション内で既に確認済みの知識と矛盾しないか照合し、矛盾があれば採用前に修正する。たたき台に書かれていることは、その内容が正しいことの根拠にならない。
 
 ### `result_{timestamp}.md` の書式
 
