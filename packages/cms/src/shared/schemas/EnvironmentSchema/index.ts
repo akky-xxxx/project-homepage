@@ -19,12 +19,14 @@ export const EnvironmentSchema = z
     // 空文字はアダプタが「トークン無し」として扱い黙って無効化されるため、ここで弾く
     BLOB_READ_WRITE_TOKEN: z.string().min(NON_EMPTY).optional(),
 
+    // Vercel の Neon 連携が付与する接頭辞付きの変数名(値の中身は自由、この命名であることが必須)
+    DB_POSTGRES_URL: z.string().min(NON_EMPTY),
+
     // "true" のときだけ password サインインの passkey チェックを外す。
     // 本番 DB へローカルから繋いで写真を投入する作業でのみ使う(README 参照)
     PASSWORD_SIGN_IN_ENABLED: z.string().optional(),
 
     PAYLOAD_SECRET: z.string().min(MINIMUM_SECRET_LENGTH),
-    POSTGRES_URL: z.string().min(NON_EMPTY),
 
     // サインアップを許可する唯一のメールアドレス。未設定ならサインアップは常に拒否される
     // (初期登録が済んだらこの環境変数を削除して再デプロイすることでエンドポイントを閉じる)
@@ -36,10 +38,11 @@ export const EnvironmentSchema = z
   // 本番 DB へ向けている場合は「書き込みは成功するが実ファイルは手元にしか無い」状態になる
   .refine(
     (environment) =>
-      !isProductionDatabase(environment.POSTGRES_URL) || environment.BLOB_READ_WRITE_TOKEN != null,
+      !isProductionDatabase(environment.DB_POSTGRES_URL) ||
+      environment.BLOB_READ_WRITE_TOKEN != null,
     {
       message:
-        "BLOB_READ_WRITE_TOKEN is required when POSTGRES_URL points at a non-local database. Without it uploads are written to a local filesystem that production cannot serve.",
+        "BLOB_READ_WRITE_TOKEN is required when DB_POSTGRES_URL points at a non-local database. Without it uploads are written to a local filesystem that production cannot serve.",
       path: ["BLOB_READ_WRITE_TOKEN"],
     },
   )

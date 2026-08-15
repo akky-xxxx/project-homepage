@@ -21,7 +21,7 @@
     "log": "wrangler pages deployment tail",
     "preview": "wrangler pages dev ./dist",
     "spell-check": "cspell \"./{config,app}/**\" --no-progress",
-    "test": "bun test",
+    "test": "bun test --isolate",
     "type-check": "tsc"
   },
   "dependencies": {

@@ -25,7 +25,7 @@ bun ws:check-code           # 各パッケージで lint + spell-check + type-ch
 bun test                    # ルートでの bun:test
 bun fix                     # eslint --fix + fixpack + prettier --write（ルート）
 bun ws:fix                  # 各パッケージで同上
-bun all-check                # check-code + ws:spell-check + test
+bun all-check                # check-code + ws:check-code + test
 ```
 
 パッケージ単位（`packages/main` または `packages/module-images-db` 内で実行、あるいは `bun --cwd` 経由）:
@@ -47,7 +47,7 @@ bun test -t "test name"          # テスト名でフィルタして実行
 `module-images-db` の画像パイプライン（`packages/module-images-db` 内で実行、GCS の認証情報が必要 — 下記参照）:
 
 ```bash
-bun image-add               # origin-image/ 内のファイルを最適化・アップロードし、src/index.ts の定数を再生成
+bun image-add               # origin-image/ 内のファイルを最適化・アップロードし、src/const/IMAGES の定数を再生成
 bun image-delete            # src/const/IMAGES に存在しなくなった画像の GCS オブジェクトを削除し、fix を実行
 ```
 
@@ -69,7 +69,7 @@ bun payload migrate:create <name>   # コレクション/フィールド変更�
 
 - `main`: `VITE_IMAGE_HOST`（`packages/main/.env.example` を参照）。
 - `module-images-db`: `BUCKET`（GCS バケット名、`EnvironmentSchema` でバリデーション）に加え、GCP サービスアカウントの JSON（`src/shared/schemas/CredentialSchema` の `CredentialSchema` でバリデーション）。これは `src/shared/utils/storageBucket` が `@google-cloud/storage` と通信する際に使われる。`packages/module-images-db/.env.example` を参照。
-- `cms`: `ENVIRONMENT`（`src/shared/const/ENVIRONMENT`、`EnvironmentSchema` でバリデーション）が起動時に検証する。主な変数は `POSTGRES_URL`(必須)、`PAYLOAD_SECRET`/`BETTER_AUTH_SECRET`(必須、32文字以上)、`BETTER_AUTH_URL`(必須、passkey の rpID になるため本番では固定ドメインが必要)、`SIGN_UP_ALLOWED_EMAIL`(任意、初回サインアップ許可用)、`BLOB_READ_WRITE_TOKEN`(本番 DB 接続時は必須。ローカル DB なら省略可で画像はローカルディスクに保存される)。初回セットアップ手順・写真投入手順・マイグレーション運用の詳細は `packages/cms/README.md` を参照。
+- `cms`: `ENVIRONMENT`（`src/shared/const/ENVIRONMENT`、`EnvironmentSchema` でバリデーション）が起動時に検証する。主な変数は `DB_POSTGRES_URL`(必須。Vercel の Neon 連携が付与する `DB_` 接頭辞付きの命名に合わせている)、`PAYLOAD_SECRET`/`BETTER_AUTH_SECRET`(必須、32文字以上)、`BETTER_AUTH_URL`(必須、passkey の rpID になるため本番では固定ドメインが必要)、`SIGN_UP_ALLOWED_EMAIL`(任意、初回サインアップ許可用)、`BLOB_READ_WRITE_TOKEN`(本番 DB 接続時は必須。ローカル DB なら省略可で画像はローカルディスクに保存される)。初回セットアップ手順・写真投入手順・マイグレーション運用の詳細は `packages/cms/README.md` を参照。
 
 ## アーキテクチャ
 
@@ -105,8 +105,105 @@ bun payload migrate:create <name>   # コレクション/フィールド変更�
 
 - **1フォルダにつき1エクスポート、常に `index.ts`/`index.tsx`**: コンポーネント、util、const、type、style、hook などほぼすべての単位が、エクスポート対象の名前を持つ専用ディレクトリに配置され、中身は `index.ts(x)` のみとなっている。これはルートの `eslint.config.mjs` にある `sc-js/file-path-patterns` ESLint ルールで強制されており、設定ファイルなど一部のみが許可リストの例外となっている。新規ファイルを追加する際もこのパターンに従うこと。単独のファイルを並べて置かない。
 - **テストのコロケーション(`main`/`module-images-db`)**: `index.test.ts` はテスト対象の `index.ts` の隣に置かれ、`bun:test`（`describe`/`it`/`expect`、しばしば `it.each` を使用）で書かれる。`cms` はこの規約の対象外で、結合テストは `tests/int/**/*.int.spec.ts`(Vitest)、E2E は `tests/e2e/**/*.e2e.spec.ts`(Playwright)に配置する(詳細は `packages/cms/README.md` の「テスト」節を参照)。
-- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名（現状 `module-images-db`、`main`、`cms`)のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。
-- **pre-push フック**（`.husky/pre-push`）は `bun install --frozen-lockfile && bun check-code && bun ws:check-code && bun test` を実行する — push 前にこれが走ることを前提とすること。
+- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名（現状 `module-images-db`、`main`、`cms`)のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。type/scope 以外の説明文(subject/body)は英語で書く(チャットでの応答等における日本語既定の例外。commitlint による機械的な強制は無いが、コミット履歴はこれまで英語で統一されている)。
+- **品質ゲートは GitHub Actions**（`.github/workflows/check-code.yml`）: pull request と、`deploy-main.yml` からの `workflow_call`（`develop`/`main` への push）で走る。`dorny/paths-filter` で変更パスを判定し、影響のあるパッケージのジョブだけを実行する（共有資材 — `bun.lock`、ルート `package.json`、`bunfig.toml`、`tsconfig.json`、`config/**`、`.github/actions/**` — の変更時は全パッケージ）。`main` は `module-images-db` の変更でも走る（workspace 依存のため）。ジョブは変更差分によってスキップされるため、branch protection の required status check には集約ジョブ `checked` を登録する。husky に残っているのは `commit-msg`（commitlint）のみで、push 時のローカルチェックは無い。
+- **GitHub Actions の action はコミットハッシュで固定する**: tag ではなく SHA で指定し、行末コメントに `# v4.3.1` の形式でバージョンを添える。更新は手動。
 - Lint は階層化されている: ルートの ESLint 設定はトップレベル/設定ファイルのみを対象とする（`eslint.config.mjs`、`ignores: ["packages"]`）。各パッケージは自身の `app/`/`src/` 用に独自の `eslint.config.js.mjs` を持ち、そのパッケージの `lint:product-code`/`lint:config` スクリプト経由で実行される。
 - 整形は Prettier が担い、ESLint 側には整形ルールを持たせていない。各パッケージの `fix`/`lint` は `fix:prettier`/`lint:prettier` として ESLint とは別ステップで実行される。
 - ロックファイルは Bun のテキスト形式ロックファイル `bun.lock` 単一構成。以前存在した `bun.lockb`/`yarn.lock` の併用構成は廃止されている。
+
+## AI 間のファイルベース連携(ai-communication)
+
+このリポジトリでは Claude Code が**設計・実装**、codex CLI が**レビュー**を担当する。両者は直接会話せず、リポジトリルートの `./ai-communication` 配下のファイルだけで受け渡しを行う。このディレクトリは git 管理外(`.gitignore` 済み)で、存在しなければ作成してよい。
+
+### ファイルと権限
+
+Claude Code 視点の権限は以下の通り。**読み取り専用のファイルには、書き込み・編集・削除・リネームのいずれも行わない。**
+
+| ファイル                                 | Claude Code                                | codex CLI                                  |
+| ---------------------------------------- | ------------------------------------------ | ------------------------------------------ |
+| `ai-communication/task.md`               | 読み取りのみ                               | 読み取り禁止・書き込み禁止                 |
+| `ai-communication/result_{timestamp}.md` | 新規作成して書く(既存ファイルは編集しない) | 読み取りのみ                               |
+| `ai-communication/review_{timestamp}.md` | 読み取りのみ                               | 新規作成して書く(既存ファイルは編集しない) |
+
+`{timestamp}` はファイル作成時刻を `YYYYMMDD-HHmmss`(ローカル時刻)で表したもの。例: `result_20260814-203015.md`。既存ファイルへの追記は行わず、常に新しい timestamp のファイルを作成する。
+
+### フロー
+
+1. タスクの入力を把握する。優先順位は「ユーザーからの直接指示 > 指定された issue > `ai-communication/task.md` の本文」。issue が指定された場合の扱いは下記「issue をタスク入力とする場合」を参照する。issue も `task.md` も無ければ従来通りユーザーの指示のみで進める
+2. 設計・実装を行う。`.claude/rules/` の実装前確認ルール・コミットルール(ユーザー承認)はこれまで通り適用する。設計フェーズに入るかどうかの判定条件は下記「設計フェーズに入る条件」を参照する
+3. **タスクが完了した時点で** `ai-communication/result_{timestamp}.md` を**新規作成**し、結果と申し送り事項を書く。作業途中の状態では作成しない(未レビューの result が複数並び、codex 側がレビュー対象を選べなくなるため)。途中経過の共有はチャットで行う。codex CLI の起動はユーザーが行う
+4. ユーザーからレビュー到着を知らされたら、未対応の `ai-communication/review_*.md` を読む。未対応かどうかはファイル名の timestamp 順ではなく、各 review の `- reviewed_file:` が自分の直近の result を指しているかで判断する(timestamp は実際の作成順と前後することがある)
+5. 各指摘の妥当性を自分で確認し、対応要否を判断する。修正が必要なものは実装前確認ルールに従って承認を得てから実装する
+6. 対応後に新しい `ai-communication/result_{timestamp}.md` を作成し、対応した指摘・見送った指摘とその理由・元になった review のファイル名を書く。以降 4〜6 を必要な回数だけ繰り返す
+7. レビューの指摘が無くなったら `retrospective` agent を実行し、今回の作業プロセスを振り返る。agent は会話履歴を持たないため、承認フローの逸脱・手戻り・ユーザーからの指摘といった経緯メモを呼び出し時に渡す。ドキュメント反映が必要な項目が出た場合は**別タスク(別ブランチ)として起票**し、現タスクの push はブロックしない。あわせて、これまでの result の `## 申し送り・レビュー観点` に「別 issue 候補」として書いた項目が未起票のまま残っていないか確認し、残っていれば同じく別タスクとして起票する。ここでの「レビューの指摘が無くなったら」は、設計フェーズのサブループ(判断軸を変える変更の result/review)の解消ではなく、実装(Edit/Write)とその実装内容に対する result/review ループまで完了した、タスク全体としての解消を指す。設計フェーズを踏むタスクでは、設計サブループが指摘0件になった時点ではまだ実行しない。
+8. push / PR 作成に進む。push はユーザーが実行する
+
+### issue をタスク入力とする場合
+
+タスクは GitHub issue で管理することを基本とする。`task.md` はローカルの git 管理外ファイルで作業デバイスに縛られるが、issue ならどのデバイスからでも起票・追記でき、着手前に内容を詰めておける。
+
+- issue の指定は、ユーザーがチャットで issue 番号 / URL を渡す形と、`task.md` に issue の URL / 番号だけが書かれている形のどちらでもよい。後者の場合、`task.md` 本文は issue への参照とみなし、要件は issue 側を読む
+- issue 番号のみ渡された場合は `gh issue view <issue 番号> --repo akky-xxxx/project-homepage` で参照する。issue の URL を渡された場合は URL 自体がリポジトリを一意に定めるため `gh issue view <URL>` をそのまま使う
+- issue 本文が曖昧で複数の解釈が成り立つ場合は、自分で解釈を確定せず実装前確認ルールに従ってユーザーに確認する
+- `ai-communication/result_{timestamp}.md` には issue 番号・URL を一切書かない。`- task:` 行に限らず、経緯説明やレビュー対応の記述であっても同様(過去の result に番号が残っていた、といった言及自体は許すが、その番号自体は書かない)。issue 本文の丸写しも行わない。codex に渡すのはレビューに必要な範囲の背景だけで、これは従来通り
+- result を新規作成する前に、`- task:` 行だけでなく本文全体(`## 概要`・`## 申し送り・レビュー観点` 等の経緯説明を含む)に issue 番号・URL が紛れていないか見直す
+
+codex には issue の id・本文のどちらも渡さない(`AGENTS.md` を参照)。背景情報を持たせないことで追認的なレビューになるのを避ける意図的な制約であり、issue で管理するようになってもこの前提は変えない。`result_{timestamp}.md` に issue 番号や URL を書くと、この前提が result 経由で崩れる。
+
+### 設計フェーズに入る条件
+
+手順2で、次のいずれかに当たる場合は、実装(Edit / Write)に着手する前に**設計だけ**を `ai-communication/result_{timestamp}.md` に出力し、codex の設計レビューが解消するまでコード・設定・ドキュメントに一切触らない。
+
+- 以後の実装・レビューの判断軸になるもの(`CLAUDE.md` / `AGENTS.md` / `.claude/**` / `config/**` / CI 定義)を変更する。パスではなく検査基準・分類・実行条件・権限のいずれかを変えるかで判定し、既存基準に従うデータの更新(cspell 辞書への単語追加など)は含まない
+- 複数パッケージにまたがる、または既存の公開インターフェース・データ構造を変える
+- 判断軸や分類基準を新しく決める(どこまでを対象とするか、何を基準に分けるか)
+
+変更行数・ファイル数・コード変更の有無は判定に使わない。ドキュメント1ファイルの追記でも上記に当たれば設計フェーズを踏む。
+
+設計だけを書いた result は手順3 が禁じる「作業途中の result」には当たらない。`## 変更ファイル` には変更予定のファイルと適用後の文言を書く。Plan Mode のプランには、そのターンで実行する範囲(設計 result の作成までか、実装まで進むか)を明記する。
+
+設計 result に対象ファイルの確定文言(markdown 等)を含める場合、リポジトリのファイルには触れずに、対象ファイルに実際に適用される整形ツールを ignore 設定(`.prettierignore`、`.ecrc`/`.editorconfig-checker.json` の `Exclude` 等)から先に判定する。適用されると判定したツールについてのみ、確定文言をスクラッチファイルへ書き出し、対象ファイルに適用されるのと同じ設定(`.editorconfig` 等)が有効になる状態で実行し、意図した構造(見出し階層、リストのネストなど)で解釈されることを確認してから result を提出する。`## 確認済みのこと` には、スクラッチファイルの配置場所・適用した設定・実行したツールとコマンドを書く。
+
+設計対象が `result_{timestamp}.md` / `review_{timestamp}.md` の記述内容そのものを制約するルール(本節や次節の書式を変更する場合など)であるときは、そのうち起草中の設計 result 自身にも適用できる制約(禁止情報の不記載、記録すべき粒度など)は自己適用する。review 専用の書式(severity 見出し・固定ラベル・`reviewed_file`・件数サマリ等)のように result の形式に直接あてはめられない制約については、result をその形式に合わせるのではなく、提案内容が既存の制約や設計意図と整合しているかを点検する。直前の段落が定める整形・構造確認に加えて、ドラフト中の文言、`## 設計判断`、`## 確認済みのこと` の書き方がこれらの点検を満たしているかを提出前に確認し、修正可能な不整合は提出前に解消する。設計上解消できない、または適用可否が未確定な点だけを、禁止情報自体は転記せず理由とともに `## 申し送り・レビュー観点` に記録する。
+
+設計 result にたたき台や過去の指示に含まれる文言(コマンド例、手順、事実主張)を採用する場合、内容の技術的な正しさの検証を省略しない。特にコマンドの既定挙動など、自分が同じセッション内で既に確認済みの知識と矛盾しないか照合し、矛盾があれば採用前に修正する。たたき台に書かれていることは、その内容が正しいことの根拠にならない。
+
+### `result_{timestamp}.md` の書式
+
+codex が機械的に読み取れるよう、以下の形式に統一する。ファイル参照は `path:line` 形式(コロン区切り、括弧なし)、絵文字・罫線などの装飾は使わない(`AGENTS.md` の指摘出力形式と揃えている)。
+
+```markdown
+- task: 対象タスクの1行要約
+- reviewed_file: review_20260814-210000.md
+
+## 概要
+
+## 変更ファイル
+
+## 設計判断
+
+## 確認済みのこと
+
+## 前回レビューへの対応
+
+## 申し送り・レビュー観点
+```
+
+- `- task:`: 対象タスクの1行要約。issue が入力元であっても issue 番号 / URL は書かない(下記「issue をタスク入力とする場合」を参照)
+- `- reviewed_file:`: 対応した review のファイル名。初回やレビュー起因でない場合は `-` とする
+- `## 変更ファイル`: 変更した各ファイルのパスと変更内容を1行ずつ
+- `## 設計判断`: 選んだ方針と、その理由・採らなかった選択肢
+- `## 確認済みのこと`: 実行したコマンド(`bun ws:check-code` 等)とその結果。未確認の項目があればその旨も書く
+  - result を提出する直前に、対象ファイル・検索オプションを含む実行コマンドの形で、禁止対象の情報(issue 番号の実値、`#` 付き表記、issue URL 等)が本文全体(特定のフィールドに限らない)に含まれていないことを `grep`/`rg` 等で機械的に検査し、実行したコマンドと結果(該当有無)をここに書く。issue 番号の実値を検索する際は、無関係な数字列(タイムスタンプ・セッション ID 等)への誤検知を避けるため単語境界(`\b` 等)を使う
+  - 検索パターンに禁止対象の実値(issue 番号そのもの等)を使う場合、その値を result にそのまま転記すると禁止対象自体を書き込んでしまうため、記録するコマンドはパターン部分をプレースホルダ(例: `<issue番号>`)に置き換え、結果(該当有無)のみを書く
+- `## 前回レビューへの対応`: 2回目以降のみ。指摘ごとに「対応した / 見送った」と理由。見送りは必ず理由を書く
+- `## 申し送り・レビュー観点`: 特に見てほしい箇所、既知の懸念、次のタスクへの引き継ぎ
+
+### やらないこと
+
+- `ai-communication/task.md` および `ai-communication/review_*.md` への書き込み・編集・削除
+- 既存の `ai-communication/result_*.md` の編集・追記(常に新規ファイルを作成する)
+- 作業途中の状態で `ai-communication/result_*.md` を作成すること(手順2 の設計フェーズで作成する、設計だけを書いた result は該当しない)
+- レビュー指摘を検証せずそのまま実装に反映すること(妥当性を自分で確認してから対応する)
+- レビューの指摘が解消しないまま push / PR 作成に進むこと

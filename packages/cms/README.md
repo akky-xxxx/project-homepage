@@ -10,7 +10,7 @@ Payload CMS + Better Auth(passkey)で構築した、フォトギャラリーの�
 
 | 変数                       | 必須   | ローカル `.env`           | Vercel Production      | 説明                                                                             |
 | -------------------------- | ------ | ------------------------- | ---------------------- | -------------------------------------------------------------------------------- |
-| `POSTGRES_URL`             | 必須   | docker の接続文字列       | Postgres の接続文字列  | 空文字不可                                                                       |
+| `DB_POSTGRES_URL`          | 必須   | docker の接続文字列       | Postgres の接続文字列  | 空文字不可                                                                       |
 | `PAYLOAD_SECRET`           | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
 | `BETTER_AUTH_SECRET`       | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
 | `BETTER_AUTH_URL`          | 必須   | `http://localhost:3000`   | 固定のカスタムドメイン | passkey の rpID になる。デプロイごとに変わる URL は不可                          |
@@ -18,7 +18,9 @@ Payload CMS + Better Auth(passkey)で構築した、フォトギャラリーの�
 | `BLOB_READ_WRITE_TOKEN`    | 条件付 | 設定しない                | 設定する               | ローカル DB なら省略可(画像はローカルディスク保存)。本番 DB に接続していると必須 |
 | `PASSWORD_SIGN_IN_ENABLED` | 任意   | 設定しない                | **設定しない**         | 写真投入作業のときだけコマンドラインで渡す                                       |
 
-Preview 環境を使う場合、`PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` は Production と別の値にし、`POSTGRES_URL` は本番 DB を指さないこと。
+Preview 環境を使う場合、`PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` は Production と別の値にし、`DB_POSTGRES_URL` は本番 DB を指さないこと。
+
+Vercel の Marketplace 経由で Neon(Postgres)・Blob をプロジェクトに接続すると、接頭辞付き(`DB_`)の `DB_DATABASE_URL` / `DB_DATABASE_URL_UNPOOLED` / `DB_PGHOST` / `DB_PGUSER` / `DB_PGDATABASE` / `DB_PGPASSWORD` / `DB_POSTGRES_URL_NON_POOLING` / `DB_POSTGRES_USER` / `DB_POSTGRES_HOST` / `DB_POSTGRES_PASSWORD` / `DB_POSTGRES_DATABASE` / `DB_POSTGRES_URL_NO_SSL` / `DB_POSTGRES_PRISMA_URL` / `BLOB_STORE_ID` など多数の変数が自動で発行されるが、`EnvironmentSchema` が読むのは上表の `DB_POSTGRES_URL`(pooled、"Recommended for most uses" のもの)と `BLOB_READ_WRITE_TOKEN` の 2 つだけ。他は未使用なのでこのプロジェクトでは無視してよい(ローカル `.env` には一切設定しない)。値そのものは Neon 連携が自動で発行するので自由だが、`DB_` 接頭辞の変数名であることが必須。
 
 ## 手順 1: ローカル開発環境を作る
 
@@ -40,17 +42,17 @@ bun dev
 bun run seed:gallery-areas
 ```
 
-本番 DB に対して実行する場合は、手順 3 の写真投入と同様に `POSTGRES_URL` をコマンドラインで渡す。
+本番 DB に対して実行する場合は、手順 3 の写真投入と同様に `DB_POSTGRES_URL` をコマンドラインで渡す。
 
 ```bash
-POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-areas
+DB_POSTGRES_URL='<本番 DB_POSTGRES_URL>' bun run seed:gallery-areas
 ```
 
 `gallery-tags` も同様に一括投入できる。こちらは可変(今後タグが増える)だが、既存レコードは削除しない・スキップするだけなので、一度投入したタグを消してしまう心配なく何度でも実行できる。将来的には本番 DB のダンプを正とする運用に切り替える想定で、それまでの暫定手段。
 
 ```bash
 bun run seed:gallery-tags
-POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-tags
+DB_POSTGRES_URL='<本番 DB_POSTGRES_URL>' bun run seed:gallery-tags
 ```
 
 ## 手順 2: 本番の初回セットアップ
@@ -58,7 +60,7 @@ POSTGRES_URL='<本番 POSTGRES_URL>' bun run seed:gallery-tags
 **この手順を完了するまで、サインアップ API は誰でも叩ける状態にある。** 守りになっているのは `SIGN_UP_ALLOWED_EMAIL` の値を知らないと登録できないことだけなので、推測されにくいエイリアスを使い、デプロイから登録までを続けて行うこと。
 
 1. Vercel で Blob ストアを作成し、プロジェクトに接続する(`BLOB_READ_WRITE_TOKEN` が環境変数に入る)。
-2. Vercel の環境変数に `POSTGRES_URL` / `PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` / `BETTER_AUTH_URL` を設定する。
+2. Vercel の環境変数に `DB_POSTGRES_URL` / `PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` / `BETTER_AUTH_URL` を設定する。
 3. `SIGN_UP_ALLOWED_EMAIL` に**推測されにくいエイリアス**を設定する(例: `cms-admin+7f3a9c2e@example.com`)。この値が実質的なセットアップトークンになる。
 4. デプロイする。`vercel-build` が `payload migrate` を実行してからビルドするので、この時点で DB にテーブルが作られる。
 5. `https://<本番ドメイン>/login` を開き、3 で設定したアドレスでサインアップする。
@@ -76,13 +78,13 @@ Vercel Function にはリクエストボディ 4.5MB の制限があるため、
 
 ```bash
 # 1. バックアップを取る。この作業中の削除・編集は即座に本番へ反映される
-pg_dump '<本番 POSTGRES_URL>' -Fc -f "backup-$(date +%Y%m%d).dump"
+pg_dump '<本番 DB_POSTGRES_URL>' -Fc -f "backup-$(date +%Y%m%d).dump"
 
 # 2. ビルドする
 bun build
 
 # 3. 本番に向けて production モードで起動する
-POSTGRES_URL='<本番 POSTGRES_URL>' \
+DB_POSTGRES_URL='<本番 DB_POSTGRES_URL>' \
 BLOB_READ_WRITE_TOKEN='<本番トークン>' \
 PASSWORD_SIGN_IN_ENABLED=true \
 NODE_ENV=production \

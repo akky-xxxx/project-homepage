@@ -1,5 +1,6 @@
 **/coverage/**
 **/dist/**
 .claude/**
+ai-communication/**
 bun.lock
 packages/**
