@@ -27,10 +27,9 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    ALTER TABLE "two_factors" DISABLE ROW LEVEL SECURITY;
-  DROP TABLE "two_factors" CASCADE;
   ALTER TABLE "payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_two_factors_fk";
-  
   DROP INDEX "payload_locked_documents_rels_two_factors_id_idx";
+  DROP TABLE "two_factors" CASCADE;
   ALTER TABLE "users" DROP COLUMN "two_factor_enabled";
   ALTER TABLE "payload_locked_documents_rels" DROP COLUMN "two_factors_id";`)
 }
