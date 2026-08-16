@@ -1,3 +1,6 @@
 ctap
+hotp
 networkidle
+otpauth
+totp
 webauthn
