@@ -99,15 +99,15 @@ export default buildConfig({
 
       admin: {
         betterAuthOptions,
-        loginViewComponent:
-          "@delmaredigital/payload-better-auth/components/login-passkey#LoginViewWrapperWithPasskey",
+        loginViewComponent: "@/components/LoginView#LoginView",
         logoutButtonComponent: "@/components/LogoutButton#LogoutButton",
 
         login: {
           afterLoginPath: "/",
-          enablePasskey: true,
-          // password / サインアップは最初の 1 アカウントを作るためだけに開いている。
-          // 作成後の password ログインと 2 回目以降のサインアップは authBeforeHook が拒否する。
+          // トップ画面からの passkey 単独サインインボタンは出さない。passkey は
+          // password(第1要素)の後に選べる第2要素としてのみ使う(LoginView 参照)。
+          enablePasskey: false,
+          // 2回目以降のサインアップは authBeforeHook が拒否する。
           enablePassword: true,
           enableSignUp: true,
 
