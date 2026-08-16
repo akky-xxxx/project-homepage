@@ -1,13 +1,12 @@
 import { passkey } from "@better-auth/passkey"
 
 import { ENVIRONMENT } from "@/shared/const/ENVIRONMENT"
+import { MINIMUM_PASSWORD_LENGTH } from "@/shared/const/MINIMUM_PASSWORD_LENGTH"
 import { authBeforeHook } from "@/shared/utilities/authBeforeHook"
 
 import type { BetterAuthOptions } from "better-auth"
 
 const rpID = new URL(ENVIRONMENT.BETTER_AUTH_URL).hostname
-
-const MINIMUM_PASSWORD_LENGTH = 12
 
 export const betterAuthOptions: Partial<BetterAuthOptions> = {
   user: {
