@@ -2,7 +2,7 @@ import type { CSSProperties } from "react"
 
 /**
  * `LoginView` が自前描画する部分(カード・トグルボタン・入力欄・ラベル・エラーバナー・成功バナー等)の
- * スタイルトークン。passkey ボタンと TOTP 検証画面はベンダー標準コンポーネントを使うため対象外。
+ * スタイルトークン(入力欄・ラベル・バナーは `ChangePasswordField` からも使われる)。passkey ボタンと TOTP 検証画面はベンダー標準コンポーネントを使うため対象外。
  * 色・間隔は `main` パッケージ独自のトークン体系ではなく、Payload 標準の CSS 変数を使う。
  */
 export const LOGIN_VIEW_STYLES: Record<string, CSSProperties> = {

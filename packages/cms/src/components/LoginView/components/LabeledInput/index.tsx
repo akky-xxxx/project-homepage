@@ -1,6 +1,6 @@
 import { LOGIN_VIEW_STYLES } from "@/shared/const/LOGIN_VIEW_STYLES"
 
-import type { Ref } from "react"
+import type { KeyboardEvent, Ref } from "react"
 
 type LabeledInputProps = {
   autoComplete: HTMLInputElement["autocomplete"]
@@ -10,18 +10,20 @@ type LabeledInputProps = {
   type: "email" | "password" | "text"
   value: string
   onChange: (value: string) => void
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void
 }
 
 /**
- * `LoginView` 配下のフォームで共有する、`<label>` と対応付けた `<input>`。
+ * 認証まわりのフォーム(`LoginView` 配下、`ChangePasswordField` 等)で共有する、
+ * `<label>` と対応付けた `<input>`。
  * `autoComplete` は 1Password 等のパスワードマネージャーがフィールドを正しく
  * 認識するために必須(このログイン方式の作り直し自体が 1Password 経由での
  * ログインしづらさを解消する目的のため)。
- * @param props フィールドの id・ラベル・型・値・変更ハンドラ(必要なら ref)
+ * @param props フィールドの id・ラベル・型・値・変更ハンドラ(必要なら ref・キー入力ハンドラ)
  * @returns ラベル付き入力欄
  */
 export const LabeledInput = (props: LabeledInputProps) => {
-  const { autoComplete, id, inputRef, label, type, value, onChange } = props
+  const { autoComplete, id, inputRef, label, type, value, onChange, onKeyDown } = props
 
   return (
     <div>
@@ -36,6 +38,7 @@ export const LabeledInput = (props: LabeledInputProps) => {
         style={LOGIN_VIEW_STYLES.input}
         type={type}
         value={value}
+        onKeyDown={onKeyDown}
         onChange={(event) => {
           onChange(event.target.value)
         }}

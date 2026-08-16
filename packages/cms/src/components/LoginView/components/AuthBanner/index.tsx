@@ -6,7 +6,7 @@ type AuthBannerProps = {
 }
 
 /**
- * `LoginView` 配下で共有するエラー/成功バナー。
+ * 認証まわりのフォーム(`LoginView` 配下、`ChangePasswordField` 等)で共有するエラー/成功バナー。
  * @param props 種別とメッセージ
  * @returns バナー
  */
