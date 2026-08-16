@@ -8,15 +8,14 @@ Payload CMS + Better Auth(passkey)で構築した、フォトギャラリーの�
 
 `ENVIRONMENT`(`src/shared/const/ENVIRONMENT`)が起動時に検証する。条件を満たさないと起動・ビルドが失敗する。
 
-| 変数                       | 必須   | ローカル `.env`           | Vercel Production      | 説明                                                                             |
-| -------------------------- | ------ | ------------------------- | ---------------------- | -------------------------------------------------------------------------------- |
-| `DB_POSTGRES_URL`          | 必須   | docker の接続文字列       | Postgres の接続文字列  | 空文字不可                                                                       |
-| `PAYLOAD_SECRET`           | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
-| `BETTER_AUTH_SECRET`       | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
-| `BETTER_AUTH_URL`          | 必須   | `http://localhost:3000`   | 固定のカスタムドメイン | passkey の rpID になる。デプロイごとに変わる URL は不可                          |
-| `SIGN_UP_ALLOWED_EMAIL`    | 任意   | `dev@payloadcms.com`      | 初回登録時のみ設定     | 未設定ならサインアップは常に拒否                                                 |
-| `BLOB_READ_WRITE_TOKEN`    | 条件付 | 設定しない                | 設定する               | ローカル DB なら省略可(画像はローカルディスク保存)。本番 DB に接続していると必須 |
-| `PASSWORD_SIGN_IN_ENABLED` | 任意   | 設定しない                | **設定しない**         | 写真投入作業のときだけコマンドラインで渡す                                       |
+| 変数                    | 必須   | ローカル `.env`           | Vercel Production      | 説明                                                                             |
+| ----------------------- | ------ | ------------------------- | ---------------------- | -------------------------------------------------------------------------------- |
+| `DB_POSTGRES_URL`       | 必須   | docker の接続文字列       | Postgres の接続文字列  | 空文字不可                                                                       |
+| `PAYLOAD_SECRET`        | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
+| `BETTER_AUTH_SECRET`    | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
+| `BETTER_AUTH_URL`       | 必須   | `http://localhost:3000`   | 固定のカスタムドメイン | passkey の rpID になる。デプロイごとに変わる URL は不可                          |
+| `SIGN_UP_ALLOWED_EMAIL` | 任意   | `dev@payloadcms.com`      | 初回登録時のみ設定     | 未設定ならサインアップは常に拒否                                                 |
+| `BLOB_READ_WRITE_TOKEN` | 条件付 | 設定しない                | 設定する               | ローカル DB なら省略可(画像はローカルディスク保存)。本番 DB に接続していると必須 |
 
 Preview 環境を使う場合、`PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` は Production と別の値にし、`DB_POSTGRES_URL` は本番 DB を指さないこと。
 
@@ -64,11 +63,12 @@ DB_POSTGRES_URL='<本番 DB_POSTGRES_URL>' bun run seed:gallery-tags
 3. `SIGN_UP_ALLOWED_EMAIL` に**推測されにくいエイリアス**を設定する(例: `cms-admin+7f3a9c2e@example.com`)。この値が実質的なセットアップトークンになる。
 4. デプロイする。`vercel-build` が `payload migrate` を実行してからビルドするので、この時点で DB にテーブルが作られる。
 5. `https://<本番ドメイン>/login` を開き、3 で設定したアドレスでサインアップする。
-6. **続けてそのまま passkey を登録する。** password ログインが使えるのは passkey を登録するまでの間だけ。
-7. Vercel から `SIGN_UP_ALLOWED_EMAIL` を**削除して再デプロイする**。環境変数はモジュール読み込み時に評価されるため、削除しただけでは反映されない。
-8. `https://<本番ドメイン>/login` からサインアップを試み、拒否されることを確認する。
+6. **続けて自分の Users 編集画面から Two-Factor Authentication を有効化し、TOTP をセットアップする。** `twoFactorEnabled` は TOTP セットアップを完了するまで false のままで、その間は password だけでログインできてしまう(第2要素が強制されない)ため、サインアップ直後に続けて行うこと。表示される backup code は復旧手段として控えておく。
+7. 任意で passkey も追加登録する(TOTP セットアップ完了後に、第2要素として passkey も選べるようになる)。
+8. Vercel から `SIGN_UP_ALLOWED_EMAIL` を**削除して再デプロイする**。環境変数はモジュール読み込み時に評価されるため、削除しただけでは反映されない。
+9. `https://<本番ドメイン>/login` からサインアップを試み、拒否されることを確認する。
 
-以降、本番へのログインは passkey のみ。
+以降、本番へのログインは password + (TOTP または passkey)の2段階。
 
 ## 手順 3: 写真を投入する
 
@@ -86,12 +86,11 @@ bun build
 # 3. 本番に向けて production モードで起動する
 DB_POSTGRES_URL='<本番 DB_POSTGRES_URL>' \
 BLOB_READ_WRITE_TOKEN='<本番トークン>' \
-PASSWORD_SIGN_IN_ENABLED=true \
 NODE_ENV=production \
 bun start
 ```
 
-4. `http://localhost:3000/login` を開き、password でログインする。
+4. `http://localhost:3000/login` を開き、password + TOTP でログインする(TOTP はドメインに依存しないため、本番用に登録済みの認証アプリのコードがそのまま使える。passkey は本番ドメインの rpID に紐づき localhost では使えない)。
 5. 管理画面の左上に「本番 DB に接続中」の赤いバナーが出ていることを確認する。出ていなければ接続先がローカル DB なので、環境変数を見直す。
 6. Gallery Photos から写真をアップロードする。上限は 1 ファイル 30MB。
 7. 作業が終わったらサーバーを停止する(Ctrl-C)。
@@ -99,8 +98,6 @@ bun start
 注意点:
 
 - **`NODE_ENV=production` は必須。** dev モードで本番 DB に繋ぐと Payload が dev スキーマ push を実行し、本番のスキーマを書き換えてしまう
-- `PASSWORD_SIGN_IN_ENABLED` が必要なのは、passkey が rpID(= `BETTER_AUTH_URL` のホスト)に紐づき、本番ドメインで登録した passkey を localhost では使えないため。このフラグは `BETTER_AUTH_URL` が localhost のときだけ効く
-- `PASSWORD_SIGN_IN_ENABLED` を Vercel の環境変数に設定しないこと
 
 ## 手順 4: スキーマを変更したとき
 
@@ -118,20 +115,23 @@ Vercel への適用は `vercel-build`(`cross-env NODE_OPTIONS=--no-deprecation p
 
 過去の(すでに適用済みの)マイグレーションファイルは、原則として削除しないこと。`payload_migrations` テーブルには適用済みの記録が残るので既存の本番環境がすぐ壊れることはないが、`payload migrate` は「まっさらな DB」に対して配列を先頭から全部再生してスキーマを組み立てる前提のコマンドであるため、途中のファイルを消すと DB を作り直す(新しい環境を立てる・災害復旧でリストアする等)ときにスキーマが欠落し、今の本番と一致しなくなる。整理したい場合は個別に `rm` するのではなく、複数のマイグレーションを1つに統合(スカッシュ)し、統合後のマイグレーションが同じ最終スキーマを作ることを検証してから古いファイルを消すこと。
 
-## 手順 5: passkey を全て失ったとき
+## 手順 5: 第2要素を失ったとき
 
-1. 本番 Postgres の `passkeys` から該当ユーザーの行を削除する。
-2. `https://<本番ドメイン>/login` から password でログインする(passkey が 0 件になったので通る)。
-3. すぐに passkey を登録し直す。
+TOTP・backup code・passkey は互いに独立して失われうる。
 
-password を忘れている場合は、`users` / `accounts` / `sessions` / `passkeys` から該当ユーザーの行を削除し、手順 2 をやり直す。
+- **passkey だけを失った場合**: password + TOTP でログインし、Users 編集画面から passkey を登録し直す。
+- **TOTP(と、登録していれば passkey)を失った場合**: TOTP セットアップ時に控えた backup code でログインする。ログイン後、Two-Factor Authentication を無効化してから再度有効化し、TOTP を登録し直す。
+- **TOTP・backup code・passkey を全て失った場合**: 本番 Postgres の `two_factors` から該当ユーザーの行を削除し、`users.two_factor_enabled` を `false` に更新する。`https://<本番ドメイン>/login` から password のみでログインできるようになるので(第2要素が未登録の間は要求されない)、ログイン後すぐに Two-Factor Authentication を再度有効化する。
+
+password を忘れている場合は、`users` / `accounts` / `sessions` / `passkeys` / `two_factors` から該当ユーザーの行を削除し、手順 2 をやり直す。
 
 ## 認証の設計
 
-- **password はブートストラップ専用。** passkey を登録すると、それ以降その account の password ログインは `authBeforeHook` が拒否する。例外は `PASSWORD_SIGN_IN_ENABLED=true` かつ localhost のときだけ。
+- **password は常時必須の第1要素。** 第2要素として TOTP(better-auth 標準の `twoFactor` プラグイン)または passkey のいずれかを要求する。`users.twoFactorEnabled` は TOTP セットアップを完了した場合のみ true になり、その時点で初めて第2要素が強制される(passkey を登録しただけでは強制されない)。
+- **passkey を第2要素として使う判定は `verifyPasskeySecondFactor`(`passkey()` の `authentication.afterVerification`)が担う。** password サインインで `twoFactor` プラグインが発行した2要素待ち challenge(signed cookie + verification record)を、WebAuthn 検証成功後・セッション作成前に `consumeVerificationValue` の戻り値のみで判定する(存在確認だけに頼ると TOTP/backup code との競合を防げない)。判定に失敗すればセッションは一度も作られない。
 - **サインアップは `SIGN_UP_ALLOWED_EMAIL` と一致し、かつ users が 0 件のときだけ通る。** 未設定なら常に拒否。拒否時のレスポンスはどの条件でも同一で、どこで落ちたかは外部から分からない。
 - `role` はサーバー側専用のフィールドで、サインアップ時にクライアントから指定できない。最初の 1 人だけが `admin` になる。
-- `users` コレクションの create / update / delete は admin 限定。`role` と `emailVerified` にはフィールド単位の admin チェックも入れてある。
+- `users` コレクションの create / update / delete は admin 限定。`role`・`emailVerified`・`twoFactorEnabled` にはフィールド単位の admin チェックも入れてある。
 - 画像は `BLOB_READ_WRITE_TOKEN` があれば Vercel Blob、無ければローカルディスクに保存する。アップロード上限は 30MB(`payload.config.ts` の `upload.limits.fileSize`)で、超過時は 413 を返す。
 
 ## Vercel 運用チェックリスト
