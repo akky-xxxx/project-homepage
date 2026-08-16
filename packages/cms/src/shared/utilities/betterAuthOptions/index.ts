@@ -8,7 +8,7 @@ import type { BetterAuthOptions } from "better-auth"
 
 const rpID = new URL(ENVIRONMENT.BETTER_AUTH_URL).hostname
 
-export const betterAuthOptions: Partial<BetterAuthOptions> = {
+export const betterAuthOptions = {
   user: {
     additionalFields: {
       // input: false により role はサーバー側専用となり、サインアップ時にクライアントから
@@ -30,4 +30,4 @@ export const betterAuthOptions: Partial<BetterAuthOptions> = {
       rpName: "project-homepage CMS",
     }),
   ],
-}
+} satisfies Partial<BetterAuthOptions>

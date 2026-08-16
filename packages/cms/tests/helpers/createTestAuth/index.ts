@@ -26,6 +26,6 @@ export const createTestAuth = async () => {
     secret: ENVIRONMENT.BETTER_AUTH_SECRET,
     trustedOrigins: [baseUrl],
 
-    plugins: [...(betterAuthOptions.plugins ?? []), testUtils()],
+    plugins: [...betterAuthOptions.plugins, testUtils()],
   })
 }
