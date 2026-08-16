@@ -60,5 +60,15 @@ export const Users: CollectionConfig = {
         { label: "Admin", value: "admin" },
       ],
     },
+    {
+      label: "Change Password",
+      name: "changePassword",
+      type: "ui",
+
+      admin: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention -- Payload の admin.components API が要求するキー名
+        components: { Field: "@/components/ChangePasswordField#ChangePasswordField" },
+      },
+    },
   ],
 }
