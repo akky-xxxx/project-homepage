@@ -47,6 +47,15 @@ export const Users: CollectionConfig = {
     { name: "name", type: "text" },
     { name: "image", type: "text" },
     {
+      defaultValue: false,
+      name: "twoFactorEnabled",
+      type: "checkbox",
+
+      // better-auth の自動補完フィールドは admin.readOnly のみで access.update を塞がないため、
+      // 明示フィールドで admin-only 書き込みにする(role/emailVerified と同じ理由)
+      access: { create: isAdmin, update: isAdmin },
+    },
+    {
       name: "role",
 
       defaultValue: "user",

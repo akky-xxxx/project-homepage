@@ -75,6 +75,7 @@ export interface Config {
     accounts: Account;
     verifications: Verification;
     passkeys: Passkey;
+    twoFactors: TwoFactor;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     accounts: AccountsSelect<false> | AccountsSelect<true>;
     verifications: VerificationsSelect<false> | VerificationsSelect<true>;
     passkeys: PasskeysSelect<false> | PasskeysSelect<true>;
+    twoFactors: TwoFactorsSelect<false> | TwoFactorsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -190,6 +192,7 @@ export interface User {
   emailVerified?: boolean | null;
   name?: string | null;
   image?: string | null;
+  twoFactorEnabled?: boolean | null;
   role?: ('user' | 'admin') | null;
   updatedAt: string;
   createdAt: string;
@@ -267,6 +270,23 @@ export interface Passkey {
   createdAt: string;
 }
 /**
+ * Auto-generated from Better Auth schema (twoFactor)
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "twoFactors".
+ */
+export interface TwoFactor {
+  id: number;
+  secret: string;
+  backupCodes: string;
+  user: number | User;
+  verified?: boolean | null;
+  failedVerificationCount?: number | null;
+  lockedUntil?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -321,6 +341,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'passkeys';
         value: number | Passkey;
+      } | null)
+    | ({
+        relationTo: 'twoFactors';
+        value: number | TwoFactor;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -425,6 +449,7 @@ export interface UsersSelect<T extends boolean = true> {
   emailVerified?: T;
   name?: T;
   image?: T;
+  twoFactorEnabled?: T;
   role?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -485,6 +510,20 @@ export interface PasskeysSelect<T extends boolean = true> {
   backedUp?: T;
   transports?: T;
   aaguid?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "twoFactors_select".
+ */
+export interface TwoFactorsSelect<T extends boolean = true> {
+  secret?: T;
+  backupCodes?: T;
+  user?: T;
+  verified?: T;
+  failedVerificationCount?: T;
+  lockedUntil?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -22,10 +22,6 @@ export const EnvironmentSchema = z
     // Vercel の Neon 連携が付与する接頭辞付きの変数名(値の中身は自由、この命名であることが必須)
     DB_POSTGRES_URL: z.string().min(NON_EMPTY),
 
-    // "true" のときだけ password サインインの passkey チェックを外す。
-    // 本番 DB へローカルから繋いで写真を投入する作業でのみ使う(README 参照)
-    PASSWORD_SIGN_IN_ENABLED: z.string().optional(),
-
     PAYLOAD_SECRET: z.string().min(MINIMUM_SECRET_LENGTH),
 
     // サインアップを許可する唯一のメールアドレス。未設定ならサインアップは常に拒否される
