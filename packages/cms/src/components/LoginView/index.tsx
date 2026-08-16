@@ -18,6 +18,7 @@ export const LoginView = (): JSX.Element => {
   if (loginView.step === "secondFactor") {
     return (
       <SecondFactorStep
+        error={loginView.error}
         isPasskeyLoading={loginView.isPasskeyLoading}
         onPasskeySignIn={loginView.handlePasskeySignIn}
       />

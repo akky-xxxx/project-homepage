@@ -3,16 +3,29 @@ import { APIError } from "better-auth/api"
 import { consumeTwoFactorPendingChallenge } from "@/shared/utilities/consumeTwoFactorPendingChallenge"
 import { getTwoFactorChallengeIdentifier } from "@/shared/utilities/getTwoFactorChallengeIdentifier"
 
-import type { PasskeyOptions } from "@better-auth/passkey"
-
-type AfterVerification = NonNullable<
-  NonNullable<PasskeyOptions["authentication"]>["afterVerification"]
->
-// eslint-disable-next-line @typescript-eslint/no-magic-numbers -- 型レベルの tuple index であり数値定数化できない
-type AfterVerificationArguments = Parameters<AfterVerification>[0]
+import type { Where } from "better-auth/types"
 
 type PasskeyRecord = {
   userId: string
+}
+
+type VerifyPasskeySecondFactorContext = {
+  context: {
+    adapter: {
+      findOne: (data: { model: string; where: Where[] }) => Promise<PasskeyRecord | null>
+    }
+    createAuthCookie: (name: string) => { name: string }
+    internalAdapter: {
+      consumeVerificationValue: (identifier: string) => Promise<{ value: string } | null>
+    }
+    secret: string
+  }
+  getSignedCookie: (name: string, secret: string) => Promise<string | false | null | undefined>
+}
+
+type VerifyPasskeySecondFactorArguments = {
+  ctx: VerifyPasskeySecondFactorContext
+  clientData: { id: string }
 }
 
 /**
@@ -24,10 +37,15 @@ type PasskeyRecord = {
  * この passkey 認証の完了とみなしてよいかを判定する。判定は `consumeVerificationValue`
  * の戻り値のみで行う(読み取り専用の存在確認だけに頼ると、TOTP/backup code と
  * 同時に challenge を取り合う競合を防げない)。
+ *
+ * `ctx`/`clientData` の型は better-auth の SDK 型(`PasskeyOptions["authentication"]`)
+ * から派生させず、実際に使うプロパティだけの最小構造型として宣言している。SDK が渡す
+ * 実際の値はこの構造型を満たすため型上は問題なく、かつ fake ctx/adapter を使った
+ * ホワイトボックステストが `any`/型アサーション無しで書けるようになる。
  * @param arguments_ `{ ctx, clientData }` を含む better-auth からのコールバック引数
  */
 export const verifyPasskeySecondFactor = async (
-  arguments_: AfterVerificationArguments,
+  arguments_: VerifyPasskeySecondFactorArguments,
 ): Promise<void> => {
   const { ctx, clientData } = arguments_
 
@@ -37,7 +55,7 @@ export const verifyPasskeySecondFactor = async (
   const consumed = await consumeTwoFactorPendingChallenge(identifier, ctx)
   if (consumed === null) throw new APIError("UNAUTHORIZED")
 
-  const passkey = await ctx.context.adapter.findOne<PasskeyRecord>({
+  const passkey = await ctx.context.adapter.findOne({
     model: "passkey",
     where: [{ field: "credentialID", value: clientData.id }],
   })

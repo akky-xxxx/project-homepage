@@ -77,6 +77,29 @@ test.describe("ログイン", () => {
     await expect(page.getByText(/invalid/i)).toBeVisible()
   })
 
+  test("登録済みの passkey が無い状態で passkey を試みるとエラー表示になる", async ({ page }) => {
+    const { id: userId } = await seedTestUser(LOGIN_TEST_EMAIL)
+    await seedTestTOTPSecret(userId, TEST_TOTP_SECRET)
+
+    // passkey を1つも登録しない virtual authenticator を追加する(navigator.credentials.get
+    // が一致する credential を返せず失敗する状態を再現する)
+    const authenticator = await addVirtualAuthenticator(page)
+
+    try {
+      await page.goto(`${SERVER_URL}/login`)
+      await page.getByLabel("Email").fill(LOGIN_TEST_EMAIL)
+      await page.getByLabel("Password", { exact: true }).fill(testUser.password)
+      await page.getByRole("button", { name: "Sign in" }).click()
+
+      await page.getByRole("button", { name: "Sign in with passkey instead" }).click()
+
+      await expect(page.getByRole("alert")).toBeVisible()
+      await expect(page).toHaveURL(`${SERVER_URL}/login`)
+    } finally {
+      await removeVirtualAuthenticator(authenticator)
+    }
+  })
+
   test("passkey を第2要素として使ってログインできる", async ({ page }) => {
     const { id: userId } = await seedTestUser(LOGIN_TEST_EMAIL)
     await seedTestTOTPSecret(userId, TEST_TOTP_SECRET)

@@ -161,5 +161,20 @@ describe("認証", () => {
 
       await expect(verify).rejects.toMatchObject({ status: UNAUTHORIZED })
     })
+
+    it("同じ challenge は一度しか消費できず、2回目の verifyTOTP は拒否される(passkey との競合防止の前提を公開 endpoint で検証)", async () => {
+      const { id: userId } = await seedPasswordTestUser(TEST_PASSWORD)
+      await seedTestTOTPSecret(userId, TEST_TOTP_SECRET)
+      const auth = await createTestAuth()
+
+      const headers = await signInAndGetSecondFactorHeaders(auth)
+      const code = generateTestTOTPCode(TEST_TOTP_SECRET)
+
+      const firstVerify = await auth.api.verifyTOTP({ body: { code }, headers })
+      expect(firstVerify.user.email).toBe(testUser.email)
+
+      const secondVerify = auth.api.verifyTOTP({ body: { code }, headers })
+      await expect(secondVerify).rejects.toMatchObject({ status: UNAUTHORIZED })
+    })
   })
 })
