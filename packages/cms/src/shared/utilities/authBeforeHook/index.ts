@@ -47,7 +47,10 @@ const assertSignInAllowed = async (adapter: DBAdapter, body: unknown): Promise<v
   const parsedBody = EmailBodySchema.safeParse(body)
   if (!parsedBody.success) return
 
-  const { email } = parsedBody.data
+  // Better Auth の internalAdapter は email を保存時・検索時に必ず小文字化するため
+  // (node_modules/better-auth/dist/db/internal-adapter.mjs)、ここでの判定も同じ正規化を
+  // 行わないと大文字小文字違いの入力でブートストラップ窓の誤許可が起きる
+  const email = parsedBody.data.email.toLowerCase()
 
   if (await hasEnabledTotp(adapter, email)) return
 

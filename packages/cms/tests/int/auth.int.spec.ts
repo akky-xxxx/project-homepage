@@ -114,6 +114,18 @@ describe("認証", () => {
       await expect(signIn).rejects.toMatchObject({ status: FORBIDDEN })
     })
 
+    it("passkey 登録済みのユーザーは大文字小文字を変えたメールアドレスでも拒否される", async () => {
+      const { id: userId } = await seedPasswordTestUser(TEST_PASSWORD)
+      await seedTestPasskey(userId)
+      const auth = await createTestAuth()
+
+      const signIn = auth.api.signInEmail({
+        body: { email: testUser.email.toUpperCase(), password: TEST_PASSWORD },
+      })
+
+      await expect(signIn).rejects.toMatchObject({ status: FORBIDDEN })
+    })
+
     it("存在しないメールアドレスは passkey 判定を素通しして認証エラーになる", async () => {
       const auth = await createTestAuth()
 
