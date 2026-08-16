@@ -2,7 +2,7 @@ import { getPayload } from "payload"
 
 import config from "@/payload.config"
 
-const relatedAuthCollections = ["sessions", "accounts", "passkeys"] as const
+const relatedAuthCollections = ["sessions", "accounts", "passkeys", "twoFactors"] as const
 
 export const deleteRelatedAuthRows = async (userId: string): Promise<void> => {
   const payload = await getPayload({ config })

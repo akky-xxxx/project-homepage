@@ -1,18 +1,43 @@
+import { applySetCookies } from "better-auth/cookies"
 import { afterEach, describe, expect, it } from "vitest"
 
 import { cleanupTestUser } from "../helpers/cleanupTestUser"
 import { createTestAuth } from "../helpers/createTestAuth"
 import { deleteUserByEmail } from "../helpers/deleteUserByEmail"
+import { generateTestTOTPCode } from "../helpers/generateTestTOTPCode"
 import { seedPasswordTestUser } from "../helpers/seedPasswordTestUser"
 import { seedTestPasskey } from "../helpers/seedTestPasskey"
+import { seedTestTOTPSecret } from "../helpers/seedTestTOTPSecret"
 import { testUser } from "../helpers/testUser"
 
 const TEST_PASSWORD = "bootstrap-password-1234"
+const TEST_TOTP_SECRET = "test-totp-secret-value"
+const WRONG_TOTP_CODE = "000000"
 const SECOND_USER_EMAIL = "second-user@example.com"
 const UNKNOWN_USER_EMAIL = "unknown-user@example.com"
 
 const FORBIDDEN = "FORBIDDEN"
 const UNAUTHORIZED = "UNAUTHORIZED"
+
+/**
+ * password サインインし、`twoFactor` プラグインが発行した pending cookie を
+ * 次のリクエスト用の `Cookie` ヘッダーへ変換して返す。
+ * @param auth `createTestAuth` で生成したインスタンス
+ * @returns 第2要素の verify エンドポイントへそのまま渡せる headers
+ */
+const signInAndGetSecondFactorHeaders = async (
+  auth: Awaited<ReturnType<typeof createTestAuth>>,
+): Promise<Headers> => {
+  const signInResult = await auth.api.signInEmail({
+    body: { email: testUser.email, password: TEST_PASSWORD },
+    returnHeaders: true,
+  })
+
+  const headers = new Headers()
+  applySetCookies(headers, signInResult.headers.getSetCookie())
+
+  return headers
+}
 
 describe("認証", () => {
   afterEach(async () => {
@@ -55,7 +80,7 @@ describe("認証", () => {
   })
 
   describe("password でのサインイン", () => {
-    it("passkey 未登録のユーザーは成功する", async () => {
+    it("第2要素未登録なら成功する", async () => {
       await seedPasswordTestUser(TEST_PASSWORD)
       const auth = await createTestAuth()
 
@@ -66,19 +91,32 @@ describe("認証", () => {
       expect(user.email).toBe(testUser.email)
     })
 
-    it("passkey 登録済みのユーザーは拒否される", async () => {
+    it("passkey を登録済みでも第2要素(TOTP)が未登録なら password だけで成功する", async () => {
       const { id: userId } = await seedPasswordTestUser(TEST_PASSWORD)
       await seedTestPasskey(userId)
       const auth = await createTestAuth()
 
-      const signIn = auth.api.signInEmail({
+      const { user } = await auth.api.signInEmail({
         body: { email: testUser.email, password: TEST_PASSWORD },
       })
 
-      await expect(signIn).rejects.toMatchObject({ status: FORBIDDEN })
+      expect(user.email).toBe(testUser.email)
     })
 
-    it("存在しないメールアドレスは passkey 判定を素通しして認証エラーになる", async () => {
+    it("第2要素(TOTP)が有効なら password だけでは完結せず twoFactorRedirect になる", async () => {
+      const { id: userId } = await seedPasswordTestUser(TEST_PASSWORD)
+      await seedTestTOTPSecret(userId, TEST_TOTP_SECRET)
+      const auth = await createTestAuth()
+
+      const result = await auth.api.signInEmail({
+        body: { email: testUser.email, password: TEST_PASSWORD },
+        returnHeaders: true,
+      })
+
+      expect(result.response).toMatchObject({ twoFactorRedirect: true })
+    })
+
+    it("存在しないメールアドレスは認証エラーになる", async () => {
       const auth = await createTestAuth()
 
       const signIn = auth.api.signInEmail({
@@ -86,6 +124,42 @@ describe("認証", () => {
       })
 
       await expect(signIn).rejects.toMatchObject({ status: UNAUTHORIZED })
+    })
+  })
+
+  describe("TOTP での第2要素", () => {
+    it("正しいコードでフルセッションを取得できる", async () => {
+      const { id: userId } = await seedPasswordTestUser(TEST_PASSWORD)
+      await seedTestTOTPSecret(userId, TEST_TOTP_SECRET)
+      const auth = await createTestAuth()
+
+      const headers = await signInAndGetSecondFactorHeaders(auth)
+
+      const code = generateTestTOTPCode(TEST_TOTP_SECRET)
+      const verifyResult = await auth.api.verifyTOTP({ body: { code }, headers })
+
+      expect(verifyResult.user.email).toBe(testUser.email)
+    })
+
+    it("誤ったコードは拒否される", async () => {
+      const { id: userId } = await seedPasswordTestUser(TEST_PASSWORD)
+      await seedTestTOTPSecret(userId, TEST_TOTP_SECRET)
+      const auth = await createTestAuth()
+
+      const headers = await signInAndGetSecondFactorHeaders(auth)
+
+      const verify = auth.api.verifyTOTP({ body: { code: WRONG_TOTP_CODE }, headers })
+
+      await expect(verify).rejects.toMatchObject({ status: UNAUTHORIZED })
+    })
+
+    it("第2要素が未登録のユーザーに対する verifyTOTP は拒否される", async () => {
+      await seedPasswordTestUser(TEST_PASSWORD)
+      const auth = await createTestAuth()
+
+      const verify = auth.api.verifyTOTP({ body: { code: WRONG_TOTP_CODE } })
+
+      await expect(verify).rejects.toMatchObject({ status: UNAUTHORIZED })
     })
   })
 })

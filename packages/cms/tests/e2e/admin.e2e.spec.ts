@@ -1,36 +1,38 @@
 import { test, expect } from "@playwright/test"
 
-import { addVirtualAuthenticator } from "../helpers/addVirtualAuthenticator"
 import { cleanupTestUser } from "../helpers/cleanupTestUser"
 import { login } from "../helpers/login"
-import { registerTestPasskey } from "../helpers/registerTestPasskey"
-import { removeVirtualAuthenticator } from "../helpers/removeVirtualAuthenticator"
+import { seedTestTOTPSecret } from "../helpers/seedTestTOTPSecret"
 import { seedTestUser } from "../helpers/seedTestUser"
+import { testUser } from "../helpers/testUser"
 
 import type { Page } from "@playwright/test"
 
 const FORBIDDEN_STATUS = 403
+const TEST_TOTP_SECRET = "admin-e2e-totp-secret"
 
 test.describe("Admin Panel", () => {
   let page: Page
-  let authenticator: Awaited<ReturnType<typeof addVirtualAuthenticator>>
 
   // Playwright は callback のソースを正規表現で解析し、第一引数の分割代入パターンから
   // 注入する fixture を決めるため、ここは仮引数で分割代入する必要がある
   // (playwright/lib/common/fixtures.js の innerFixtureParameterNames)
   test.beforeAll(async ({ browser }) => {
     const { id: userId } = await seedTestUser()
+    await seedTestTOTPSecret(userId, TEST_TOTP_SECRET)
 
     const context = await browser.newContext()
     page = await context.newPage()
-    authenticator = await addVirtualAuthenticator(page)
 
-    await registerTestPasskey({ context, page, userId })
-    await login({ page })
+    await login({
+      email: testUser.email,
+      page,
+      password: testUser.password,
+      totpSecret: TEST_TOTP_SECRET,
+    })
   })
 
   test.afterAll(async () => {
-    await removeVirtualAuthenticator(authenticator)
     await cleanupTestUser()
   })
 
