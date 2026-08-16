@@ -54,6 +54,24 @@ const isPasswordSignInEnabled = (): boolean => {
 }
 
 /**
+ * password サインインを通してよいリクエストかを検証し、拒否すべきときだけ throw する。
+ * @param adapter Better Auth の DB adapter (`ctx.context.adapter`)
+ * @param body リクエストボディ
+ */
+const assertSignInAllowed = async (adapter: DBAdapter, body: unknown): Promise<void> => {
+  if (isPasswordSignInEnabled()) return
+
+  const parsedBody = EmailBodySchema.safeParse(body)
+  if (!parsedBody.success) return
+
+  if (await hasRegisteredPasskey(adapter, parsedBody.data.email)) {
+    throw new APIError("FORBIDDEN", {
+      message: "Password sign-in is disabled for this account. Sign in with your passkey.",
+    })
+  }
+}
+
+/**
  * password をブートストラップ専用に留め、通常のログインを passkey に限定する before hook。
  *
  * - `/sign-up/email`: `SIGN_UP_ALLOWED_EMAIL` と一致し、かつ users が 0 件のときだけ通す。
@@ -79,15 +97,7 @@ export const authBeforeHook = createAuthMiddleware(async (authContext) => {
     return
   }
 
-  if (authContext.path !== SIGN_IN_EMAIL_PATH) return
-  if (isPasswordSignInEnabled()) return
-
-  const parsedBody = EmailBodySchema.safeParse(authContext.body)
-  if (!parsedBody.success) return
-
-  if (await hasRegisteredPasskey(adapter, parsedBody.data.email)) {
-    throw new APIError("FORBIDDEN", {
-      message: "Password sign-in is disabled for this account. Sign in with your passkey.",
-    })
+  if (authContext.path === SIGN_IN_EMAIL_PATH) {
+    await assertSignInAllowed(adapter, authContext.body)
   }
 })
