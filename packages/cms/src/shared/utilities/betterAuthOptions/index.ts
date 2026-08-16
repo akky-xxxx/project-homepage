@@ -1,4 +1,5 @@
 import { passkey } from "@better-auth/passkey"
+import { twoFactor } from "better-auth/plugins"
 
 import { ENVIRONMENT } from "@/shared/const/ENVIRONMENT"
 import { MINIMUM_PASSWORD_LENGTH } from "@/shared/const/MINIMUM_PASSWORD_LENGTH"
@@ -29,5 +30,6 @@ export const betterAuthOptions = {
       rpID,
       rpName: "project-homepage CMS",
     }),
+    twoFactor({ issuer: "project-homepage CMS" }),
   ],
 } satisfies Partial<BetterAuthOptions>
