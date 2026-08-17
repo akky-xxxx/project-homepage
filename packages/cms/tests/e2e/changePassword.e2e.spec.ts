@@ -19,6 +19,8 @@ const TOO_SHORT_PASSWORD = "short-pw"
 const TEST_TOTP_SECRET = "change-password-e2e-test-totp-secret-1234567890"
 const NO_REQUEST_COUNT = 0
 const SINGLE_REQUEST_COUNT = 1
+const FIRST_SUCCESS_COUNT = 1
+const SECOND_SUCCESS_COUNT = 2
 
 /**
  * パスワード変更対象のテストユーザーを準備し、password + TOTP でログインして
@@ -120,6 +122,15 @@ test.describe("パスワード変更", () => {
   test("同じ画面で連続して変更に成功しても毎回入力欄は空に戻る", async ({ page }) => {
     await setUpAndSignIn(page)
 
+    // 成功バナーは 1 回目と 2 回目で同じ文字列なので、表示だけでは 2 回目の成功を判定できない
+    // (1 回目の残りで即座に成立する)。API の成功レスポンス数で判定する
+    const changePasswordSuccesses: string[] = []
+    page.on("response", (response) => {
+      const isChangePasswordSuccess =
+        response.url().includes("/api/auth/change-password") && response.ok()
+      if (isChangePasswordSuccess) changePasswordSuccesses.push(response.url())
+    })
+
     const currentPassword = page.getByLabel("Current password", { exact: true })
     const newPassword = page.getByLabel("New password", { exact: true })
     const confirmPassword = page.getByLabel("Confirm Password", { exact: true })
@@ -129,7 +140,14 @@ test.describe("パスワード変更", () => {
     await newPassword.fill(NEW_PASSWORD)
     await confirmPassword.fill(NEW_PASSWORD)
     await submitButton.click()
-    await expect(page.getByText("Password changed.")).toBeVisible()
+
+    await expect.poll(() => changePasswordSuccesses).toHaveLength(FIRST_SUCCESS_COUNT)
+
+    // 1 回目のリセットが終わる前に 2 回目を入力すると、遅れて走る replaceState に入力値を
+    // 消され、クライアント検証で送信されないまま空振りする
+    await expect(currentPassword).toHaveValue("")
+    await expect(newPassword).toHaveValue("")
+    await expect(confirmPassword).toHaveValue("")
 
     // 2 回目の成功でもクリアされること。成功メッセージは 1 回目と同じ文字列なので、
     // メッセージの変化を契機にしているとここで値が残る
@@ -137,7 +155,8 @@ test.describe("パスワード変更", () => {
     await newPassword.fill(SECOND_NEW_PASSWORD)
     await confirmPassword.fill(SECOND_NEW_PASSWORD)
     await submitButton.click()
-    await expect(page.getByText("Password changed.")).toBeVisible()
+
+    await expect.poll(() => changePasswordSuccesses).toHaveLength(SECOND_SUCCESS_COUNT)
 
     await expect(currentPassword).toHaveValue("")
     await expect(newPassword).toHaveValue("")
