@@ -9,7 +9,7 @@ import { authClient } from "@/shared/utilities/authClient"
 
 import { PasswordSignInForm } from "./components/PasswordSignInForm"
 
-import type { CSSProperties, SyntheticEvent } from "react"
+import type { SyntheticEvent } from "react"
 
 // routes.admin: "/" (payload.config.ts) 固定のため、LogoutButton と同様にハードコードする
 const ADMIN_PATH = "/"
@@ -17,10 +17,6 @@ const ADMIN_PATH = "/"
 // PasskeySignInButton は受け取った props を素の <button> に spread するため、Payload の Button と
 // 同じクラスを渡して見た目を揃える(ベンダーコンポーネントを置き換えずに済ませるため)。
 const PASSKEY_BUTTON_CLASS = "btn btn--style-primary btn--size-large btn--no-margin"
-
-// Payload の全幅指定は `form > .form-submit .btn` にぶら下がっており、フォームの外にある
-// このボタンには効かない。フォーム内の送信ボタンと幅を揃えるためここだけ明示する。
-const PASSKEY_BUTTON_STYLE: CSSProperties = { width: "100%" }
 
 type SignInViewProps = {
   onNavigateToRegister: () => void
@@ -60,7 +56,6 @@ export const SignInView = (props: SignInViewProps) => {
       <PasskeySignInButton
         authClient={authClient}
         className={PASSKEY_BUTTON_CLASS}
-        style={PASSKEY_BUTTON_STYLE}
         onError={handlePasskeyError}
         onSuccess={() => {
           router.replace(ADMIN_PATH)
