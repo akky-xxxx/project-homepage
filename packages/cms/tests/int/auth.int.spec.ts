@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it } from "vitest"
 
+import { ENVIRONMENT } from "@/shared/const/ENVIRONMENT"
+
 import { cleanupTestUser } from "../helpers/cleanupTestUser"
 import { createTestAuth } from "../helpers/createTestAuth"
 import { deleteUserByEmail } from "../helpers/deleteUserByEmail"
@@ -58,6 +60,12 @@ describe("認証", () => {
 
   // SIGN_UP_ALLOWED_EMAIL には testUser.email を設定しておく(.env.example 参照)
   describe("サインアップ", () => {
+    // 一致しないと以降のサインアップ成功テストが、原因の見えない FORBIDDEN で落ちるため、
+    // 前提条件として先に検証する。比較は authBeforeHook と同じく大文字小文字を無視する
+    it("SIGN_UP_ALLOWED_EMAIL がテストユーザーの email と一致している", () => {
+      expect(ENVIRONMENT.SIGN_UP_ALLOWED_EMAIL?.toLowerCase()).toBe(testUser.email.toLowerCase())
+    })
+
     it("許可されたメールアドレスかつ users が 0 件なら成功する", async () => {
       const auth = await createTestAuth()
 
