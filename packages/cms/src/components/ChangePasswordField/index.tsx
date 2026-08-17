@@ -2,6 +2,8 @@
 
 import { useAuth, useDocumentInfo } from "@payloadcms/ui"
 
+import { resolveChangePasswordFieldView } from "@/shared/utilities/resolveChangePasswordFieldView"
+
 import { ChangePasswordForm } from "./components/ChangePasswordForm"
 
 /**
@@ -9,19 +11,23 @@ import { ChangePasswordForm } from "./components/ChangePasswordForm"
  * better-auth コアの `changePassword` はセッションユーザーに対して作用する API のため、
  * 閲覧中のドキュメントとセッションユーザーが一致しない場合はフォームを描画せず、
  * ライブラリ標準の `TwoFactorField`/`PasskeysField` と同じプレースホルダ文言のみ表示する。
- * @returns パスワード変更フォーム、または他人のドキュメント閲覧時のプレースホルダ
+ * どちらの id もまだ確定していない間は所有者かどうかを判定できないため、何も描画しない。
+ * @returns パスワード変更フォーム、他人のドキュメント閲覧時のプレースホルダ、または `null`
  */
 export const ChangePasswordField = () => {
   const { id: documentId } = useDocumentInfo()
   const { user } = useAuth()
 
-  if (String(documentId) !== String(user?.id)) {
+  const view = resolveChangePasswordFieldView({ documentId, userId: user?.id })
+
+  if (view === "hidden") return null
+
+  if (view === "notOwner")
     return (
       <div className="field-type">
         <p className="field-description">Password can only be changed by the account owner.</p>
       </div>
     )
-  }
 
   return <ChangePasswordForm />
 }
