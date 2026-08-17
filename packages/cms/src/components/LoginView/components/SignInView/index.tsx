@@ -1,19 +1,26 @@
 "use client"
 
 import { PasskeySignInButton } from "@delmaredigital/payload-better-auth/components/passkey"
+import { Banner, Button } from "@payloadcms/ui"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 
-import { AuthBanner } from "@/components/LoginView/components/AuthBanner"
-import { LOGIN_VIEW_STYLES } from "@/shared/const/LOGIN_VIEW_STYLES"
 import { authClient } from "@/shared/utilities/authClient"
 
 import { PasswordSignInForm } from "./components/PasswordSignInForm"
 
-import type { SyntheticEvent } from "react"
+import type { CSSProperties, SyntheticEvent } from "react"
 
 // routes.admin: "/" (payload.config.ts) 固定のため、LogoutButton と同様にハードコードする
 const ADMIN_PATH = "/"
+
+// PasskeySignInButton は受け取った props を素の <button> に spread するため、Payload の Button と
+// 同じクラスを渡して見た目を揃える(ベンダーコンポーネントを置き換えずに済ませるため)。
+const PASSKEY_BUTTON_CLASS = "btn btn--style-primary btn--size-large btn--no-margin"
+
+// Payload の全幅指定は `form > .form-submit .btn` にぶら下がっており、フォームの外にある
+// このボタンには効かない。フォーム内の送信ボタンと幅を揃えるためここだけ明示する。
+const PASSKEY_BUTTON_STYLE: CSSProperties = { width: "100%" }
 
 type SignInViewProps = {
   onNavigateToRegister: () => void
@@ -23,6 +30,7 @@ type SignInViewProps = {
 /**
  * passkey を主 CTA として描画するサインイン画面。password + email での
  * サインインはトグルで開閉するフォーム(`PasswordSignInForm`)に格納し、視認性を落としている。
+ * 縦の間隔は Payload の `.login-fields` が持つ gap に任せる。
  * @param props コールバック(2FA 要求時・サインアップ導線への遷移時)
  * @returns サインイン画面
  */
@@ -40,13 +48,19 @@ export const SignInView = (props: SignInViewProps) => {
   }
 
   return (
-    <div style={LOGIN_VIEW_STYLES.card}>
+    <div className="login-fields">
       <h1>Sign in</h1>
 
-      {errorMessage != null && <AuthBanner kind="error" message={errorMessage} />}
+      {errorMessage != null && (
+        <div aria-live="assertive" role="alert">
+          <Banner type="error">{errorMessage}</Banner>
+        </div>
+      )}
 
       <PasskeySignInButton
         authClient={authClient}
+        className={PASSKEY_BUTTON_CLASS}
+        style={PASSKEY_BUTTON_STYLE}
         onError={handlePasskeyError}
         onSuccess={() => {
           router.replace(ADMIN_PATH)
@@ -60,9 +74,9 @@ export const SignInView = (props: SignInViewProps) => {
         }}
       />
 
-      <button style={LOGIN_VIEW_STYLES.link} type="button" onClick={onNavigateToRegister}>
+      <Button buttonStyle="none" margin={false} onClick={onNavigateToRegister}>
         Create the first admin account
-      </button>
+      </Button>
     </div>
   )
 }
