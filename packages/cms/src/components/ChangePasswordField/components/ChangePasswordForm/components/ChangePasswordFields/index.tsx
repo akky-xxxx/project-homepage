@@ -1,57 +1,76 @@
-import { AuthBanner } from "@/components/LoginView/components/AuthBanner"
+"use client"
 
-import { ChangePasswordInputs } from "./components/ChangePasswordInputs"
+import { Banner, ConfirmPasswordField, FormSubmit, PasswordField, useForm } from "@payloadcms/ui"
+
+import { validatePasswordField } from "@/shared/utilities/validatePasswordField"
+
+import type { KeyboardEvent } from "react"
 
 type ChangePasswordFieldsProps = {
-  confirmNewPassword: string
-  currentPassword: string
   errorMessage: string | null
-  newPassword: string
+  isSubmitting: boolean
   successMessage: string | null
-  onConfirmNewPasswordChange: (value: string) => void
-  onCurrentPasswordChange: (value: string) => void
-  onNewPasswordChange: (value: string) => void
-  onSubmit: () => void
 }
 
 /**
- * 見出し・エラー/成功バナー・入力欄一式・送信ボタンをまとめる、パスワード変更フィールドの見た目部分。
- * @param props 表示に必要な値とコールバック一式
- * @returns パスワード変更フォーム
+ * パスワード変更フォームの見た目と、Enter キーによる送信を担う。
+ *
+ * 親の `Form` は `el="div"` で描画されるため、入力欄の form owner は外側のドキュメント編集
+ * フォームのままになる。この状態で Enter を押すとブラウザの暗黙の送信が外側へ向かい、
+ * パスワード変更ではなくユーザードキュメントの保存を誘発する。そのため送信中かどうかに
+ * 関わらず必ず `preventDefault()` する。`PasswordField`/`ConfirmPasswordField` は `onKeyDown` を
+ * 受け取らないので、入力欄をまとめた要素でバブルした keydown を捕捉している。
+ *
+ * `useForm()` は `Form` の内側でしか呼べないため、このコンポーネントが橋渡し役になる。
+ * @param props 表示するメッセージと送信中フラグ
+ * @returns パスワード変更フォームの中身
  */
 export const ChangePasswordFields = (props: ChangePasswordFieldsProps) => {
-  const {
-    confirmNewPassword,
-    currentPassword,
-    errorMessage,
-    newPassword,
-    successMessage,
-    onConfirmNewPasswordChange,
-    onCurrentPasswordChange,
-    onNewPasswordChange,
-    onSubmit,
-  } = props
+  const { errorMessage, isSubmitting, successMessage } = props
+  const { submit } = useForm()
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Enter") return
+
+    event.preventDefault()
+    if (isSubmitting) return
+
+    void submit()
+  }
 
   return (
     <div className="field-type">
       <h3>Password</h3>
 
-      {errorMessage != null && <AuthBanner kind="error" message={errorMessage} />}
-      {successMessage != null && <AuthBanner kind="success" message={successMessage} />}
+      {errorMessage != null && (
+        <div aria-live="assertive" role="alert">
+          <Banner type="error">{errorMessage}</Banner>
+        </div>
+      )}
+      {successMessage != null && (
+        <div aria-live="polite" role="status">
+          <Banner type="success">{successMessage}</Banner>
+        </div>
+      )}
 
-      <ChangePasswordInputs
-        confirmNewPassword={confirmNewPassword}
-        currentPassword={currentPassword}
-        newPassword={newPassword}
-        onConfirmNewPasswordChange={onConfirmNewPasswordChange}
-        onCurrentPasswordChange={onCurrentPasswordChange}
-        onNewPasswordChange={onNewPasswordChange}
-        onSubmit={onSubmit}
-      />
+      <div onKeyDown={handleKeyDown}>
+        <PasswordField
+          autoComplete="current-password"
+          field={{ name: "currentPassword", label: "Current password", required: true }}
+          path="currentPassword"
+        />
+        <PasswordField
+          autoComplete="new-password"
+          field={{ name: "password", label: "New password", required: true }}
+          path="password"
+          validate={validatePasswordField}
+        />
+        <ConfirmPasswordField />
+      </div>
 
-      <button type="button" onClick={onSubmit}>
+      <FormSubmit disabled={isSubmitting} programmaticSubmit size="large" type="button">
         Change password
-      </button>
+      </FormSubmit>
     </div>
   )
 }

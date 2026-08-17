@@ -1,86 +1,84 @@
 "use client"
 
-import { useState } from "react"
+import { Form } from "@payloadcms/ui"
+import { useRef, useState } from "react"
 
+import { CONFIRM_PASSWORD_PATH } from "@/shared/const/CONFIRM_PASSWORD_PATH"
 import { authClient } from "@/shared/utilities/authClient"
 import { changeOwnPassword } from "@/shared/utilities/changeOwnPassword"
-import { validateNewPassword } from "@/shared/utilities/validateNewPassword"
+import { readFormValue } from "@/shared/utilities/readFormValue"
 
 import { ChangePasswordFields } from "./components/ChangePasswordFields"
 
-const INITIAL_VALUES = { confirmNewPassword: "", currentPassword: "", newPassword: "" }
+import type { FormState } from "payload"
+
 const SUCCESS_MESSAGE = "Password changed."
 
-type ChangePasswordFormResult =
-  | { status: "error"; message: string }
-  | { status: "invalid"; message: string }
-  | { status: "success" }
-
-/**
- * クライアント側検証(`validateNewPassword`)を通してから `changeOwnPassword` を呼ぶ。
- * @param values 現在のパスワード・新パスワード・確認用パスワード
- * @returns 検証エラー・API エラー・成功のいずれか
- */
-const submitChangePassword = async (
-  values: typeof INITIAL_VALUES,
-): Promise<ChangePasswordFormResult> => {
-  const { confirmNewPassword, currentPassword, newPassword } = values
-
-  const validation = validateNewPassword({ confirmNewPassword, newPassword })
-  if (!validation.ok) {
-    return { message: validation.message, status: "invalid" }
-  }
-
-  const result = await changeOwnPassword(authClient, { currentPassword, newPassword })
-  if (!result.ok) {
-    return { message: result.message, status: "error" }
-  }
-
-  return { status: "success" }
+// useField はフォーム state に登録済みのパスしか扱えないため初期 state を明示する。
+// 新パスワードは ConfirmPasswordField の検証対象に合わせて "password" に固定する
+const INITIAL_FORM_STATE: FormState = {
+  [CONFIRM_PASSWORD_PATH]: { initialValue: "", valid: false, value: "" },
+  currentPassword: { initialValue: "", valid: true, value: "" },
+  password: { initialValue: "", valid: true, value: "" },
 }
 
 /**
- * 現在のパスワード・新パスワード・確認用パスワードの入力状態と送信処理を持つ。
+ * パスワード変更の送信処理を持つフォーム。
+ *
+ * `el="div"` で描画するのは、このコンポーネントが Payload のドキュメント編集画面
+ * (既に `<form>` でラップ済み)の内側に置かれるため。`<form>` を入れ子にすると無効な HTML と
+ * hydration mismatch を招く。ただし DOM 上が `<div>` になることで入力欄の form owner は
+ * 外側のドキュメント編集フォームのままになるので、Enter キーの既定動作を明示的に止める必要が
+ * ある(`ChangePasswordFields` が担当)。
  * @returns パスワード変更フォーム
  */
 export const ChangePasswordForm = () => {
-  const [values, setValues] = useState(INITIAL_VALUES)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async () => {
+  // Payload の `Form` は `onSubmit` の非同期処理を待たず、直後に processing/disabled を解除する
+  // ため、state の反映を待たずに同期的に再入を弾く ref のロックを別に持つ
+  const isSubmittingRef = useRef(false)
+
+  const handleSubmit = async (fields: FormState) => {
+    if (isSubmittingRef.current) return
+    isSubmittingRef.current = true
+    setIsSubmitting(true)
     setSuccessMessage(null)
 
-    const result = await submitChangePassword(values)
-    if (result.status !== "success") {
-      setErrorMessage(result.message)
-      return
-    }
+    try {
+      const result = await changeOwnPassword(authClient, {
+        currentPassword: readFormValue(fields.currentPassword?.value),
+        newPassword: readFormValue(fields.password?.value),
+      })
 
-    setErrorMessage(null)
-    setSuccessMessage(SUCCESS_MESSAGE)
-    setValues(INITIAL_VALUES)
+      if (!result.ok) {
+        setErrorMessage(result.message)
+        return
+      }
+
+      setErrorMessage(null)
+      setSuccessMessage(SUCCESS_MESSAGE)
+    } finally {
+      isSubmittingRef.current = false
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <ChangePasswordFields
-      confirmNewPassword={values.confirmNewPassword}
-      currentPassword={values.currentPassword}
-      errorMessage={errorMessage}
-      newPassword={values.newPassword}
-      successMessage={successMessage}
-      onConfirmNewPasswordChange={(value) => {
-        setValues((previous) => ({ ...previous, confirmNewPassword: value }))
+    <Form
+      el="div"
+      initialState={INITIAL_FORM_STATE}
+      onSubmit={(fields) => {
+        void handleSubmit(fields)
       }}
-      onCurrentPasswordChange={(value) => {
-        setValues((previous) => ({ ...previous, currentPassword: value }))
-      }}
-      onNewPasswordChange={(value) => {
-        setValues((previous) => ({ ...previous, newPassword: value }))
-      }}
-      onSubmit={() => {
-        void handleSubmit()
-      }}
-    />
+    >
+      <ChangePasswordFields
+        errorMessage={errorMessage}
+        isSubmitting={isSubmitting}
+        successMessage={successMessage}
+      />
+    </Form>
   )
 }
