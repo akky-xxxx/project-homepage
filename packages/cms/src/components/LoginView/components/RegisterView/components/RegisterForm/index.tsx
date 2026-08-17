@@ -12,19 +12,16 @@ import {
 import { useRouter } from "next/navigation"
 import { useRef, useState } from "react"
 
+import { CONFIRM_PASSWORD_PATH } from "@/shared/const/CONFIRM_PASSWORD_PATH"
 import { authClient } from "@/shared/utilities/authClient"
 import { readFormValue } from "@/shared/utilities/readFormValue"
 import { signUpWithCredentials } from "@/shared/utilities/signUpWithCredentials"
-import { validateNewPassword } from "@/shared/utilities/validateNewPassword"
+import { validatePasswordField } from "@/shared/utilities/validatePasswordField"
 
-import type { FormState, Validate } from "payload"
+import type { FormState } from "payload"
 
 // routes.admin: "/" (payload.config.ts) 固定のため、LogoutButton と同様にハードコードする
 const ADMIN_PATH = "/"
-
-// ConfirmPasswordField が既定で使うパス。`payload/shared` の confirmPassword バリデータが
-// siblingData.password と突き合わせるため、新パスワード側は "password" に固定する
-const CONFIRM_PASSWORD_PATH = "confirm-password"
 
 // useField はフォーム state に登録済みのパスしか扱えないため、Payload 標準のログイン画面と
 // 同じく初期 state を明示する(@payloadcms/next の dist/views/Login/LoginForm/index.js)
@@ -33,25 +30,6 @@ const INITIAL_FORM_STATE: FormState = {
   email: { initialValue: "", valid: true, value: "" },
   name: { initialValue: "", valid: true, value: "" },
   password: { initialValue: "", valid: true, value: "" },
-}
-
-type PasswordSiblingData = { [CONFIRM_PASSWORD_PATH]?: unknown }
-
-/**
- * 新パスワードを既存の `validateNewPassword` で検証する。最小長に加えて確認用入力との一致も
- * 見るため `ConfirmPasswordField` と判定が重なるが、パスワード欄側にもメッセージを出したいので
- * 両方に効かせる。エラーの表示は初回送信後のみ(`useField` の `showError`)。
- * @param value 入力値
- * @param options Payload のバリデーションオプション
- * @returns 合格なら true、不合格ならメッセージ
- */
-const validatePassword: Validate<string, unknown, PasswordSiblingData> = (value, options) => {
-  const result = validateNewPassword({
-    confirmNewPassword: readFormValue(options.siblingData[CONFIRM_PASSWORD_PATH]),
-    newPassword: readFormValue(value),
-  })
-
-  return result.ok ? true : result.message
 }
 
 /**
@@ -120,7 +98,7 @@ export const RegisterForm = () => {
         autoComplete="new-password"
         field={{ name: "password", label: "Password", required: true }}
         path="password"
-        validate={validatePassword}
+        validate={validatePasswordField}
       />
       <ConfirmPasswordField />
 
