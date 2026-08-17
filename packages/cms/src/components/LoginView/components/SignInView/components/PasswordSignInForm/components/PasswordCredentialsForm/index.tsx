@@ -1,74 +1,100 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { Banner, EmailField, Form, FormSubmit, PasswordField } from "@payloadcms/ui"
+import { useRef, useState } from "react"
 
 import { authClient } from "@/shared/utilities/authClient"
+import { readFormValue } from "@/shared/utilities/readFormValue"
 import { signInWithPassword } from "@/shared/utilities/signInWithPassword"
 import { toPasswordSignInClient } from "@/shared/utilities/toPasswordSignInClient"
 
-import { PasswordCredentialsFields } from "./components/PasswordCredentialsFields"
+import type { FormState } from "payload"
 
-import type { SyntheticEvent } from "react"
+// useField はフォーム state に登録済みのパスしか扱えないため、Payload 標準のログイン画面と
+// 同じく初期 state を明示する(@payloadcms/next の dist/views/Login/LoginForm/index.js)
+const INITIAL_FORM_STATE: FormState = {
+  email: { initialValue: "", valid: true, value: "" },
+  password: { initialValue: "", valid: true, value: "" },
+}
 
 type PasswordCredentialsFormProps = {
-  formId: string
-  isOpen: boolean
   onRequireTwoFactor: () => void
   onSignedIn: () => void
 }
 
 /**
- * email/password の入力状態と送信処理を持つ。開閉は `isOpen` に応じた `hidden` 属性で行い、
- * `PasswordSignInForm`(トグルボタン)がマウントしたまま入力値を保持する。
- * @param props フォーム id・開閉状態・コールバック(2FA 要求時・サインイン成功時)
+ * email/password の入力と送信を担うフォーム。フォーム state・バリデーション・エラー表示は
+ * Payload の `Form` と各 Field に委ね、送信時に Better Auth を呼ぶ配線だけを持つ。
+ * @param props コールバック(2FA 要求時・サインイン成功時)
  * @returns email/password のサインインフォーム
  */
 export const PasswordCredentialsForm = (props: PasswordCredentialsFormProps) => {
-  const { formId, isOpen, onRequireTwoFactor, onSignedIn } = props
+  const { onRequireTwoFactor, onSignedIn } = props
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const emailRef = useRef<HTMLInputElement>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  useEffect(() => {
-    if (isOpen) emailRef.current?.focus()
-  }, [isOpen])
+  // Payload の `Form` は `onSubmit` の非同期処理を待たず、直後に processing/disabled を解除する
+  // (@payloadcms/ui の dist/forms/Form/index.js)。state の反映を待たずに同期的に再入を弾くため、
+  // 表示用の isSubmitting とは別に ref のロックを持つ
+  const isSubmittingRef = useRef(false)
 
-  const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleSubmit = async (fields: FormState) => {
+    if (isSubmittingRef.current) return
+    isSubmittingRef.current = true
+    setIsSubmitting(true)
+    setErrorMessage(null)
 
-    const result = await signInWithPassword(toPasswordSignInClient(authClient), {
-      email,
-      password,
-    })
+    try {
+      const result = await signInWithPassword(toPasswordSignInClient(authClient), {
+        email: readFormValue(fields.email?.value),
+        password: readFormValue(fields.password?.value),
+      })
 
-    if (result.status === "error") {
-      setErrorMessage(result.message)
-      return
+      if (result.status === "error") {
+        setErrorMessage(result.message)
+        return
+      }
+
+      if (result.status === "twoFactorRequired") {
+        onRequireTwoFactor()
+        return
+      }
+
+      onSignedIn()
+    } finally {
+      isSubmittingRef.current = false
+      setIsSubmitting(false)
     }
-
-    if (result.status === "twoFactorRequired") {
-      onRequireTwoFactor()
-      return
-    }
-
-    onSignedIn()
   }
 
   return (
-    <PasswordCredentialsFields
-      email={email}
-      emailRef={emailRef}
-      errorMessage={errorMessage}
-      formId={formId}
-      isOpen={isOpen}
-      password={password}
-      onEmailChange={setEmail}
-      onPasswordChange={setPassword}
-      onSubmit={(event) => {
-        void handleSubmit(event)
+    <Form
+      className="login-fields"
+      initialState={INITIAL_FORM_STATE}
+      onSubmit={(fields) => {
+        void handleSubmit(fields)
       }}
-    />
+    >
+      {errorMessage != null && (
+        <div aria-live="assertive" role="alert">
+          <Banner type="error">{errorMessage}</Banner>
+        </div>
+      )}
+
+      <EmailField
+        field={{ name: "email", admin: { autoComplete: "email" }, label: "Email", required: true }}
+        path="email"
+      />
+      <PasswordField
+        autoComplete="current-password"
+        field={{ name: "password", label: "Password", required: true }}
+        path="password"
+      />
+
+      <FormSubmit disabled={isSubmitting} size="large">
+        Sign in
+      </FormSubmit>
+    </Form>
   )
 }
