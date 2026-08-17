@@ -14,7 +14,7 @@ Payload CMS + Better Auth(passkey)で構築した、フォトギャラリーの�
 | `PAYLOAD_SECRET`        | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
 | `BETTER_AUTH_SECRET`    | 必須   | `openssl rand -base64 32` | 本番用に別の値を生成   | 32 文字以上                                                                      |
 | `BETTER_AUTH_URL`       | 必須   | `http://localhost:3000`   | 固定のカスタムドメイン | passkey の rpID になる。デプロイごとに変わる URL は不可                          |
-| `SIGN_UP_ALLOWED_EMAIL` | 任意   | `dev@payloadcms.com`      | 初回登録時のみ設定     | 未設定ならサインアップは常に拒否                                                 |
+| `SIGN_UP_ALLOWED_EMAIL` | 任意   | `example@example.com`     | 初回登録時のみ設定     | 未設定ならサインアップは常に拒否。int テストはこの値が一致している前提           |
 | `BLOB_READ_WRITE_TOKEN` | 条件付 | 設定しない                | 設定する               | ローカル DB なら省略可(画像はローカルディスク保存)。本番 DB に接続していると必須 |
 
 Preview 環境を使う場合、`PAYLOAD_SECRET` / `BETTER_AUTH_SECRET` は Production と別の値にし、`DB_POSTGRES_URL` は本番 DB を指さないこと。
@@ -144,7 +144,9 @@ TOTP の検証に 5 回連続で失敗してロックアウトされた場合は
 
 ## パスワード変更
 
-Users 詳細画面で自分自身のドキュメントを開くと、`role` フィールドの後ろに「Change Password」フィールドが表示される。「Current password」「New password」「Confirm new password」を入力して変更でき、成功すると他デバイスのセッションは失効する(閲覧中の現在のセッションは維持される)。自分以外のドキュメントを開いた場合、このフィールドは操作できずプレースホルダ文言のみが表示される。
+Users 詳細画面で自分自身のドキュメントを開くと、`role` フィールドの後ろに「Change Password」フィールドが表示される。「Current password」「New password」「Confirm Password」を入力して変更でき、成功すると他デバイスのセッションは失効する(閲覧中の現在のセッションは維持される)。自分以外のドキュメントを開いた場合、このフィールドは操作できずプレースホルダ文言のみが表示される。
+
+フォームは Payload 標準の `Form` / `PasswordField` / `ConfirmPasswordField` で組んでおり、確認用入力のラベルは Payload の翻訳(`authentication:confirmPassword`)に従う。ドキュメント編集画面の内側に置かれるため `Form` は `el="div"` で描画し、入力欄での Enter は明示的に打ち消したうえでパスワード変更として処理する(そのまま通すとドキュメント保存が走るため)。
 
 ## Vercel 運用チェックリスト
 
