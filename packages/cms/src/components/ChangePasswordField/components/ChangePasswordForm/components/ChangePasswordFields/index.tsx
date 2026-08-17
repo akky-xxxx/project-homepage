@@ -53,22 +53,24 @@ export const ChangePasswordFields = (props: ChangePasswordFieldsProps) => {
         </div>
       )}
 
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions -- 自身は操作対象ではなく、
+          子の入力欄からバブルしてくる Enter を 1 か所で捕まえるためのラッパー */}
       <div onKeyDown={handleKeyDown}>
         <PasswordField
           autoComplete="current-password"
-          field={{ name: "currentPassword", label: "Current password", required: true }}
+          field={{ label: "Current password", name: "currentPassword", required: true }}
           path="currentPassword"
         />
         <PasswordField
           autoComplete="new-password"
-          field={{ name: "password", label: "New password", required: true }}
+          field={{ label: "New password", name: "password", required: true }}
           path="password"
           validate={validatePasswordField}
         />
         <ConfirmPasswordField />
       </div>
 
-      <FormSubmit disabled={isSubmitting} programmaticSubmit size="large" type="button">
+      <FormSubmit programmaticSubmit disabled={isSubmitting} size="large" type="button">
         Change password
       </FormSubmit>
     </div>

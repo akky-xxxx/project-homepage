@@ -1,13 +1,15 @@
 "use client"
 
 import { Banner, EmailField, Form, FormSubmit, PasswordField } from "@payloadcms/ui"
-import { useRef, useState } from "react"
+import { useState } from "react"
 
 import { authClient } from "@/shared/utilities/authClient"
 import { readFormValue } from "@/shared/utilities/readFormValue"
 import { signInWithPassword } from "@/shared/utilities/signInWithPassword"
 import { toPasswordSignInClient } from "@/shared/utilities/toPasswordSignInClient"
+import { useSubmitLock } from "@/shared/utilities/useSubmitLock"
 
+import type { SignInWithPasswordResult } from "@/shared/utilities/signInWithPassword"
 import type { FormState } from "payload"
 
 // useField はフォーム state に登録済みのパスしか扱えないため、Payload 標準のログイン画面と
@@ -16,6 +18,17 @@ const INITIAL_FORM_STATE: FormState = {
   email: { initialValue: "", valid: true, value: "" },
   password: { initialValue: "", valid: true, value: "" },
 }
+
+/**
+ * フォーム state の値で Better Auth のサインインを実行する。
+ * @param fields Payload のフォーム state
+ * @returns サインイン結果(成功 / 2FA 要求 / エラー)
+ */
+const runSignIn = async (fields: FormState): Promise<SignInWithPasswordResult> =>
+  signInWithPassword(toPasswordSignInClient(authClient), {
+    email: readFormValue(fields.email.value),
+    password: readFormValue(fields.password.value),
+  })
 
 type PasswordCredentialsFormProps = {
   onRequireTwoFactor: () => void
@@ -32,48 +45,20 @@ export const PasswordCredentialsForm = (props: PasswordCredentialsFormProps) => 
   const { onRequireTwoFactor, onSignedIn } = props
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  // Payload の `Form` は `onSubmit` の非同期処理を待たず、直後に processing/disabled を解除する
-  // (@payloadcms/ui の dist/forms/Form/index.js)。state の反映を待たずに同期的に再入を弾くため、
-  // 表示用の isSubmitting とは別に ref のロックを持つ
-  const isSubmittingRef = useRef(false)
-
-  const handleSubmit = async (fields: FormState) => {
-    if (isSubmittingRef.current) return
-    isSubmittingRef.current = true
-    setIsSubmitting(true)
-    setErrorMessage(null)
-
-    try {
-      const result = await signInWithPassword(toPasswordSignInClient(authClient), {
-        email: readFormValue(fields.email?.value),
-        password: readFormValue(fields.password?.value),
-      })
-
-      if (result.status === "error") {
-        setErrorMessage(result.message)
-        return
-      }
-
-      if (result.status === "twoFactorRequired") {
-        onRequireTwoFactor()
-        return
-      }
-
-      onSignedIn()
-    } finally {
-      isSubmittingRef.current = false
-      setIsSubmitting(false)
-    }
-  }
+  const { isSubmitting, runExclusive } = useSubmitLock()
 
   return (
     <Form
       className="login-fields"
       initialState={INITIAL_FORM_STATE}
       onSubmit={(fields) => {
-        void handleSubmit(fields)
+        void runExclusive(async () => {
+          const result = await runSignIn(fields)
+
+          setErrorMessage(result.status === "error" ? result.message : null)
+          if (result.status === "twoFactorRequired") onRequireTwoFactor()
+          if (result.status === "signedIn") onSignedIn()
+        })
       }}
     >
       {errorMessage != null && (
@@ -83,12 +68,12 @@ export const PasswordCredentialsForm = (props: PasswordCredentialsFormProps) => 
       )}
 
       <EmailField
-        field={{ name: "email", admin: { autoComplete: "email" }, label: "Email", required: true }}
+        field={{ admin: { autoComplete: "email" }, label: "Email", name: "email", required: true }}
         path="email"
       />
       <PasswordField
         autoComplete="current-password"
-        field={{ name: "password", label: "Password", required: true }}
+        field={{ label: "Password", name: "password", required: true }}
         path="password"
       />
 

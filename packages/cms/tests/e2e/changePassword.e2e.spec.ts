@@ -16,6 +16,8 @@ const CURRENT_PASSWORD = "change-password-e2e-test-1234"
 const NEW_PASSWORD = "change-password-e2e-test-5678"
 const TOO_SHORT_PASSWORD = "short-pw"
 const TEST_TOTP_SECRET = "change-password-e2e-test-totp-secret-1234567890"
+const NO_REQUEST_COUNT = 0
+const SINGLE_REQUEST_COUNT = 1
 
 /**
  * パスワード変更対象のテストユーザーを準備し、password + TOTP でログインして
@@ -140,7 +142,7 @@ test.describe("パスワード変更", () => {
 
     // Enter はパスワード変更として処理される
     await expect(page.getByText("Password changed.")).toBeVisible()
-    expect(documentSaveRequests).toHaveLength(0)
+    expect(documentSaveRequests).toHaveLength(NO_REQUEST_COUNT)
   })
 
   test("送信中に連打してもパスワード変更 API は 1 回しか呼ばれない", async ({ page }) => {
@@ -159,6 +161,6 @@ test.describe("パスワード変更", () => {
     await page.getByRole("button", { name: "Change password" }).dblclick()
 
     await expect(page.getByText("Password changed.")).toBeVisible()
-    expect(changePasswordRequests).toHaveLength(1)
+    expect(changePasswordRequests).toHaveLength(SINGLE_REQUEST_COUNT)
   })
 })

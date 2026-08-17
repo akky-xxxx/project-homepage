@@ -6,7 +6,7 @@ import { useEffect, useId, useState } from "react"
 import { PasswordCredentialsForm } from "./components/PasswordCredentialsForm"
 
 // EmailField は inputRef を受け取らないため、Payload が付与する `field-<path>` の id で参照する
-const EMAIL_FIELD_ID = "field-email"
+const EMAIL_FIELD_SELECTOR = "#field-email"
 
 type PasswordSignInFormProps = {
   onRequireTwoFactor: () => void
@@ -28,13 +28,14 @@ export const PasswordSignInForm = (props: PasswordSignInFormProps) => {
   useEffect(() => {
     if (!isOpen) return
 
-    document.getElementById(EMAIL_FIELD_ID)?.focus()
+    document.querySelector<HTMLInputElement>(EMAIL_FIELD_SELECTOR)?.focus()
   }, [isOpen])
 
   return (
     <div className="login-fields">
       <Button
         buttonStyle="secondary"
+        // eslint-disable-next-line @typescript-eslint/naming-convention -- ARIA 属性名は kebab-case で固定
         extraButtonProps={{ "aria-controls": formId, "aria-expanded": isOpen }}
         margin={false}
         size="large"

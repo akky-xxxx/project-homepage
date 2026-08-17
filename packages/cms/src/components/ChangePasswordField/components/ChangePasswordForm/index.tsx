@@ -1,12 +1,13 @@
 "use client"
 
 import { Form } from "@payloadcms/ui"
-import { useRef, useState } from "react"
+import { useState } from "react"
 
 import { CONFIRM_PASSWORD_PATH } from "@/shared/const/CONFIRM_PASSWORD_PATH"
 import { authClient } from "@/shared/utilities/authClient"
 import { changeOwnPassword } from "@/shared/utilities/changeOwnPassword"
 import { readFormValue } from "@/shared/utilities/readFormValue"
+import { useSubmitLock } from "@/shared/utilities/useSubmitLock"
 
 import { ChangePasswordFields } from "./components/ChangePasswordFields"
 
@@ -23,6 +24,20 @@ const INITIAL_FORM_STATE: FormState = {
 }
 
 /**
+ * フォーム state の値でパスワードを変更する。
+ * @param fields Payload のフォーム state
+ * @returns 失敗時はエラーメッセージ、成功時は null
+ */
+const runChangePassword = async (fields: FormState): Promise<string | null> => {
+  const result = await changeOwnPassword(authClient, {
+    currentPassword: readFormValue(fields.currentPassword.value),
+    newPassword: readFormValue(fields.password.value),
+  })
+
+  return result.ok ? null : result.message
+}
+
+/**
  * パスワード変更の送信処理を持つフォーム。
  *
  * `el="div"` で描画するのは、このコンポーネントが Payload のドキュメント編集画面
@@ -35,43 +50,19 @@ const INITIAL_FORM_STATE: FormState = {
 export const ChangePasswordForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
-
-  // Payload の `Form` は `onSubmit` の非同期処理を待たず、直後に processing/disabled を解除する
-  // ため、state の反映を待たずに同期的に再入を弾く ref のロックを別に持つ
-  const isSubmittingRef = useRef(false)
-
-  const handleSubmit = async (fields: FormState) => {
-    if (isSubmittingRef.current) return
-    isSubmittingRef.current = true
-    setIsSubmitting(true)
-    setSuccessMessage(null)
-
-    try {
-      const result = await changeOwnPassword(authClient, {
-        currentPassword: readFormValue(fields.currentPassword?.value),
-        newPassword: readFormValue(fields.password?.value),
-      })
-
-      if (!result.ok) {
-        setErrorMessage(result.message)
-        return
-      }
-
-      setErrorMessage(null)
-      setSuccessMessage(SUCCESS_MESSAGE)
-    } finally {
-      isSubmittingRef.current = false
-      setIsSubmitting(false)
-    }
-  }
+  const { isSubmitting, runExclusive } = useSubmitLock()
 
   return (
     <Form
       el="div"
       initialState={INITIAL_FORM_STATE}
       onSubmit={(fields) => {
-        void handleSubmit(fields)
+        void runExclusive(async () => {
+          const message = await runChangePassword(fields)
+
+          setErrorMessage(message)
+          setSuccessMessage(message === null ? SUCCESS_MESSAGE : null)
+        })
       }}
     >
       <ChangePasswordFields
