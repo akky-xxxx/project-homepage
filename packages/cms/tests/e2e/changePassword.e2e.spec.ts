@@ -14,6 +14,7 @@ import type { Page } from "@playwright/test"
 const CHANGE_PASSWORD_TEST_EMAIL = "change-password-e2e-test@example.com"
 const CURRENT_PASSWORD = "change-password-e2e-test-1234"
 const NEW_PASSWORD = "change-password-e2e-test-5678"
+const SECOND_NEW_PASSWORD = "change-password-e2e-test-9012"
 const TOO_SHORT_PASSWORD = "short-pw"
 const TEST_TOTP_SECRET = "change-password-e2e-test-totp-secret-1234567890"
 const NO_REQUEST_COUNT = 0
@@ -114,6 +115,33 @@ test.describe("パスワード変更", () => {
     await expect(page.getByLabel("Current password", { exact: true })).toHaveValue("")
     await expect(page.getByLabel("New password", { exact: true })).toHaveValue("")
     await expect(page.getByLabel("Confirm Password", { exact: true })).toHaveValue("")
+  })
+
+  test("同じ画面で連続して変更に成功しても毎回入力欄は空に戻る", async ({ page }) => {
+    await setUpAndSignIn(page)
+
+    const currentPassword = page.getByLabel("Current password", { exact: true })
+    const newPassword = page.getByLabel("New password", { exact: true })
+    const confirmPassword = page.getByLabel("Confirm Password", { exact: true })
+    const submitButton = page.getByRole("button", { name: "Change password" })
+
+    await currentPassword.fill(CURRENT_PASSWORD)
+    await newPassword.fill(NEW_PASSWORD)
+    await confirmPassword.fill(NEW_PASSWORD)
+    await submitButton.click()
+    await expect(page.getByText("Password changed.")).toBeVisible()
+
+    // 2 回目の成功でもクリアされること。成功メッセージは 1 回目と同じ文字列なので、
+    // メッセージの変化を契機にしているとここで値が残る
+    await currentPassword.fill(NEW_PASSWORD)
+    await newPassword.fill(SECOND_NEW_PASSWORD)
+    await confirmPassword.fill(SECOND_NEW_PASSWORD)
+    await submitButton.click()
+    await expect(page.getByText("Password changed.")).toBeVisible()
+
+    await expect(currentPassword).toHaveValue("")
+    await expect(newPassword).toHaveValue("")
+    await expect(confirmPassword).toHaveValue("")
   })
 
   test("誤った現パスワードでは失敗表示になり、変更されない", async ({ page }) => {

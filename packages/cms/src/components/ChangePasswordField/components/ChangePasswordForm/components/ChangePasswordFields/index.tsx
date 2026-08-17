@@ -8,9 +8,12 @@ import { validatePasswordField } from "@/shared/utilities/validatePasswordField"
 
 import type { KeyboardEvent } from "react"
 
+const NO_SUCCESS_YET = 0
+
 type ChangePasswordFieldsProps = {
   errorMessage: string | null
   isSubmitting: boolean
+  successCount: number
   successMessage: string | null
 }
 
@@ -28,18 +31,19 @@ type ChangePasswordFieldsProps = {
  * @returns パスワード変更フォームの中身
  */
 export const ChangePasswordFields = (props: ChangePasswordFieldsProps) => {
-  const { errorMessage, isSubmitting, successMessage } = props
+  const { errorMessage, isSubmitting, successCount, successMessage } = props
   const { replaceState, submit } = useForm()
 
-  // 変更に成功したら 3 欄を空に戻し、画面に平文のパスワードを残さない。
+  // 変更に成功するたび 3 欄を空に戻し、画面に平文のパスワードを残さない。
   // `reset` はサーバー側の `getFormState` を呼ぶためコレクションに属さないこのフォームでは
   // 使えないので、クライアント側だけで完結する `replaceState` を使う。
+  // 契機に成功回数を使うのは、2 回目以降も成功メッセージが同じ文字列で変化しないため。
   // 失敗時は再入力の手間を避けるため値を残す
   useEffect(() => {
-    if (successMessage === null) return
+    if (successCount === NO_SUCCESS_YET) return
 
     replaceState(CHANGE_PASSWORD_FORM_STATE)
-  }, [replaceState, successMessage])
+  }, [replaceState, successCount])
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== "Enter") return

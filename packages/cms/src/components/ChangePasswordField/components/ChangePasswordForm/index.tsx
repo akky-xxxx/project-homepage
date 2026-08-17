@@ -14,6 +14,8 @@ import { ChangePasswordFields } from "./components/ChangePasswordFields"
 import type { FormState } from "payload"
 
 const SUCCESS_MESSAGE = "Password changed."
+const INITIAL_SUCCESS_COUNT = 0
+const SUCCESS_INCREMENT = 1
 
 /**
  * フォーム state の値でパスワードを変更する。
@@ -42,6 +44,10 @@ const runChangePassword = async (fields: FormState): Promise<string | null> => {
 export const ChangePasswordForm = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  // 成功メッセージは 2 回目以降も同じ文字列なので、リセットの契機には使えない
+  // (同じ値の set では再描画されず、子の effect が再実行されない)。成功のたびに必ず変わる
+  // 値が要るため、回数を数える
+  const [successCount, setSuccessCount] = useState(INITIAL_SUCCESS_COUNT)
   const { isSubmitting, runExclusive } = useSubmitLock()
 
   return (
@@ -50,16 +56,22 @@ export const ChangePasswordForm = () => {
       initialState={CHANGE_PASSWORD_FORM_STATE}
       onSubmit={(fields) => {
         void runExclusive(async () => {
+          setSuccessMessage(null)
+
           const message = await runChangePassword(fields)
 
           setErrorMessage(message)
-          setSuccessMessage(message === null ? SUCCESS_MESSAGE : null)
+          if (message !== null) return
+
+          setSuccessMessage(SUCCESS_MESSAGE)
+          setSuccessCount((current) => current + SUCCESS_INCREMENT)
         })
       }}
     >
       <ChangePasswordFields
         errorMessage={errorMessage}
         isSubmitting={isSubmitting}
+        successCount={successCount}
         successMessage={successMessage}
       />
     </Form>
