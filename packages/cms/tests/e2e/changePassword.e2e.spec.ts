@@ -100,6 +100,22 @@ test.describe("パスワード変更", () => {
     await expect(page).toHaveURL("http://localhost:3000/")
   })
 
+  test("変更に成功すると入力欄は空に戻る", async ({ page }) => {
+    await setUpAndSignIn(page)
+
+    await page.getByLabel("Current password", { exact: true }).fill(CURRENT_PASSWORD)
+    await page.getByLabel("New password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByLabel("Confirm Password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByRole("button", { name: "Change password" }).click()
+
+    await expect(page.getByText("Password changed.")).toBeVisible()
+
+    // 画面に平文のパスワードを残さない
+    await expect(page.getByLabel("Current password", { exact: true })).toHaveValue("")
+    await expect(page.getByLabel("New password", { exact: true })).toHaveValue("")
+    await expect(page.getByLabel("Confirm Password", { exact: true })).toHaveValue("")
+  })
+
   test("誤った現パスワードでは失敗表示になり、変更されない", async ({ page }) => {
     await setUpAndSignIn(page)
 
@@ -109,6 +125,9 @@ test.describe("パスワード変更", () => {
     await page.getByRole("button", { name: "Change password" }).click()
 
     await expect(page.getByRole("alert")).toBeVisible()
+
+    // 失敗時は再入力の手間を避けるため値を残す
+    await expect(page.getByLabel("New password", { exact: true })).toHaveValue(NEW_PASSWORD)
   })
 
   test("新パスワードが最小文字数未満だと送信できない", async ({ page }) => {

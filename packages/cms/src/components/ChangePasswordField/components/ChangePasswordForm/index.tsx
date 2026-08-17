@@ -3,7 +3,7 @@
 import { Form } from "@payloadcms/ui"
 import { useState } from "react"
 
-import { CONFIRM_PASSWORD_PATH } from "@/shared/const/CONFIRM_PASSWORD_PATH"
+import { CHANGE_PASSWORD_FORM_STATE } from "@/shared/const/CHANGE_PASSWORD_FORM_STATE"
 import { authClient } from "@/shared/utilities/authClient"
 import { changeOwnPassword } from "@/shared/utilities/changeOwnPassword"
 import { readFormValue } from "@/shared/utilities/readFormValue"
@@ -14,14 +14,6 @@ import { ChangePasswordFields } from "./components/ChangePasswordFields"
 import type { FormState } from "payload"
 
 const SUCCESS_MESSAGE = "Password changed."
-
-// useField はフォーム state に登録済みのパスしか扱えないため初期 state を明示する。
-// 新パスワードは ConfirmPasswordField の検証対象に合わせて "password" に固定する
-const INITIAL_FORM_STATE: FormState = {
-  [CONFIRM_PASSWORD_PATH]: { initialValue: "", valid: false, value: "" },
-  currentPassword: { initialValue: "", valid: true, value: "" },
-  password: { initialValue: "", valid: true, value: "" },
-}
 
 /**
  * フォーム state の値でパスワードを変更する。
@@ -55,7 +47,7 @@ export const ChangePasswordForm = () => {
   return (
     <Form
       el="div"
-      initialState={INITIAL_FORM_STATE}
+      initialState={CHANGE_PASSWORD_FORM_STATE}
       onSubmit={(fields) => {
         void runExclusive(async () => {
           const message = await runChangePassword(fields)

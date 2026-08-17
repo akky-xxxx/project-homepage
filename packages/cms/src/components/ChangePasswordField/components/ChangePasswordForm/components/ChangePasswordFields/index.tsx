@@ -1,7 +1,9 @@
 "use client"
 
 import { Banner, ConfirmPasswordField, FormSubmit, PasswordField, useForm } from "@payloadcms/ui"
+import { useEffect } from "react"
 
+import { CHANGE_PASSWORD_FORM_STATE } from "@/shared/const/CHANGE_PASSWORD_FORM_STATE"
 import { validatePasswordField } from "@/shared/utilities/validatePasswordField"
 
 import type { KeyboardEvent } from "react"
@@ -27,7 +29,17 @@ type ChangePasswordFieldsProps = {
  */
 export const ChangePasswordFields = (props: ChangePasswordFieldsProps) => {
   const { errorMessage, isSubmitting, successMessage } = props
-  const { submit } = useForm()
+  const { replaceState, submit } = useForm()
+
+  // 変更に成功したら 3 欄を空に戻し、画面に平文のパスワードを残さない。
+  // `reset` はサーバー側の `getFormState` を呼ぶためコレクションに属さないこのフォームでは
+  // 使えないので、クライアント側だけで完結する `replaceState` を使う。
+  // 失敗時は再入力の手間を避けるため値を残す
+  useEffect(() => {
+    if (successMessage === null) return
+
+    replaceState(CHANGE_PASSWORD_FORM_STATE)
+  }, [replaceState, successMessage])
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== "Enter") return
