@@ -1,4 +1,4 @@
 export const testUser = {
-  email: "dev@payloadcms.com",
+  email: "example@example.com",
   name: "E2E Test User",
 }
