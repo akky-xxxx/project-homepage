@@ -42,6 +42,21 @@ const setUpAndSignIn = async (page: Page) => {
 
   await page.goto(`http://localhost:3000/collections/users/${userId}`)
 
+  // Payload の Form は初期化を終えると data-form-ready="true" を立てる(ライブラリ側が e2e の
+  // ちらつき対策として用意している属性)。hydration 前に fill すると DOM だけ値が入って
+  // フォーム state には反映されず、送信時に必須エラーになるため、ここで待ってから操作する。
+  // ドキュメント編集フォーム(form 要素)にも同じ属性が付くので、el="div" で描画している
+  // パスワード変更フォーム側だけを指す
+  await expect(
+    page
+      .locator('div.form[data-form-ready="true"]')
+      .filter({ has: page.getByRole("button", { name: "Change password" }) }),
+  ).toBeVisible()
+
+  // 画面表示後も get-session / list-user-passkeys が飛んでおり、その解決に伴う再描画が
+  // 入力中のフォーカスやキーイベントと競合する。落ち着くまで待ってから操作する
+  await page.waitForLoadState("networkidle")
+
   return userId
 }
 
@@ -55,7 +70,7 @@ test.describe("パスワード変更", () => {
 
     await expect(page.getByLabel("Current password", { exact: true })).toBeVisible()
     await expect(page.getByLabel("New password", { exact: true })).toBeVisible()
-    await expect(page.getByLabel("Confirm new password", { exact: true })).toBeVisible()
+    await expect(page.getByLabel("Confirm Password", { exact: true })).toBeVisible()
   })
 
   test("正しい現パスワードで新パスワードに変更でき、ログアウト後は新パスワードでのみログインできる", async ({
@@ -65,7 +80,7 @@ test.describe("パスワード変更", () => {
 
     await page.getByLabel("Current password", { exact: true }).fill(CURRENT_PASSWORD)
     await page.getByLabel("New password", { exact: true }).fill(NEW_PASSWORD)
-    await page.getByLabel("Confirm new password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByLabel("Confirm Password", { exact: true }).fill(NEW_PASSWORD)
     await page.getByRole("button", { name: "Change password" }).click()
 
     await expect(page.getByText("Password changed.")).toBeVisible()
@@ -88,7 +103,7 @@ test.describe("パスワード変更", () => {
 
     await page.getByLabel("Current password", { exact: true }).fill("wrong-current-password")
     await page.getByLabel("New password", { exact: true }).fill(NEW_PASSWORD)
-    await page.getByLabel("Confirm new password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByLabel("Confirm Password", { exact: true }).fill(NEW_PASSWORD)
     await page.getByRole("button", { name: "Change password" }).click()
 
     await expect(page.getByRole("alert")).toBeVisible()
@@ -99,9 +114,51 @@ test.describe("パスワード変更", () => {
 
     await page.getByLabel("Current password", { exact: true }).fill(CURRENT_PASSWORD)
     await page.getByLabel("New password", { exact: true }).fill(TOO_SHORT_PASSWORD)
-    await page.getByLabel("Confirm new password", { exact: true }).fill(TOO_SHORT_PASSWORD)
+    await page.getByLabel("Confirm Password", { exact: true }).fill(TOO_SHORT_PASSWORD)
     await page.getByRole("button", { name: "Change password" }).click()
 
     await expect(page.getByText("Password must be at least 12 characters long.")).toBeVisible()
+  })
+
+  test("入力欄で Enter を押してもユーザードキュメントは保存されない", async ({ page }) => {
+    const userId = await setUpAndSignIn(page)
+
+    // このフォームは Payload のドキュメント編集フォームの内側にあり、Form を el="div" で
+    // 描画している。Enter の既定動作を止めないと暗黙の送信が外側のフォームへ向かい、
+    // パスワード変更ではなくドキュメント保存が走ってしまう
+    const documentSaveRequests: string[] = []
+    page.on("request", (request) => {
+      const isDocumentSave =
+        request.method() === "PATCH" && request.url().includes(`/api/users/${userId}`)
+      if (isDocumentSave) documentSaveRequests.push(request.url())
+    })
+
+    await page.getByLabel("Current password", { exact: true }).fill(CURRENT_PASSWORD)
+    await page.getByLabel("New password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByLabel("Confirm Password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByLabel("Confirm Password", { exact: true }).press("Enter")
+
+    // Enter はパスワード変更として処理される
+    await expect(page.getByText("Password changed.")).toBeVisible()
+    expect(documentSaveRequests).toHaveLength(0)
+  })
+
+  test("送信中に連打してもパスワード変更 API は 1 回しか呼ばれない", async ({ page }) => {
+    await setUpAndSignIn(page)
+
+    const changePasswordRequests: string[] = []
+    page.on("request", (request) => {
+      if (request.url().includes("/api/auth/change-password")) {
+        changePasswordRequests.push(request.url())
+      }
+    })
+
+    await page.getByLabel("Current password", { exact: true }).fill(CURRENT_PASSWORD)
+    await page.getByLabel("New password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByLabel("Confirm Password", { exact: true }).fill(NEW_PASSWORD)
+    await page.getByRole("button", { name: "Change password" }).dblclick()
+
+    await expect(page.getByText("Password changed.")).toBeVisible()
+    expect(changePasswordRequests).toHaveLength(1)
   })
 })
