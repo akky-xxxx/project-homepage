@@ -69,9 +69,12 @@ export const ChangePasswordFields = (props: ChangePasswordFieldsProps) => {
         </div>
       )}
 
+      {/* `render-fields` は余白のためだけに付けている。フィールド間の余白は Payload 側の
+          `.render-fields > .field-type` が与えており、各フィールドが自分で出す `field-type` だけでは
+          余白が付かない */}
       {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions -- 自身は操作対象ではなく、
           子の入力欄からバブルしてくる Enter を 1 か所で捕まえるためのラッパー */}
-      <div onKeyDown={handleKeyDown}>
+      <div className="render-fields" onKeyDown={handleKeyDown}>
         <PasswordField
           autoComplete="current-password"
           field={{ label: "Current password", name: "currentPassword", required: true }}
