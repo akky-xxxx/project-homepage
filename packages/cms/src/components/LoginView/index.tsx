@@ -4,7 +4,6 @@ import { TwoFactorVerifyView } from "@delmaredigital/payload-better-auth/compone
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
 
-import { LOGIN_VIEW_STYLES } from "@/shared/const/LOGIN_VIEW_STYLES"
 import { authClient } from "@/shared/utilities/authClient"
 
 import { RegisterView } from "./components/RegisterView"
@@ -54,44 +53,39 @@ const useRedirectIfAlreadySignedIn = (): boolean => {
  * `@delmaredigital/payload-better-auth` の標準 `LoginView` は password を主要フォームとして
  * 描画するため、そのまま流用できず自前実装している(passkey ボタン・TOTP 検証画面は
  * ベンダー標準コンポーネントをそのまま使う)。
+ *
+ * 全画面の中央寄せと最大幅は Payload の `MinimalTemplate` が担うため、ここでは持たない。
+ * 組み込み login view を `loginViewComponent` で上書きした場合も、Payload は組み込み view の
+ * テンプレート設定を引き継いで `MinimalTemplate` でラップする
+ * (`@payloadcms/next` の `dist/views/Root/getRouteData.js`)。
  * @returns ログイン画面
  */
 export const LoginView = () => {
   const isCheckingSession = useRedirectIfAlreadySignedIn()
   const [mode, setMode] = useState<Mode>("signIn")
 
-  if (isCheckingSession) {
-    return (
-      <div style={LOGIN_VIEW_STYLES.page}>
-        <p>Loading...</p>
-      </div>
-    )
-  }
+  if (isCheckingSession) return <p>Loading...</p>
 
   if (mode === "twoFactor") return <TwoFactorVerifyView />
 
   if (mode === "register") {
     return (
-      <div style={LOGIN_VIEW_STYLES.page}>
-        <RegisterView
-          onNavigateToSignIn={() => {
-            setMode("signIn")
-          }}
-        />
-      </div>
+      <RegisterView
+        onNavigateToSignIn={() => {
+          setMode("signIn")
+        }}
+      />
     )
   }
 
   return (
-    <div style={LOGIN_VIEW_STYLES.page}>
-      <SignInView
-        onNavigateToRegister={() => {
-          setMode("register")
-        }}
-        onRequireTwoFactor={() => {
-          setMode("twoFactor")
-        }}
-      />
-    </div>
+    <SignInView
+      onNavigateToRegister={() => {
+        setMode("register")
+      }}
+      onRequireTwoFactor={() => {
+        setMode("twoFactor")
+      }}
+    />
   )
 }
