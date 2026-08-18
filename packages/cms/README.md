@@ -141,6 +141,7 @@ TOTP の検証に 5 回連続で失敗してロックアウトされた場合は
 - `role` はサーバー側専用のフィールドで、サインアップ時にクライアントから指定できない。最初の 1 人だけが `admin` になる。
 - `users` コレクションの create / update / delete は admin 限定。`role` と `emailVerified` にはフィールド単位の admin チェックも入れてある。
 - 画像は `BLOB_READ_WRITE_TOKEN` があれば Vercel Blob、無ければローカルディスクに保存する。アップロード上限は 30MB(`payload.config.ts` の `upload.limits.fileSize`)で、超過時は 413 を返す。
+- 本番で API が返す画像 URL は Blob の public ドメイン(`https://<storeId>.public.blob.vercel-storage.com/...`)を直接指す。`gallery-photos` は `read: () => true` の全公開コレクションで Payload の access control を通す意味が無いため、`disablePayloadAccessControl: true` を指定し、CMS ドメインの `/api/gallery-photos/file/...`(Vercel Function)を経由させずに Blob の CDN から配信する。`BLOB_READ_WRITE_TOKEN` が無いローカル / CI ではプラグインごと無効になるため、従来通りローカルディスク + `/api/gallery-photos/file/...` になる。
 
 ## パスワード変更
 
