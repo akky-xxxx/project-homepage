@@ -16,8 +16,10 @@ export default defineConfig({
   forbidOnly: Boolean(process.env.CI),
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
-  /* Opt out of parallel tests on CI. */
-  workers: process.env.CI ? 1 : undefined,
+  // e2e は 1 台の next dev サーバーと 1 つの DB を共有するため、ローカル/CI ともに直列で実行する。
+  // 並列にすると dev サーバーのオンデマンドコンパイルと、worker ごとに走る payload の
+  // dev schema push が競合し、一覧画面への遷移が test timeout に達することがある
+  workers: 1,
 
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: "html",
