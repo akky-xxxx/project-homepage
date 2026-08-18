@@ -77,7 +77,9 @@ export default buildConfig({
       token: ENVIRONMENT.BLOB_READ_WRITE_TOKEN,
 
       collections: {
-        [GalleryPhotos.slug]: true,
+        // GalleryPhotos は read: () => true の全公開コレクションで、Payload の access control を
+        // 通す意味が無い。staticHandler(Vercel Function)を経由させず Blob の CDN から直接配信する
+        [GalleryPhotos.slug]: { disablePayloadAccessControl: true },
       },
     }),
 
