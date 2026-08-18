@@ -3,6 +3,7 @@ import { APIError, createAuthMiddleware } from "better-auth/api"
 import { ENVIRONMENT } from "@/shared/const/ENVIRONMENT"
 import { EmailBodySchema } from "@/shared/schemas/EmailBodySchema"
 import { hasAnyUser } from "@/shared/utilities/hasAnyUser"
+import { hasEnabledTotp } from "@/shared/utilities/hasEnabledTotp"
 import { hasRegisteredPasskey } from "@/shared/utilities/hasRegisteredPasskey"
 
 import type { DBAdapter } from "better-auth/types"
@@ -38,37 +39,50 @@ const assertSignUpAllowed = async (adapter: DBAdapter, body: unknown): Promise<v
 }
 
 /**
- * passkey 登録済みでも password サインインを許可する作業モードかを判定する。
- * ローカルから本番 DB へ繋いで写真を投入する作業のためのもので、passkey は rpID
- * (= BETTER_AUTH_URL のホスト)に紐づくため localhost では本番の passkey を使えないことによる。
- *
- * 判定はサーバー自身の設定値だけを見る。env フラグが誤って Vercel 側に設定されても、
- * 本番はカスタムドメインで動くためホスト条件で弾かれる。
- * @returns 作業モードなら true
+ * password サインインを通してよいリクエストかを検証し、拒否すべきときだけ throw する。
+ * @param adapter Better Auth の DB adapter (`ctx.context.adapter`)
+ * @param body リクエストボディ
  */
-const isPasswordSignInEnabled = (): boolean => {
-  const { BETTER_AUTH_URL, PASSWORD_SIGN_IN_ENABLED } = ENVIRONMENT
-  if (PASSWORD_SIGN_IN_ENABLED !== "true") return false
+const assertSignInAllowed = async (adapter: DBAdapter, body: unknown): Promise<void> => {
+  const parsedBody = EmailBodySchema.safeParse(body)
+  if (!parsedBody.success) return
 
-  return new URL(BETTER_AUTH_URL).hostname === "localhost"
+  // Better Auth の internalAdapter は email を保存時・検索時に必ず小文字化するため
+  // (node_modules/better-auth/dist/db/internal-adapter.mjs)、ここでの判定も同じ正規化を
+  // 行わないと大文字小文字違いの入力でブートストラップ窓の誤許可が起きる
+  const email = parsedBody.data.email.toLowerCase()
+
+  if (await hasEnabledTotp(adapter, email)) return
+
+  if (await hasRegisteredPasskey(adapter, email)) {
+    throw new APIError("FORBIDDEN", {
+      message:
+        "Password sign-in is disabled for this account. Sign in with your passkey, or enable TOTP to use password sign-in as a fallback.",
+    })
+  }
 }
 
 /**
- * password をブートストラップ専用に留め、通常のログインを passkey に限定する before hook。
+ * password をブートストラップ専用に留め、通常のログインを passkey (+ フォールバックとしての
+ * password + TOTP) に限定する before hook。
  *
  * - `/sign-up/email`: `SIGN_UP_ALLOWED_EMAIL` と一致し、かつ users が 0 件のときだけ通す。
  *   admin 1 人運用のため、アカウントを作れるのは最初の 1 回だけ(その 1 人は
  *   `betterAuthCollections` が注入する first-user-admin ガードにより `role: "admin"` になる)。
  *   `SIGN_UP_ALLOWED_EMAIL` 未設定なら常に拒否するので、初期登録後は環境変数を削除して
  *   再デプロイすればサインアップ API を恒久的に閉じられる。
- * - `/sign-in/email`: passkey を登録済みのユーザーは拒否する。passkey 未登録の間だけ
- *   password でログインでき、そこから passkey を登録する導線に乗る。
- *   例外として、localhost かつ `PASSWORD_SIGN_IN_ENABLED=true` のときは拒否しない
- *   (本番 DB へローカルから繋いで作業するため。isPasswordSignInEnabled 参照)。
+ * - `/sign-in/email`: 次の優先順位で判定する。
+ *   1. TOTP を有効化済みなら許可する。password 自体の正しさは Better Auth 本体の
+ *      credential 検証に委ね、成功後は `twoFactor` プラグインの after hook が
+ *      自動的にフルセッションを 2FA チャレンジへ差し替える(このミドルウェアでは何もしない)。
+ *   2. passkey を登録済みなら拒否する。passkey はあるが TOTP を有効化していない
+ *      アカウントは password + TOTP のフォールバックを使えないため。
+ *   3. どちらも未設定なら許可する(ブートストラップ窓)。passkey・TOTP を登録する前の
+ *      初期セットアップの間だけ password 単独でのログインを許す。
  *
- * passkey を全て失った場合の復旧手順:
- * Postgres の `passkeys` から当該ユーザーの行を削除すると password ログインが再び通るため、
- * ログイン後に passkey を登録し直す。
+ * passkey・TOTP を両方失った場合の復旧手順:
+ * Postgres の `passkeys`/`twoFactors` から当該ユーザーの行を削除し、`users.twoFactorEnabled`
+ * を false に戻すと password ログインが再び通るため、ログイン後に登録し直す。
  */
 export const authBeforeHook = createAuthMiddleware(async (authContext) => {
   const { adapter } = authContext.context
@@ -79,15 +93,7 @@ export const authBeforeHook = createAuthMiddleware(async (authContext) => {
     return
   }
 
-  if (authContext.path !== SIGN_IN_EMAIL_PATH) return
-  if (isPasswordSignInEnabled()) return
-
-  const parsedBody = EmailBodySchema.safeParse(authContext.body)
-  if (!parsedBody.success) return
-
-  if (await hasRegisteredPasskey(adapter, parsedBody.data.email)) {
-    throw new APIError("FORBIDDEN", {
-      message: "Password sign-in is disabled for this account. Sign in with your passkey.",
-    })
+  if (authContext.path === SIGN_IN_EMAIL_PATH) {
+    await assertSignInAllowed(adapter, authContext.body)
   }
 })
