@@ -20,6 +20,11 @@ tools: Read, Grep, Glob, Bash
 
 上から順に実施する。
 
+- 同種の変更が過去に着手されていないかを調べる(設計に入る前のゲート)
+  - `git ls-remote --heads origin` でリモートの最新ブランチ、`git branch -a` と `git log --all --oneline` でローカルに残る作業ブランチ・未マージのコミット、`gh pr list --state all --search "<キーワード>"` で close 済みを含む PR を確認する
+  - `git branch -a` / `git log --all` は最後に fetch した時点のローカル ref しか見ないため、リモート側の確認は必ず `git ls-remote` で行う(ローカルの ref を書き換えずに最新を参照できる)
+  - 見つかった場合は、ブランチ名 / PR 番号 / 状態(open / merged / closed)と、読み取れる範囲での方針の違いをレポートに記載する
+  - close 済み・未マージのものがあった場合、却下の経緯を確認しないまま設計に進むと同じ理由で再度却下されうる。**経緯をユーザーに確認してから設計に入るようレポートで促す**
 - 対象パッケージを特定し、関連する既存ディレクトリ / ファイル構成を確認する
   - `main`: `app/routes/`(ファイルベースルーティング), `app/components/{atoms,icons,pages,Layout}/`, `app/islands/`, `app/modules/`, `app/shared/{const,styles,types,utils}/`, `app/styles/`
   - `module-images-db`: `src/index.ts`(手動管理の写真レコード = source of truth), `src/{const,modules,types}/`, `src/shared/{schemas,utils}/`, `src/upload-image/`, `src/delete-image/`
@@ -40,6 +45,7 @@ tools: Read, Grep, Glob, Bash
 
 日本語で以下を出力する。3つの design agent がそのまま参照できる粒度にする。
 
+- 過去に同種の変更が着手されたブランチ / PR の有無。あれば名称・番号・状態と、ユーザーに確認すべき点。無ければ「無し」と明記する
 - 対象パッケージと、その理由 / 波及するパッケージ
 - 関連する既存ディレクトリ / ファイル構成
 - 類似の既存実装(あれば、ファイルパス付き)とそこから読み取れる慣習
