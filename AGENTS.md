@@ -62,6 +62,7 @@ Bun 管理の TypeScript モノレポ。`packages/main`(公開サイト)/`packag
 ### セキュリティ
 
 - 認証情報・Blob トークン・DB 接続文字列・GCP サービスアカウント情報がコミットされていないか
+- CI 定義(`.github/workflows/**`)への secrets・環境変数の追加や `permissions:` の変更が、必要なジョブ/ステップに限定されているか(最小公開範囲)
 - `cms` の認証まわり(passkey 専用化、`SIGN_UP_ALLOWED_EMAIL` によるサインアップ制限、admin 限定の書き込み制御)を変更する差分は特に注意して確認する
 - 環境変数のバリデーション(`EnvironmentSchema`、`CredentialSchema` 等)が壊れていないか
 - **理論上のリスクを網羅的に指摘するのではなく、実運用コストとのバランスで判断する。** 個人運営・管理者1人という前提を踏まえ、過剰な防御コードの追加を推奨しない。運用でカバーできるものはその旨を指摘するに留める
@@ -147,6 +148,7 @@ Claude Code がこのファイルを読んで消化する運用のため、機�
 - `ai-communication/result_*.md` への書き込み・編集・削除
 - 既存の `ai-communication/review_*.md` の編集・追記(常に新しい timestamp のファイルを作成する)
 - `ai-communication/review_{timestamp}.md` 以外の場所へのレビュー結果の書き出し
+- `ai-communication/review_{timestamp}.md` への機密情報(secrets・トークン・API キー・パスワード・接続文字列)の実値の転記。指摘に必要なのは変数名と参照元だけで、値そのものは書かない
 - コードの編集・生成・コミット・ブランチ作成・PR の作成やマージ
 - `dev`/`build`/`deploy`/`payload migrate`/`image-add`/`image-delete` など、状態やリモートリソースを変更するコマンドの実行
 - コードを確認せずに行う推測ベースの指摘
