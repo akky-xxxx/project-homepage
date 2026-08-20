@@ -26,6 +26,7 @@ jobs:
       pull-requests: read
     outputs:
       cms: ${{ steps.filter.outputs.cms }}
+      cms-types: ${{ steps.filter.outputs.cms-types }}
       main: ${{ steps.filter.outputs.main }}
       module-images-db: ${{ steps.filter.outputs.module-images-db }}
       root: ${{ steps.filter.outputs.root }}
@@ -55,10 +56,15 @@ jobs:
               - "tsconfig.json"
             cms:
               - *shared
+              - "packages/cms-types/**"
               - "packages/cms/**"
+            cms-types:
+              - *shared
+              - "packages/cms-types/**"
             main:
               - *shared
               - ".github/workflows/deploy-main.yml"
+              - "packages/cms-types/**"
               - "packages/main/**"
               - "packages/module-images-db/**"
             module-images-db:
@@ -108,6 +114,19 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - working-directory: packages/module-images-db
         run: bun run test
+
+  cms-types:
+    needs: changes
+    if: ${{ needs.changes.outputs.cms-types == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: ./.github/actions/setup-bun
+      # editorconfig-checker のバイナリ取得が GitHub API の未認証レート制限に当たるのを避けるため認証する
+      - working-directory: packages/cms-types
+        run: bun run check-code
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   cms-check-code:
     needs: changes
@@ -170,6 +189,7 @@ jobs:
       - changes
       - cms-check-code
       - cms-test
+      - cms-types
       - main
       - module-images-db
       - root
