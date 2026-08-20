@@ -23,7 +23,7 @@ design-integrator が出力した統合設計仕様をユーザーに提示し�
 - 1フォルダ1エクスポート、中身は `index.ts(x)` のみ。単独ファイルを並べない
 - `main` は `hono/jsx`(React ではない)。`cms` は React 19 + Payload
 - 環境変数は各パッケージの schema / const 経由で参照する(`process.env` 直参照は ESLint で禁止)
-- 手編集してはいけない生成物: `packages/cms/src/payload-types.ts`(`bun --cwd packages/cms payload generate:types` で再生成)、`packages/cms/src/migrations/**`(`bun --cwd packages/cms payload migrate:create <name>` で生成)、`packages/module-images-db/src/const/IMAGES`(CLI が再生成)
+- 手編集してはいけない生成物: `packages/cms-types/src/payload-types.ts`(`bun --cwd packages/cms payload generate:types` で再生成)、`packages/cms/src/migrations/**`(`bun --cwd packages/cms payload migrate:create <name>` で生成)、`packages/module-images-db/src/const/IMAGES`(CLI が再生成)
 - 実行してはいけないコマンド: `bun --cwd packages/main deploy`、`bun --cwd packages/module-images-db image-add` / `image-delete`、`git push`(いずれも deny 済み)
 
 ## 進め方
