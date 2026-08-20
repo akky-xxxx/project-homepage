@@ -1,0 +1,39 @@
+{
+  "name": "cms-types",
+  "version": "0.0.0",
+  "scripts": {
+    "check-code": "run-p -c lint spell-check type-check",
+    "fix": "run-s fix:config fix:pack fix:prettier",
+    "fix:config": "eslint -c eslint.config.js.mjs \"./\" --max-warnings 0 --fix",
+    "fix:pack": "fixpack",
+    "fix:prettier": "prettier \".\" -w -u",
+    "lint": "run-p -c \"lint:*\"",
+    "lint:config": "eslint -c eslint.config.js.mjs \"./\" --max-warnings 0",
+    "lint:editorconfig": "editorconfig-checker",
+    "lint:pack": "fixpack --dryRun",
+    "lint:prettier": "prettier \".\" -c -u",
+    "spell-check": "cspell \"./{src,config}/**\" --no-progress --no-must-find-files",
+    "type-check": "tsc"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "3.3.6",
+    "@eslint/js": "9.39.5",
+    "@tsconfig/bun": "1.0.10",
+    "cspell": "10.0.1",
+    "editorconfig-checker": "6.1.1",
+    "eslint": "9.39.5",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-config-sc-all": "0.2.2",
+    "eslint-config-sc-js": "0.2.2",
+    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-sc-js": "0.3.0",
+    "fixpack": "4.0.0",
+    "npm-run-all2": "9.0.2",
+    "prettier": "3.9.5",
+    "typescript": "5.9.3"
+  },
+  "peerDependencies": {
+    "typescript": "5.9.3"
+  },
+  "type": "module"
+}
