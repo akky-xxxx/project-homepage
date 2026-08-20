@@ -12,7 +12,7 @@
     "lint:editorconfig": "editorconfig-checker",
     "lint:pack": "fixpack --dryRun",
     "lint:prettier": "prettier \".\" -c -u",
-    "spell-check": "cspell \"./{src,config}/**\" --no-progress --no-must-find-files",
+    "spell-check": "cspell \"./{src,config}/**\" --no-progress",
     "type-check": "tsc"
   },
   "devDependencies": {
@@ -29,6 +29,7 @@
     "eslint-plugin-sc-js": "0.3.0",
     "fixpack": "4.0.0",
     "npm-run-all2": "9.0.2",
+    "payload": "3.86.0",
     "prettier": "3.9.5",
     "typescript": "5.9.3"
   },
