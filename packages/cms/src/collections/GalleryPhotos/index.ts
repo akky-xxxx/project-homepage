@@ -1,5 +1,7 @@
 import { isAdmin } from "@/shared/utilities/isAdmin"
 
+import { getDatesHandler } from "./modules/getDatesHandler"
+
 import type { CollectionConfig } from "payload"
 
 export const GalleryPhotos: CollectionConfig = {
@@ -45,5 +47,13 @@ export const GalleryPhotos: CollectionConfig = {
     { name: "date", required: true, type: "date" },
     { name: "area", relationTo: "gallery-areas", required: true, type: "relationship" },
     { hasMany: true, name: "tags", relationTo: "gallery-tags", type: "relationship" },
+  ],
+
+  endpoints: [
+    {
+      handler: getDatesHandler,
+      method: "get",
+      path: "/months",
+    },
   ],
 }
