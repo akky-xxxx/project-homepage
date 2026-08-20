@@ -5,7 +5,7 @@ import { z } from "zod"
 
 import config from "@/payload.config"
 
-import type { GalleryArea, GalleryPhoto } from "@/payload-types"
+import type { GalleryArea, GalleryPhoto } from "cms-types/src"
 import type { Payload } from "payload"
 
 const OK_STATUS = 200

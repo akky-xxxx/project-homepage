@@ -9,7 +9,6 @@ export const IGNORES = {
     // payload migrate:create が生成するため対象外にする
     "src/migrations/**",
     "src/payload-generated-schema.ts",
-    "src/payload-types.ts",
     "test-results",
   ],
 }
