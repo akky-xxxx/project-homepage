@@ -3,6 +3,7 @@ const payload = [/src\/payload\.config\.ts/]
 
 const collections = [/collections\/[A-Z][\dA-Za-z]+\/index\.ts/]
 const components = [/components\/[A-Z][\dA-Za-z]+\/index\.tsx/]
+const modules = [/modules\/[a-z][\dA-Za-z]+\/index\.ts/]
 const types = [/types\/[A-Z][\dA-Za-z]+\/index\.ts/]
 
 const shared = [
@@ -18,6 +19,15 @@ const tests = [
 
 const scripts = [/scripts\/[a-z][\dA-Za-z]+\/index\.ts/]
 
-const allowPatterns = [payload, collections, components, types, shared, tests, scripts].flat()
+const allowPatterns = [
+  payload,
+  collections,
+  components,
+  modules,
+  types,
+  shared,
+  tests,
+  scripts,
+].flat()
 
 export const FILE_PATH_PATTERNS = [2, { allowPatterns }]
