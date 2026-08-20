@@ -51,5 +51,5 @@ tools: Read, Grep, Glob, Bash
 - 類似の既存実装(あれば、ファイルパス付き)とそこから読み取れる慣習
 - 再利用可能な既存の shared 資産
 - 設計時に踏襲すべき慣習・注意点(ESLint で機械的に強制される命名パターンを含む)
-- 生成物・手編集禁止ファイルが関わる場合はその明示(`packages/cms/src/payload-types.ts`, `packages/cms/src/migrations/**`, `packages/module-images-db/src/const/IMAGES`)
+- 生成物・手編集禁止ファイルが関わる場合はその明示(`packages/cms-types/src/payload-types.ts`, `packages/cms/src/migrations/**`, `packages/module-images-db/src/const/IMAGES`)
 - 慣習が定まっていない、または既存実装がない領域(あれば明示)

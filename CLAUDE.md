@@ -4,11 +4,12 @@
 
 ## リポジトリ概要
 
-これは `akky-xxxx` の個人ホームページ/フォトギャラリーサイトです。Bun で管理されたモノレポで、`packages/` 配下に3つのワークスペースパッケージがあります。
+これは `akky-xxxx` の個人ホームページ/フォトギャラリーサイトです。Bun で管理されたモノレポで、`packages/` 配下に4つのワークスペースパッケージがあります。
 
 - **`main`** — 公開サイト本体。[HonoX](https://github.com/honojs/honox)（Hono + ファイルベースルーティング、アイランドアーキテクチャ）で構築され、Vite でビルドし、Wrangler 経由で Cloudflare Pages にデプロイされる。
-- **`module-images-db`** — 写真のメタデータ（`ImagesDataBase`）を保持し、新しい写真を最適化して Google Cloud Storage にアップロード・メタデータを再生成する CLI スクリプトを提供する、独立したデータ/ビルド用パッケージ。`main` はこれを `module-images-db: "workspace:*"` として依存に持ち、`ImagesDataBase`、`Locations`、`Tags`、`Months` を静的データとしてインポートしている（実行時DBは無し）。
-- **`cms`** — フォトギャラリーの管理画面。Payload CMS + Better Auth(passkey)で構築され、DB は PostgreSQL(`@payloadcms/db-vercel-postgres`)、画像は Vercel Blob、ホスティングは Vercel。`main`/`module-images-db` とは独立したパッケージで、管理者1人だけの運用を前提にしている。詳細は `packages/cms/README.md` を参照。
+- **`module-images-db`** — 写真のメタデータ（`ImagesDataBase`）を保持し、新しい写真を最適化して Google Cloud Storage にアップロード・メタデータを再生成する CLI スクリプトを提供する、独立したデータ/ビルド用パッケージ。`main` はこれを `module-images-db: "workspace:*"` として依存に持ち、`ImagesDataBase`、`Locations`、`Tags`、`Months` を静的データとしてインポートしている(実行時DBは無し)。
+- **`cms`** — フォトギャラリーの管理画面。Payload CMS + Better Auth(passkey)で構築され、DB は PostgreSQL(`@payloadcms/db-vercel-postgres`)、画像は Vercel Blob、ホスティングは Vercel。管理者1人だけの運用を前提にしている。詳細は `packages/cms/README.md` を参照。
+- **`cms-types`** — `cms` の `payload generate:types` が出力する型定義(`src/payload-types.ts`)を置く、独立した型定義専用パッケージ。`cms`/`main` はこれを `cms-types: "workspace:*"` として依存に持ち、`cms-types/src` から型をインポートする。詳細は `packages/cms-types/README.md` を参照。
 
 パッケージマネージャーは **Bun のみ** — `npm`/`yarn`/`pnpm` は意図的に無効化されている（ルート `package.json` の `engines` を参照。Bun を使うよう日本語で警告が表示される）。
 
@@ -98,15 +99,21 @@ bun payload migrate:create <name>   # コレクション/フィールド変更�
 - **コレクション**: `src/collections/` の `GalleryAreas`/`GalleryPhotos`/`GalleryTags`(写真メタデータ)と `Users`(admin 限定で書き込み可能。`role`/`emailVerified` はフィールド単位でも admin チェックが入る)。
 - **マイグレーション**: `src/migrations/` に手動生成・コミットする(`bun payload migrate:create <name>`)。生成物のため lint/format 対象外で、手で編集しない。ローカル開発は Payload の dev push でスキーマが自動生成されるためマイグレーション実行は不要。`vercel-build` が `payload migrate` を実行してから本番ビルドする。
 - **画像ストレージ**: `BLOB_READ_WRITE_TOKEN` があれば Vercel Blob、無ければローカルディスクに保存(`@payloadcms/storage-vercel-blob`)。
-- `src/payload-types.ts` は `payload generate:types` の生成物。
+- `payload generate:types` の生成物 `payload-types.ts` は `packages/cms-types` 側(`src/payload-types.ts`)に置かれ、`cms` からは `cms-types: "workspace:*"` の依存経由で `cms-types/src` からインポートする(`outputFile` も `payload.config.ts` で `packages/cms-types/src/payload-types.ts` を指すよう設定している)。
 - 認証の詳細設計、本番初回セットアップ手順、写真投入手順、passkey 紛失時の復旧手順、Vercel 運用チェックリストは `packages/cms/README.md` に詳しくまとまっている。
+
+### `cms-types` — 生成型定義パッケージ
+
+- `packages/cms` の `payload generate:types` が出力する `src/payload-types.ts` を置くためだけのパッケージ。`src/payload-types.ts` は生成物のため手で編集しない。
+- `src/index.ts` は唯一の手書きファイルで、`payload-types.ts` の型を re-export する。`declare module "payload"` の module augmentation を `tsc` に有効なものとして認識させるには、同一プログラム内のどこかで `payload` から実在する型を参照する named type import が必要で、`src/index.ts` の `import type { Payload } from "payload"` がそのアンカーを兼ねている。
+- 消費側(`cms`/`main`)からは `module-images-db/src` と同じ形で `cms-types/src` のサブパスからインポートする。
 
 ## 規約
 
 - **1フォルダにつき1エクスポート、常に `index.ts`/`index.tsx`**: コンポーネント、util、const、type、style、hook などほぼすべての単位が、エクスポート対象の名前を持つ専用ディレクトリに配置され、中身は `index.ts(x)` のみとなっている。これはルートの `eslint.config.mjs` にある `sc-js/file-path-patterns` ESLint ルールで強制されており、設定ファイルなど一部のみが許可リストの例外となっている。新規ファイルを追加する際もこのパターンに従うこと。単独のファイルを並べて置かない。
 - **テストのコロケーション(`main`/`module-images-db`)**: `index.test.ts` はテスト対象の `index.ts` の隣に置かれ、`bun:test`（`describe`/`it`/`expect`、しばしば `it.each` を使用）で書かれる。`cms` はこの規約の対象外で、結合テストは `tests/int/**/*.int.spec.ts`(Vitest)、E2E は `tests/e2e/**/*.e2e.spec.ts`(Playwright)に配置する(詳細は `packages/cms/README.md` の「テスト」節を参照)。
-- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名（現状 `module-images-db`、`main`、`cms`)のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。type/scope 以外の説明文(subject/body)は英語で書く(チャットでの応答等における日本語既定の例外。commitlint による機械的な強制は無いが、コミット履歴はこれまで英語で統一されている)。
-- **品質ゲートは GitHub Actions**（`.github/workflows/check-code.yml`）: pull request と、`deploy-main.yml` からの `workflow_call`（`develop`/`main` への push）で走る。`dorny/paths-filter` で変更パスを判定し、影響のあるパッケージのジョブだけを実行する（共有資材 — `bun.lock`、ルート `package.json`、`bunfig.toml`、`tsconfig.json`、`config/**`、`.github/actions/**` — の変更時は全パッケージ）。`main` は `module-images-db` の変更でも走る（workspace 依存のため）。ジョブは変更差分によってスキップされるため、branch protection の required status check には集約ジョブ `checked` を登録する。husky に残っているのは `commit-msg`（commitlint）のみで、push 時のローカルチェックは無い。
+- **コミットメッセージ**: commitlint（`commitlint.config.ts`）によって、`commit-msg` の husky フック（`bun commitlint`）経由で強制される。Conventional Commits のタイプのみ許可: `chore|feat|fix|docs|style|refactor|test|revert`。`scope` は**必須**で、`root`、`*`、`packages`、またはワークスペースパッケージのディレクトリ名(現状 `module-images-db`、`main`、`cms`、`cms-types`)のいずれかでなければならない — `config/commitlint/dirs` を参照。例: `refactor(module-images-db): rename to PREFECTURES`。type/scope 以外の説明文(subject/body)は英語で書く(チャットでの応答等における日本語既定の例外。commitlint による機械的な強制は無いが、コミット履歴はこれまで英語で統一されている)。
+- **品質ゲートは GitHub Actions**（`.github/workflows/check-code.yml`）: pull request と、`deploy-main.yml` からの `workflow_call`（`develop`/`main` への push）で走る。`dorny/paths-filter` で変更パスを判定し、影響のあるパッケージのジョブだけを実行する（共有資材 — `bun.lock`、ルート `package.json`、`bunfig.toml`、`tsconfig.json`、`config/**`、`.github/actions/**` — の変更時は全パッケージ）。`main` は `module-images-db` の変更でも走る(workspace 依存のため)。`cms`/`main` は `cms-types` の変更でも走る(いずれも `cms-types` に workspace 依存しているため)。ジョブは変更差分によってスキップされるため、branch protection の required status check には集約ジョブ `checked` を登録する。husky に残っているのは `commit-msg`（commitlint）のみで、push 時のローカルチェックは無い。
 - **GitHub Actions の action はコミットハッシュで固定する**: tag ではなく SHA で指定し、行末コメントに `# v4.3.1` の形式でバージョンを添える。更新は手動。
 - Lint は階層化されている: ルートの ESLint 設定はトップレベル/設定ファイルのみを対象とする（`eslint.config.mjs`、`ignores: ["packages"]`）。各パッケージは自身の `app/`/`src/` 用に独自の `eslint.config.js.mjs` を持ち、そのパッケージの `lint:product-code`/`lint:config` スクリプト経由で実行される。
 - 整形は Prettier が担い、ESLint 側には整形ルールを持たせていない。各パッケージの `fix`/`lint` は `fix:prettier`/`lint:prettier` として ESLint とは別ステップで実行される。

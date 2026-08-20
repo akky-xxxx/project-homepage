@@ -48,6 +48,7 @@
         "@payloadcms/storage-vercel-blob": "3.86.0",
         "@payloadcms/ui": "3.86.0",
         "better-auth": "1.6.25",
+        "cms-types": "workspace:*",
         "cross-env": "^7.0.3",
         "dotenv": "16.4.7",
         "graphql": "^16.8.1",
@@ -115,6 +116,7 @@
         "eslint-plugin-sc-js": "0.3.0",
         "fixpack": "4.0.0",
         "npm-run-all2": "9.0.2",
+        "payload": "3.86.0",
         "prettier": "3.9.5",
         "typescript": "5.9.3",
       },
@@ -127,6 +129,7 @@
       "version": "0.0.0",
       "dependencies": {
         "@formkit/tempo": "1.1.0",
+        "cms-types": "workspace:*",
         "hono": "4.12.29",
         "honox": "0.1.58",
         "js-cookie": "3.0.8",

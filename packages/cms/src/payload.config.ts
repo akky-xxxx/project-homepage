@@ -50,7 +50,7 @@ export default buildConfig({
   secret: ENVIRONMENT.PAYLOAD_SECRET,
 
   typescript: {
-    outputFile: path.resolve(dirname, "payload-types.ts"),
+    outputFile: path.resolve(dirname, "../../cms-types/src/payload-types.ts"),
   },
 
   db: vercelPostgresAdapter({

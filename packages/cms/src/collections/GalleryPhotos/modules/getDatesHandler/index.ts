@@ -1,4 +1,4 @@
-import type { GalleryPhoto } from "@/payload-types"
+import type { GalleryPhoto } from "cms-types/src"
 import type { PayloadHandler } from "payload"
 
 const MONTH_INDEX_OFFSET = 1

@@ -12,7 +12,7 @@ tools: Read, Grep, Glob, Bash
 - 1フォルダ1エクスポート・`index.ts(x)` のみ、ディレクトリ名が ESLint `sc-js/file-path-patterns` の許容パターンに合致しているか
 - 型安全性(`any` の混入、不要なキャスト、`as` による握りつぶし、Props 型名が `Props` になっているか)
 - 環境変数を `process.env` で直参照していないか(schema / const 経由になっているか)
-- 手編集禁止の生成物(`packages/cms/src/payload-types.ts`, `packages/cms/src/migrations/**`, `packages/module-images-db/src/const/IMAGES`)が手で書き換えられていないか
+- 手編集禁止の生成物(`packages/cms-types/src/payload-types.ts`, `packages/cms/src/migrations/**`, `packages/module-images-db/src/const/IMAGES`)が手で書き換えられていないか
 - 責務に対して複雑度が高すぎないか(ESLint の上限は 8)
 
 ## レビュー観点(`packages/main`)

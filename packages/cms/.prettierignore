@@ -4,5 +4,4 @@ playwright-report/**
 src/app/(payload)/importMap.js
 src/migrations/**
 src/payload-generated-schema.ts
-src/payload-types.ts
 test-results/**

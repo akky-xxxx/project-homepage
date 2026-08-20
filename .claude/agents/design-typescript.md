@@ -31,7 +31,7 @@ tools: Read, Grep, Glob, Bash
 - Payload の設計論点(collection の field 定義、access control、hooks、relationship)は `.claude/skills/payload` skill と `packages/cms/README.md` を参照して判断する
 - Server / Client Component の境界設計が有効なのはこのパッケージのみ。`"use client"` は状態・副作用・イベントハンドラを持つ末端コンポーネントにだけ付ける
 - 環境変数は `src/shared/const/ENVIRONMENT` 経由で参照する(`process.env` 直参照は ESLint `sc-js/restrict-use-of-process-env` で禁止)
-- `src/payload-types.ts` と `src/migrations/**` は生成物。設計上これらを手で書く前提を置かない。コレクション / フィールドを変更する設計なら「マイグレーション生成が必要」と明記する
+- `packages/cms-types/src/payload-types.ts`(`payload generate:types` の生成物)と `src/migrations/**` は生成物。設計上これらを手で書く前提を置かない。コレクション / フィールドを変更する設計なら「マイグレーション生成が必要」と明記する
 
 ## 共通の設計制約
 
