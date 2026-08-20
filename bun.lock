@@ -98,6 +98,30 @@
         "vitest": "4.0.18",
       },
     },
+    "packages/cms-types": {
+      "name": "cms-types",
+      "version": "0.0.0",
+      "devDependencies": {
+        "@eslint/eslintrc": "3.3.6",
+        "@eslint/js": "9.39.5",
+        "@tsconfig/bun": "1.0.10",
+        "cspell": "10.0.1",
+        "editorconfig-checker": "6.1.1",
+        "eslint": "9.39.5",
+        "eslint-config-prettier": "10.1.8",
+        "eslint-config-sc-all": "0.2.2",
+        "eslint-config-sc-js": "0.2.2",
+        "eslint-plugin-import": "2.32.0",
+        "eslint-plugin-sc-js": "0.3.0",
+        "fixpack": "4.0.0",
+        "npm-run-all2": "9.0.2",
+        "prettier": "3.9.5",
+        "typescript": "5.9.3",
+      },
+      "peerDependencies": {
+        "typescript": "5.9.3",
+      },
+    },
     "packages/main": {
       "name": "main",
       "version": "0.0.0",
@@ -1477,6 +1501,8 @@
     "clsx": ["clsx@2.1.1", "", {}, "sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA=="],
 
     "cms": ["cms@workspace:packages/cms"],
+
+    "cms-types": ["cms-types@workspace:packages/cms-types"],
 
     "co": ["co@4.6.0", "", {}, "sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ=="],
 
