@@ -166,16 +166,23 @@ jobs:
           --health-timeout 5s
           --health-retries 5
     env:
-      # CI 専用の捨て値。ローカル DB に繋ぐため BLOB_READ_WRITE_TOKEN は設定しない
-      # (未設定なら画像はローカルディスクに保存される)
+      # CI 専用の捨て値。packages/cms/.env.example 側はドキュメント用のプレースホルダで
+      # 32文字未満のため EnvironmentSchema の必須要件(32文字以上)を満たせず、そのままでは使えない。
+      # このためこの2つだけ .env.example と別値のまま workflow 側にリテラルで残す。
+      # ローカル DB に繋ぐため BLOB_READ_WRITE_TOKEN は設定しない(未設定なら画像はローカルディスクに保存される)
       BETTER_AUTH_SECRET: ci-better-auth-secret-0000000000000000
-      BETTER_AUTH_URL: http://localhost:3000
-      DB_POSTGRES_URL: postgres://postgres:postgres@127.0.0.1:5432/cms
       PAYLOAD_SECRET: ci-payload-secret-00000000000000000000
-      # int テストのテストユーザー(packages/cms/tests/helpers/testUser)に合わせる
-      SIGN_UP_ALLOWED_EMAIL: example@example.com
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      # DB_POSTGRES_URL/BETTER_AUTH_URL/SIGN_UP_ALLOWED_EMAIL は packages/cms/.env.example と
+      # 値が一致すべきもの。手書きで二重管理すると片方だけ更新されたズレがローカルでは検出できず
+      # CI でしか表面化しない(過去に SIGN_UP_ALLOWED_EMAIL で発生)。.env.example を単一の
+      # 参照元にし、キーが欠落していたら grep が非ゼロ終了してこのステップ自体を失敗させる
+      - name: Load shared env from .env.example
+        run: |
+          for key in BETTER_AUTH_URL DB_POSTGRES_URL SIGN_UP_ALLOWED_EMAIL; do
+            grep -E "^${key}=" packages/cms/.env.example >> "$GITHUB_ENV"
+          done
       - uses: ./.github/actions/setup-bun
       # playwright.config.ts が channel: "chromium" を要求するため、
       # lockfile の playwright に対応するブラウザと OS 依存を入れる
