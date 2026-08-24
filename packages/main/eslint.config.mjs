@@ -29,6 +29,25 @@ const config = [
 
   {
     rules: {
+      // CMS_API_KEY を含む apiClient/ENVIRONMENT が client(island・client.ts)側の
+      // import グラフへ混入することの早期検知。ただし import.meta.env.CMS_API_KEY への
+      // 直接参照や中継モジュール経由の推移的な import までは検知できないため、実際の保証は
+      // package.json の check:client-bundle-secrets(ビルド成果物の検査)側で行う
+      "import/no-restricted-paths": [
+        2,
+        {
+          zones: [
+            {
+              from: [
+                "./app/shared/utils/apiClient/**",
+                "./app/shared/const/ENVIRONMENT/**",
+                "./app/shared/schemas/EnvironmentSchema/**",
+              ],
+              target: ["./app/islands/**", "./app/client.ts"],
+            },
+          ],
+        },
+      ],
       "react/no-unknown-property": [
         2,
         {

@@ -1,5 +1,6 @@
 node_modules
 dist
+dist-client-bundle-secrets-check
 .wrangler
 .dev.vars
 .hono
