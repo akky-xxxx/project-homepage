@@ -1,4 +1,5 @@
 import { isAdmin } from "@/shared/utilities/isAdmin"
+import { isApiClient } from "@/shared/utilities/isApiClient"
 
 import { getDatesHandler } from "./modules/getDatesHandler"
 
@@ -15,7 +16,7 @@ export const GalleryPhotos: CollectionConfig = {
     admin: isAdmin,
     create: isAdmin,
     delete: isAdmin,
-    read: () => true,
+    read: ({ req }) => isAdmin({ req }) || isApiClient({ req }),
     update: isAdmin,
   },
 

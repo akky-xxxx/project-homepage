@@ -1,4 +1,5 @@
 import { isAdmin } from "@/shared/utilities/isAdmin"
+import { isApiClient } from "@/shared/utilities/isApiClient"
 
 import type { CollectionConfig } from "payload"
 
@@ -13,7 +14,7 @@ export const GalleryAreas: CollectionConfig = {
     admin: isAdmin,
     create: isAdmin,
     delete: isAdmin,
-    read: () => true,
+    read: ({ req }) => isAdmin({ req }) || isApiClient({ req }),
     update: isAdmin,
   },
 

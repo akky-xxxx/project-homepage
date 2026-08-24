@@ -12,6 +12,7 @@ import { buildConfig } from "payload"
 import sharp from "sharp"
 import { fileURLToPath } from "url"
 
+import { ApiKeys } from "./collections/ApiKeys"
 import { GalleryAreas } from "./collections/GalleryAreas"
 import { GalleryPhotos } from "./collections/GalleryPhotos"
 import { GalleryTags } from "./collections/GalleryTags"
@@ -40,7 +41,7 @@ export default buildConfig({
     },
   },
 
-  collections: [GalleryAreas, GalleryPhotos, GalleryTags, Users],
+  collections: [ApiKeys, GalleryAreas, GalleryPhotos, GalleryTags, Users],
   editor: lexicalEditor(),
 
   routes: {
@@ -77,8 +78,9 @@ export default buildConfig({
       token: ENVIRONMENT.BLOB_READ_WRITE_TOKEN,
 
       collections: {
-        // GalleryPhotos は read: () => true の全公開コレクションで、Payload の access control を
-        // 通す意味が無い。staticHandler(Vercel Function)を経由させず Blob の CDN から直接配信する
+        // 画像バイナリは Blob の public URL を直接指すため、コレクションの read 制御を通しても
+        // 画像自体の公開性は変わらない。staticHandler(Vercel Function)を経由させず
+        // Blob の CDN から直接配信する
         [GalleryPhotos.slug]: { disablePayloadAccessControl: true },
       },
     }),
