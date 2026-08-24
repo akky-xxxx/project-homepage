@@ -1,5 +1,6 @@
 formkit
 hono
 honox
+ofetch
 remeda
 sonarjs
