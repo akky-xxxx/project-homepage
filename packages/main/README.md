@@ -12,11 +12,21 @@
 bun install
 ```
 
-`.env.example` を参考に `.env` を作成し、`VITE_IMAGE_HOST` を設定する。
+`.env.example` を参考に `.env` を作成し、`VITE_IMAGE_HOST`・`CMS_HOST`・`CMS_API_KEY` を設定する。
 
 ```bash
 cp .env.example .env
 ```
+
+## 環境変数
+
+| 変数              | 用途                                                                               | ローカル                       | GitHub Actions(デプロイ) |
+| ----------------- | ---------------------------------------------------------------------------------- | ------------------------------ | ------------------------ |
+| `VITE_IMAGE_HOST` | 写真画像を配信するホスト                                                           | `.env`                         | `vars.VITE_IMAGE_HOST`   |
+| `CMS_HOST`        | `cms` の API ホスト                                                                | `.env`                         | `vars.CMS_HOST`          |
+| `CMS_API_KEY`     | `cms` の `api-keys` コレクションで発行する API Key。`Authorization` ヘッダーに使う | `.env`(`cms` の管理画面で発行) | `secrets.CMS_API_KEY`    |
+
+`CMS_HOST`・`CMS_API_KEY` は `VITE_` 接頭辞の変数と同じ仕組み(Vite の `envPrefix`)で埋め込まれるが、これはビルド時に値が定数として埋め込まれることを意味するだけで、サーバー専用データであることを保証しない。実際の安全性は `vite.config.ts` のコメントと `check:client-bundle-secrets` gate(`package.json`)で担保している。
 
 ## よく使うコマンド
 
