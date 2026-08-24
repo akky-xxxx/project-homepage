@@ -96,7 +96,7 @@ bun payload migrate:create <name>   # コレクション/フィールド変更�
 ### `cms` — フォトギャラリー管理画面
 
 - Next.js 上に構築された Payload CMS。認証は `@delmaredigital/payload-better-auth` 経由の Better Auth で、passkey 専用(password はブートストラップ専用で、passkey 登録後は `authBeforeHook` が拒否する)。
-- **コレクション**: `src/collections/` の `GalleryAreas`/`GalleryPhotos`/`GalleryTags`(写真メタデータ)と `Users`(admin 限定で書き込み可能。`role`/`emailVerified` はフィールド単位でも admin チェックが入る)。
+- **コレクション**: `src/collections/` の `GalleryAreas`/`GalleryPhotos`/`GalleryTags`(写真メタデータ)、`Users`(admin 限定で書き込み可能。`role`/`emailVerified` はフィールド単位でも admin チェックが入る)、`ApiKeys`(`main` からの API 呼び出しを認証する API Key 専用コレクション。発行・削除は admin 限定)。
 - **マイグレーション**: `src/migrations/` に手動生成・コミットする(`bun payload migrate:create <name>`)。生成物のため lint/format 対象外で、手で編集しない。ローカル開発は Payload の dev push でスキーマが自動生成されるためマイグレーション実行は不要。`vercel-build` が `payload migrate` を実行してから本番ビルドする。
 - **画像ストレージ**: `BLOB_READ_WRITE_TOKEN` があれば Vercel Blob、無ければローカルディスクに保存(`@payloadcms/storage-vercel-blob`)。
 - `payload generate:types` の生成物 `payload-types.ts` は `packages/cms-types` 側(`src/payload-types.ts`)に置かれ、`cms` からは `cms-types: "workspace:*"` の依存経由で `cms-types/src` からインポートする(`outputFile` も `payload.config.ts` で `packages/cms-types/src/payload-types.ts` を指すよう設定している)。

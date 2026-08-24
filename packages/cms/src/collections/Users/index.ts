@@ -24,7 +24,7 @@ export const Users: CollectionConfig = {
     // eslint-disable-next-line sonarjs/function-return-type
     read: (arguments_) => {
       const { req } = arguments_
-      if (!req.user) return false
+      if (req.user?.collection !== "users") return false
       if (req.user.role === "admin") return true
       return { id: { equals: req.user.id } }
     },

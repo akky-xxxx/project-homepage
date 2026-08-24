@@ -141,7 +141,8 @@ TOTP の検証に 5 回連続で失敗してロックアウトされた場合は
 - `role` はサーバー側専用のフィールドで、サインアップ時にクライアントから指定できない。最初の 1 人だけが `admin` になる。
 - `users` コレクションの create / update / delete は admin 限定。`role` と `emailVerified` にはフィールド単位の admin チェックも入れてある。
 - 画像は `BLOB_READ_WRITE_TOKEN` があれば Vercel Blob、無ければローカルディスクに保存する。アップロード上限は 30MB(`payload.config.ts` の `upload.limits.fileSize`)で、超過時は 413 を返す。
-- 本番で API が返す画像 URL は Blob の public ドメイン(`https://<storeId>.public.blob.vercel-storage.com/...`)を直接指す。`gallery-photos` は `read: () => true` の全公開コレクションで Payload の access control を通す意味が無いため、`disablePayloadAccessControl: true` を指定し、CMS ドメインの `/api/gallery-photos/file/...`(Vercel Function)を経由させずに Blob の CDN から配信する。`BLOB_READ_WRITE_TOKEN` が無いローカル / CI ではプラグインごと無効になるため、従来通りローカルディスク + `/api/gallery-photos/file/...` になる。
+- 本番で API が返す画像 URL は Blob の public ドメイン(`https://<storeId>.public.blob.vercel-storage.com/...`)を直接指す。画像バイナリは Blob の public URL を直接指すため、コレクションの read 制御を通しても画像自体の公開性は変わらない。そのため `disablePayloadAccessControl: true` を指定し、CMS ドメインの `/api/gallery-photos/file/...`(Vercel Function)を経由させずに Blob の CDN から配信する。`BLOB_READ_WRITE_TOKEN` が無いローカル / CI ではプラグインごと無効になるため、従来通りローカルディスク + `/api/gallery-photos/file/...` になる。
+- **`main` からの API 呼び出しは `api-keys` コレクションの API Key で認証する。** `GalleryAreas`/`GalleryPhotos`/`GalleryTags` の `access.read` と、`GalleryPhotos` のカスタムエンドポイント `gallery-photos/months`(`getDatesHandler`)は、`isAdmin`(admin セッション)または `isApiClient`(`req.user.collection === "api-keys"`)のどちらかを満たすリクエストのみ許可する。`api-keys` は `auth: { disableLocalStrategy: true, useAPIKey: true }` で local strategy(email/password ログイン)を無効化した API Key 専用コレクションで、発行・削除は admin のみ行える。リクエスト側は `Authorization: api-keys API-Key <値>` ヘッダーを付与する(Payload の API Key 認証の既定フォーマット)。
 
 ## パスワード変更
 

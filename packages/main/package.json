@@ -4,6 +4,7 @@
   "scripts": {
     "build": "vite build --mode client && vite build",
     "check-code": "npm-run-all -p lint spell-check type-check -c",
+    "check:client-bundle-secrets": "rm -rf dist-client-bundle-secrets-check && CMS_HOST=http://localhost:3000 CMS_API_KEY=check-client-bundle-secrets-canary vite build --mode client --outDir dist-client-bundle-secrets-check && ( ! grep -rq check-client-bundle-secrets-canary dist-client-bundle-secrets-check ); result=$?; rm -rf dist-client-bundle-secrets-check; exit $result",
     "deploy": "$npm_execpath run build && wrangler pages deploy ./dist",
     "dev": "vite",
     "fix": "run-p fix:config fix:pack fix:product-code fix:prettier -c",

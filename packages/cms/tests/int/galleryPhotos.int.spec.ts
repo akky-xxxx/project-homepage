@@ -1,11 +1,19 @@
 // @vitest-environment node
 import { getPayload } from "payload"
 import sharp from "sharp"
-import { beforeAll, describe, expect, it } from "vitest"
+import { afterAll, beforeAll, describe, expect, it } from "vitest"
 
 import config from "@/payload.config"
 
+import { callGetRoute } from "../helpers/callGetRoute"
+import { createTestApiKey } from "../helpers/createTestApiKey"
+import { deleteUserByEmail } from "../helpers/deleteUserByEmail"
+import { getTestUserAuthHeaders } from "../helpers/getTestUserAuthHeaders"
+
 import type { Payload } from "payload"
+
+const FORBIDDEN_STATUS = 403
+const OK_STATUS = 200
 
 let payload: Payload
 
@@ -52,16 +60,95 @@ describe("gallery-photos collection", () => {
     await payload.delete({ collection: "gallery-areas", id: area.id })
     await payload.delete({ collection: "gallery-tags", id: tag.id })
   })
+})
 
-  it("未認証でも gallery-photos/gallery-areas/gallery-tags を read できる", async () => {
-    const [photos, areas, tags] = await Promise.all([
-      payload.find({ collection: "gallery-photos", overrideAccess: false }),
-      payload.find({ collection: "gallery-areas", overrideAccess: false }),
-      payload.find({ collection: "gallery-tags", overrideAccess: false }),
-    ])
+describe("gallery-photos/gallery-areas/gallery-tags の REST read アクセス制御", () => {
+  const ADMIN_EMAIL = "gallery-read-admin@example.com"
+  const MEMBER_EMAIL = "gallery-read-member@example.com"
+  const RAW_API_KEY = "gallery-photos-spec-raw-api-key"
 
-    expect(photos).toBeDefined()
-    expect(areas).toBeDefined()
-    expect(tags).toBeDefined()
+  let apiKeyId: number
+  let adminId: number
+  let memberId: number
+
+  beforeAll(async () => {
+    payload = await getPayload({ config: await config })
+
+    await deleteUserByEmail(ADMIN_EMAIL)
+    await deleteUserByEmail(MEMBER_EMAIL)
+
+    // 先に admin を作ることで、続く member 作成が first-user-admin ガードの対象にならないようにする
+    const admin = await payload.create({
+      collection: "users",
+      data: { email: ADMIN_EMAIL, name: "Gallery Read Admin", role: "admin" },
+      user: { role: "admin" },
+    })
+    const member = await payload.create({
+      collection: "users",
+      data: { email: MEMBER_EMAIL, name: "Gallery Read Member", role: "user" },
+      user: { role: "admin" },
+    })
+    adminId = admin.id
+    memberId = member.id
+
+    apiKeyId = await createTestApiKey(RAW_API_KEY)
+  })
+
+  afterAll(async () => {
+    await payload.delete({ collection: "api-keys", id: apiKeyId, overrideAccess: true })
+    await deleteUserByEmail(ADMIN_EMAIL)
+    await deleteUserByEmail(MEMBER_EMAIL)
+  })
+
+  it.each([
+    { expectedStatus: FORBIDDEN_STATUS, getHeaders: () => undefined, name: "未認証" },
+    {
+      expectedStatus: FORBIDDEN_STATUS,
+      getHeaders: () => ({ authorization: "api-keys API-Key wrong-key-value" }),
+      name: "不正な API Key",
+    },
+    {
+      expectedStatus: OK_STATUS,
+      getHeaders: () => ({ authorization: `api-keys API-Key ${RAW_API_KEY}` }),
+      name: "正しい API Key",
+    },
+    {
+      expectedStatus: OK_STATUS,
+      getHeaders: () => getTestUserAuthHeaders(String(adminId)),
+      name: "admin セッション",
+    },
+    {
+      expectedStatus: FORBIDDEN_STATUS,
+      getHeaders: () => getTestUserAuthHeaders(String(memberId)),
+      name: "非 admin セッション",
+    },
+  ])(
+    "$name のとき gallery-areas への read は $expectedStatus を返す",
+    async ({ getHeaders, expectedStatus }) => {
+      const headers = await getHeaders()
+      const response = await callGetRoute(["gallery-areas"], { headers })
+
+      expect(response.status).toBe(expectedStatus)
+    },
+  )
+
+  it("gallery-photos も同じ access 制御を適用する(未認証は拒否、正しい API Key は許可)", async () => {
+    const unauthorized = await callGetRoute(["gallery-photos"])
+    expect(unauthorized.status).toBe(FORBIDDEN_STATUS)
+
+    const authorized = await callGetRoute(["gallery-photos"], {
+      headers: { authorization: `api-keys API-Key ${RAW_API_KEY}` },
+    })
+    expect(authorized.status).toBe(OK_STATUS)
+  })
+
+  it("gallery-tags も同じ access 制御を適用する(未認証は拒否、正しい API Key は許可)", async () => {
+    const unauthorized = await callGetRoute(["gallery-tags"])
+    expect(unauthorized.status).toBe(FORBIDDEN_STATUS)
+
+    const authorized = await callGetRoute(["gallery-tags"], {
+      headers: { authorization: `api-keys API-Key ${RAW_API_KEY}` },
+    })
+    expect(authorized.status).toBe(OK_STATUS)
   })
 })

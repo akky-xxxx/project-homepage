@@ -99,6 +99,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - working-directory: packages/main
         run: bun run test
+      # CMS_API_KEY が client 向けビルド成果物に混入していないことを検査する gate。
+      # ダミーのカナリア値を script 内部で設定するため、実際の secrets は不要
+      - working-directory: packages/main
+        run: bun run check:client-bundle-secrets
 
   module-images-db:
     needs: changes

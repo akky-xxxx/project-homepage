@@ -63,10 +63,12 @@ export type SupportedTimezones =
 
 export interface Config {
   auth: {
+    'api-keys': ApiKeyAuthOperations;
     users: UserAuthOperations;
   };
   blocks: {};
   collections: {
+    'api-keys': ApiKey;
     'gallery-areas': GalleryArea;
     'gallery-photos': GalleryPhoto;
     'gallery-tags': GalleryTag;
@@ -83,6 +85,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    'api-keys': ApiKeysSelect<false> | ApiKeysSelect<true>;
     'gallery-areas': GalleryAreasSelect<false> | GalleryAreasSelect<true>;
     'gallery-photos': GalleryPhotosSelect<false> | GalleryPhotosSelect<true>;
     'gallery-tags': GalleryTagsSelect<false> | GalleryTagsSelect<true>;
@@ -107,10 +110,28 @@ export interface Config {
   widgets: {
     collections: CollectionsWidget;
   };
-  user: User;
+  user: ApiKey | User;
   jobs: {
     tasks: unknown;
     workflows: unknown;
+  };
+}
+export interface ApiKeyAuthOperations {
+  forgotPassword: {
+    email: string;
+    password: string;
+  };
+  login: {
+    email: string;
+    password: string;
+  };
+  registerFirstUser: {
+    email: string;
+    password: string;
+  };
+  unlock: {
+    email: string;
+    password: string;
   };
 }
 export interface UserAuthOperations {
@@ -130,6 +151,19 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "api-keys".
+ */
+export interface ApiKey {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  enableAPIKey?: boolean | null;
+  apiKey?: string | null;
+  apiKeyIndex?: string | null;
+  collection: 'api-keys';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -314,6 +348,10 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
+        relationTo: 'api-keys';
+        value: number | ApiKey;
+      } | null)
+    | ({
         relationTo: 'gallery-areas';
         value: number | GalleryArea;
       } | null)
@@ -350,10 +388,15 @@ export interface PayloadLockedDocument {
         value: number | TwoFactor;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'api-keys';
+        value: number | ApiKey;
+      }
+    | {
+        relationTo: 'users';
+        value: number | User;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -363,10 +406,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: number;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'api-keys';
+        value: number | ApiKey;
+      }
+    | {
+        relationTo: 'users';
+        value: number | User;
+      };
   key?: string | null;
   value?:
     | {
@@ -390,6 +438,17 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "api-keys_select".
+ */
+export interface ApiKeysSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  enableAPIKey?: T;
+  apiKey?: T;
+  apiKeyIndex?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

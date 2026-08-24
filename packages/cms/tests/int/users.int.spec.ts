@@ -5,7 +5,8 @@ import config from "@/payload.config"
 
 import { deleteUserByEmail } from "../helpers/deleteUserByEmail"
 
-import type { Payload, TypedUser } from "payload"
+import type { User } from "cms-types/src"
+import type { Payload } from "payload"
 
 const ADMIN_EMAIL = "access-admin@example.com"
 const MEMBER_EMAIL = "access-member@example.com"
@@ -14,8 +15,8 @@ const NEW_USER_EMAIL = "access-new@example.com"
 const FORBIDDEN_STATUS = 403
 
 let payload: Payload
-let adminUser: TypedUser
-let memberUser: TypedUser
+let adminUser: User
+let memberUser: User
 
 describe("users コレクションのアクセス制御", () => {
   beforeAll(async () => {

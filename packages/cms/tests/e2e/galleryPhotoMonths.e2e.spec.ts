@@ -23,14 +23,24 @@ const createTestPhotoFile = async (name: string) => {
   return { data, mimetype: "image/png", name, size: data.length }
 }
 
+const RAW_API_KEY = "gallery-photo-months-e2e-raw-api-key"
+
 test.describe("GET /api/gallery-photos/months", () => {
   let payload: Payload
   let area: GalleryArea
   let photos: GalleryPhoto[]
+  let apiKeyId: number
 
   test.beforeAll(async () => {
     const payloadConfig = await config
     payload = await getPayload({ config: payloadConfig })
+
+    const apiKeyDocument = await payload.create({
+      collection: "api-keys",
+      data: { apiKey: RAW_API_KEY, enableAPIKey: true },
+      overrideAccess: true,
+    })
+    apiKeyId = apiKeyDocument.id
 
     area = await payload.create({ collection: "gallery-areas", data: { name: "撮影月テスト用" } })
     photos = []
@@ -49,10 +59,13 @@ test.describe("GET /api/gallery-photos/months", () => {
       await payload.delete({ collection: "gallery-photos", id: photo.id })
     }
     await payload.delete({ collection: "gallery-areas", id: area.id })
+    await payload.delete({ collection: "api-keys", id: apiKeyId, overrideAccess: true })
   })
 
   test("撮影月を重複排除し新しい順に返す", async ({ request }) => {
-    const response = await request.get("http://localhost:3000/api/gallery-photos/months")
+    const response = await request.get("http://localhost:3000/api/gallery-photos/months", {
+      headers: { authorization: `api-keys API-Key ${RAW_API_KEY}` },
+    })
     expect(response.status()).toBe(OK_STATUS)
 
     const { months } = GalleryPhotoMonthsResponseSchema.parse(await response.json())
