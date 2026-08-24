@@ -37,6 +37,8 @@ jobs:
         working-directory: packages/main
         run: bun run deploy -- --branch=develop
         env:
+          CMS_API_KEY: ${{ secrets.CMS_API_KEY }}
+          CMS_HOST: ${{ vars.CMS_HOST }}
           VITE_IMAGE_HOST: ${{ vars.VITE_IMAGE_HOST }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
@@ -45,6 +47,8 @@ jobs:
         working-directory: packages/main
         run: bun run deploy -- --branch=main
         env:
+          CMS_API_KEY: ${{ secrets.CMS_API_KEY }}
+          CMS_HOST: ${{ vars.CMS_HOST }}
           VITE_IMAGE_HOST: ${{ vars.VITE_IMAGE_HOST }}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
