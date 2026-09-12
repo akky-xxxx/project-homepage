@@ -50,7 +50,7 @@
     "@types/js-cookie": "3.0.6",
     "@typescript-eslint/parser": "8.69.0",
     "cspell": "10.2.2",
-    "editorconfig-checker": "7.0.0",
+    "editorconfig-checker": "6.2.0",
     "eslint": "9.39.5",
     "eslint-config-prettier": "10.1.8",
     "eslint-config-sc-all": "0.2.2",

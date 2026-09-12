@@ -28,6 +28,16 @@ const config = [
   JSDOC,
 
   {
+    // eslint-plugin-jest の一部ルール(jest/no-deprecated-functions 等)は Jest のバージョンを
+    // 自動検出しようとし、実際に jest パッケージが解決できないと初期化時に例外を投げる。
+    // このリポジトリは bun:test を使っており jest 自体を依存に持たないため、明示的に指定する
+    settings: {
+      jest: {
+        version: 29,
+      },
+    },
+  },
+  {
     rules: {
       // CMS_API_KEY を含む apiClient/ENVIRONMENT が client(island・client.ts)側の
       // import グラフへ混入することの早期検知。ただし import.meta.env.CMS_API_KEY への

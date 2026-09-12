@@ -14,7 +14,7 @@
         "@tsconfig/bun": "1.0.11",
         "@types/bun": "1.4.1",
         "cspell": "10.2.2",
-        "editorconfig-checker": "7.0.0",
+        "editorconfig-checker": "6.2.0",
         "eslint": "9.39.5",
         "eslint-config-prettier": "10.1.8",
         "eslint-config-sc-all": "0.2.2",
@@ -72,7 +72,7 @@
         "@typescript-eslint/parser": "8.65.0",
         "@vitejs/plugin-react": "6.1.1",
         "cspell": "10.2.2",
-        "editorconfig-checker": "7.0.0",
+        "editorconfig-checker": "6.2.0",
         "eslint": "9.39.5",
         "eslint-config-prettier": "10.1.8",
         "eslint-config-sc-all": "0.2.2",
@@ -108,7 +108,7 @@
         "@eslint/js": "9.39.5",
         "@tsconfig/bun": "1.0.11",
         "cspell": "10.2.2",
-        "editorconfig-checker": "7.0.0",
+        "editorconfig-checker": "6.2.0",
         "eslint": "9.39.5",
         "eslint-config-prettier": "10.1.8",
         "eslint-config-sc-all": "0.2.2",
@@ -153,7 +153,7 @@
         "@types/js-cookie": "3.0.6",
         "@typescript-eslint/parser": "8.69.0",
         "cspell": "10.2.2",
-        "editorconfig-checker": "7.0.0",
+        "editorconfig-checker": "6.2.0",
         "eslint": "9.39.5",
         "eslint-config-prettier": "10.1.8",
         "eslint-config-sc-all": "0.2.2",
@@ -201,7 +201,7 @@
         "@types/bun": "1.4.1",
         "@types/uuid": "11.0.0",
         "cspell": "10.2.2",
-        "editorconfig-checker": "7.0.0",
+        "editorconfig-checker": "6.2.0",
         "eslint": "9.39.5",
         "eslint-config-prettier": "10.1.8",
         "eslint-config-sc-all": "0.2.2",
@@ -1477,7 +1477,7 @@
 
     "ecdsa-sig-formatter": ["ecdsa-sig-formatter@1.0.11", "", { "dependencies": { "safe-buffer": "^5.0.1" } }, "sha512-nagl3RYrbNv6kQkeJIpt6NJZy8twLB/2vtz6yN9Z4vRKHN4/QZJIEbqohALSgwKdnksuY3k5Addp5lg8sVoVcQ=="],
 
-    "editorconfig-checker": ["editorconfig-checker@7.0.0", "", { "bin": { "ec": "dist/index.js", "editorconfig-checker": "dist/index.js" } }, "sha512-bqTCyzjz6Qbah4hBO032mQiwGstrHL/jwsnlFvlqrDcpv8rv2pSgLo00Fnji1u6PGtSdY6uydzVLUdHupbpNBQ=="],
+    "editorconfig-checker": ["editorconfig-checker@6.2.0", "", { "bin": { "ec": "dist/index.js", "editorconfig-checker": "dist/index.js" } }, "sha512-5zrNwlxUWyOvAcrSK4mPIGNYrf1KK5pH2D3VXDB1AcDsDdBfLNPOjBL5jHgYh+JykOIuXlQHMeYvXPrZwGNmHA=="],
 
     "electron-to-chromium": ["electron-to-chromium@1.5.389", "", {}, "sha512-cEto7aeOqBfU1D+c5py5pE+ooscKE75JifxLBdFUZsqAxRS6y7kebtxAZvICszSl05gPjYHDTjY+lXpyGvpJbg=="],
 
