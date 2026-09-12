@@ -9,15 +9,13 @@ import { MediaQueries } from "@shared/styles/MediaQueries"
 import { Spaces } from "@shared/styles/Spaces"
 import { getHref } from "@shared/utils/getHref"
 
-import type { FC } from "hono/jsx"
+import type { Child, FC } from "hono/jsx"
 
 const { COLOR_FAFAFA } = Colors
 const { MEDIA_ONLY_HOVER, MEDIA_PC, MEDIA_SP } = MediaQueries
 const { SPACE12 } = Spaces
 
-type FcReturn = ReturnType<FC>
-
-type Props = Record<"locationCondition" | "monthCondition" | "tagCondition", FcReturn>
+type Props = Record<"locationCondition" | "monthCondition" | "tagCondition", Child>
 
 export const FormBase: FC<Props> = (props) => {
   const { locationCondition, monthCondition, tagCondition } = props

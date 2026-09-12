@@ -1,3 +1,5 @@
+import { createLocalAccountIssuer } from "@better-auth/core/db"
+
 import { createTestAuth } from "../createTestAuth"
 import { testUser } from "../testUser"
 
@@ -18,11 +20,15 @@ export const seedPasswordTestUser = async (
   const auth = await createTestAuth()
   const context = await auth.$context
 
-  const user = await context.internalAdapter.createUser({ ...testUser, email })
+  const user = await context.internalAdapter.createUser(
+    { ...testUser, email },
+    { method: "email-password" },
+  )
   const hashedPassword = await context.password.hash(password)
 
   await context.internalAdapter.linkAccount({
     accountId: user.id,
+    issuer: createLocalAccountIssuer(CREDENTIAL_PROVIDER_ID),
     password: hashedPassword,
     providerId: CREDENTIAL_PROVIDER_ID,
     userId: user.id,

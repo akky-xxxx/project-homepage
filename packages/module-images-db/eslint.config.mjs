@@ -28,6 +28,16 @@ const config = [
   JSDOC,
 
   {
+    // eslint-plugin-jest の一部ルール(jest/no-deprecated-functions 等)は Jest のバージョンを
+    // 自動検出しようとし、実際に jest パッケージが解決できないと初期化時に例外を投げる。
+    // このリポジトリは bun:test を使っており jest 自体を依存に持たないため、明示的に指定する
+    settings: {
+      jest: {
+        version: 29,
+      },
+    },
+  },
+  {
     files: ["src/const/IMAGES/index.ts", "src/types/Tag/index.ts"],
     rules: {
       "max-lines": "off",

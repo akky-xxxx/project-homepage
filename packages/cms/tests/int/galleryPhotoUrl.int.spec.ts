@@ -18,11 +18,8 @@ type AfterReadHook = (args: {
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === "object" && value !== null
 
-const findFieldByName = (fields: unknown, name: string) => {
-  if (!Array.isArray(fields)) return undefined
-
-  return fields.filter(isRecord).find((field) => field.name === name)
-}
+const findFieldByName = (fields: unknown, name: string): Record<string, unknown> | undefined =>
+  Array.isArray(fields) ? fields.filter(isRecord).find((field) => field.name === name) : undefined
 
 const getAfterReadHooks = (field: unknown): AfterReadHook[] => {
   if (!isRecord(field) || !isRecord(field.hooks)) return []

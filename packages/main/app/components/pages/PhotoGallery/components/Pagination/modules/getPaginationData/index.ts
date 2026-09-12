@@ -42,7 +42,7 @@ export const getPaginationData: GetPaginationData = (props) => {
   if (currentPage === totalPages) numberArray.push(currentPage - 2)
 
   const baseArray: PaginationData[] = [...new Set(numberArray)]
-    .sort(sortByNumberAsc)
+    .toSorted(sortByNumberAsc)
     .filter(isWithinZeroToMax(totalPages))
   if (currentPage > 1) baseArray.unshift("first", "previous")
   if (currentPage < totalPages) baseArray.push("next", "last")

@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "ignoreDeprecations": "6.0",
+    "lib": ["DOM", "DOM.Iterable", "ES2023"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,

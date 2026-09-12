@@ -20,6 +20,7 @@ const FORBIDDEN = "FORBIDDEN"
 const UNAUTHORIZED = "UNAUTHORIZED"
 
 const COOKIE_NAME_VALUE_PAIR_INDEX = 0
+const COOKIE_NAME_VALUE_SPLIT_LIMIT = 1
 
 /**
  * `returnHeaders: true` で得たレスポンスの `Set-Cookie` を、次のリクエストの
@@ -31,7 +32,7 @@ const COOKIE_NAME_VALUE_PAIR_INDEX = 0
 const toRequestCookieHeaders = (headers: Headers): Headers => {
   const cookiePairs = headers
     .getSetCookie()
-    .map((cookie) => cookie.split(";")[COOKIE_NAME_VALUE_PAIR_INDEX])
+    .map((cookie) => cookie.split(";", COOKIE_NAME_VALUE_SPLIT_LIMIT)[COOKIE_NAME_VALUE_PAIR_INDEX])
 
   return new Headers({ cookie: cookiePairs.join("; ") })
 }
