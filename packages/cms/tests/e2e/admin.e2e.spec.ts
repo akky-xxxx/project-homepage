@@ -43,7 +43,8 @@ test.describe("Admin Panel", () => {
 
   test("can navigate to list view", async () => {
     await page.goto("http://localhost:3000/collections/users")
-    await expect(page).toHaveURL("http://localhost:3000/collections/users")
+    // Payload の一覧画面は depth/limit をクエリパラメータとして URL に付与するため、パス部分のみ検証する
+    await expect(page).toHaveURL(/^http:\/\/localhost:3000\/collections\/users(?:\?.*)?$/)
     const listViewArtifact = page.locator("h1", { hasText: "Users" }).first()
     await expect(listViewArtifact).toBeVisible()
   })

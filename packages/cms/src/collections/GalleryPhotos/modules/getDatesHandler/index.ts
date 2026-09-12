@@ -31,11 +31,11 @@ export const getDatesHandler: PayloadHandler = async (request) => {
     req: request,
   })
   const months: string[] = [...new Set(dates.map(convertToDateString))]
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       const numberA = Number(a.replaceAll("-", ""))
       const numberB = Number(b.replaceAll("-", ""))
       return numberA - numberB
     })
-    .reverse()
+    .toReversed()
   return Response.json({ months })
 }

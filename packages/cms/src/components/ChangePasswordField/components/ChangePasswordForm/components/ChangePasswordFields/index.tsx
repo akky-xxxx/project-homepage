@@ -58,12 +58,12 @@ export const ChangePasswordFields = (props: ChangePasswordFieldsProps) => {
     <div className="field-type">
       <h3>Password</h3>
 
-      {errorMessage != null && (
+      {errorMessage == null ? null : (
         <div aria-live="assertive" role="alert">
           <Banner type="error">{errorMessage}</Banner>
         </div>
       )}
-      {successMessage != null && (
+      {successMessage == null ? null : (
         <div aria-live="polite" role="status">
           <Banner type="success">{successMessage}</Banner>
         </div>

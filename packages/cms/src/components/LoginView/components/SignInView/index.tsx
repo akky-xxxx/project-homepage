@@ -47,7 +47,7 @@ export const SignInView = (props: SignInViewProps) => {
     <div className="login-fields">
       <h1>Sign in</h1>
 
-      {errorMessage != null && (
+      {errorMessage == null ? null : (
         <div aria-live="assertive" role="alert">
           <Banner type="error">{errorMessage}</Banner>
         </div>

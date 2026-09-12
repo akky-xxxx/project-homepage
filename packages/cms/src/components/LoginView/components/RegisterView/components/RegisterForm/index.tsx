@@ -70,7 +70,7 @@ export const RegisterForm = () => {
         })
       }}
     >
-      {errorMessage != null && (
+      {errorMessage == null ? null : (
         <div aria-live="assertive" role="alert">
           <Banner type="error">{errorMessage}</Banner>
         </div>
