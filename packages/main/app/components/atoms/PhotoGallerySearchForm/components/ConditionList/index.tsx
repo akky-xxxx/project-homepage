@@ -28,7 +28,9 @@ export const ConditionList: FC<ConditionComponentProps> = (props) => {
   const { name, isMultiple = false, items } = props
   return (
     <ul className={rootStyle}>
-      {!isMultiple && <ListItem checked={false} display="選択してください" name={name} value="" />}
+      {isMultiple ? null : (
+        <ListItem checked={false} display="選択してください" name={name} value="" />
+      )}
       {items.map((item) => {
         const { checked, display, value } = item
         return (

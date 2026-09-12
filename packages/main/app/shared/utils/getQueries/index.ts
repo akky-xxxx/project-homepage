@@ -11,7 +11,7 @@ export const getQueries: GetQueries = (queries) => {
   if (!queries) return ""
 
   return Object.entries(queries)
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       if (a[FirstIndex] > b[FirstIndex]) return Next
       if (a[FirstIndex] < b[FirstIndex]) return Previous
       return Same
